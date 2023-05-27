@@ -54,6 +54,7 @@ const unsigned long DEEP_SLEEP = 180000;
 const unsigned long LIGHTS_OFF = 20000;
 bool btn = false;
 bool d1 = true;
+bool sleep = false;
 
 // web pages
 const char index_html[] PROGMEM = {
@@ -344,6 +345,10 @@ void setup()
 // Main code
 void loop()
 {
+    if (sleep)
+    {
+        ESP.deepSleep(0);
+    }
     currentMillis = millis();
     d1 = digitalRead(D1);
     if (!d1)
@@ -400,7 +405,7 @@ void wifiSetup(void)
             if (WiFi.status() == WL_CONNECTED)
                 break;
             if (ctr == 14)
-                ESP.deepSleep(0);
+                sleep = true;
         }
         Serial.println(WiFi.localIP());
     }
