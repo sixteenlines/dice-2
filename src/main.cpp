@@ -6,6 +6,7 @@
 #include <ESP8266WiFiMulti.h>
 #include <EEPROM.h>
 #include <Arduino.h>
+#include <vector>
 
 // Pins
 #define PIN 2
@@ -13,12 +14,22 @@
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_RGB + NEO_KHZ400);
 
 /* Endpoint params */
-const char *PARAM_INPUT_COLORR = "r";
-const char *PARAM_INPUT_COLORG = "g";
-const char *PARAM_INPUT_COLORB = "b";
-const char *PARAM_INPUT_RESULT = "result";
+const char *PARAM_R = "r";
+const char *PARAM_G = "g";
+const char *PARAM_B = "b";
+const char *PARAM_LED = "led";
+const char *PARAM_RESULT = "result";
 
-/* EEPROM */
+/* LED-Out */
+const std::vector<std::vector<int>> dicePatterns = {
+    {},                 // symbol 0
+    {12},               // symbol 1
+    {4, 20},            // symbol 2
+    {4, 12, 20},        // symbol 3
+    {0, 4, 20, 24},     // symbol 4
+    {0, 4, 12, 20, 24}, // symbol 5
+    {0, 4, 14, 20, 24}  // symbol 6
+};
 
 /* Network AP */
 String ssid = "";
@@ -141,38 +152,85 @@ const char index_html[] PROGMEM = {
 <body>
     <div class="container">
         <div class="led-grid">
-            <div class="led" id="led1"></div><div class="led" id="led2"></div><div class="led" id="led3"></div><div class="led" id="led4"></div><div class="led" id="led5"></div>
-            <div class="led" id="led6"></div><div class="led" id="led7"></div><div class="led" id="led8"></div><div class="led" id="led9"></div><div class="led" id="led10"></div>
-            <div class="led" id="led11"></div><div class="led" id="led12"></div><div class="led" id="led13"></div><div class="led" id="led14"></div><div class="led" id="led15"></div>
-            <div class="led" id="led16"></div><div class="led" id="led17"></div><div class="led" id="led18"></div><div class="led" id="led19"></div><div class="led" id="led20"></div>
-            <div class="led" id="led21"></div><div class="led" id="led22"></div><div class="led" id="led23"></div><div class="led" id="led24"></div><div class="led" id="led25"></div>
+            <div class="led" id="led0"></div><div class="led" id="led1"></div>
+            <div class="led" id="led2"></div><div class="led" id="led3"></div>
+            <div class="led" id="led4"></div>
+            <div class="led" id="led5"></div><div class="led" id="led6"></div>
+            <div class="led" id="led7"></div><div class="led" id="led8"></div>
+            <div class="led" id="led9"></div>
+            <div class="led" id="led10"></div><div class="led" id="led11"></div>
+            <div class="led" id="led12"></div><div class="led" id="led13"></div>
+            <div class="led" id="led14"></div>
+            <div class="led" id="led15"></div><div class="led" id="led16"></div>
+            <div class="led" id="led17"></div><div class="led" id="led18"></div>
+            <div class="led" id="led19"></div>
+            <div class="led" id="led20"></div><div class="led" id="led21"></div>
+            <div class="led" id="led22"></div><div class="led" id="led23"></div>
+            <div class="led" id="led24"></div>
         </div>
         <div class="color-picker-container">
             <h1 class="color-picker-heading">Color:</h1>
             <input type="color" id="colorPicker" class="color-picker" value="#ffffff">
         </div>
-        <button class="roll-dice-btn" id="rollDiceButton" onclick="rollDice()">Roll dice</button>
-        <button class="roll-dice-btn" id="deepSleepButton" onclick="deepSleep()">Schlafen</button>
+        <button class="roll-dice-btn" id="rollDiceButton"
+        onclick="rollDice()">Roll dice</button>
+        <button class="roll-dice-btn" id="deepSleepButton" 
+        onclick="deepSleep()">Schlafen</button>
     </div>
 
     <script>
         var colorPicker = document.getElementById('colorPicker');
         var rollDiceButton = document.getElementById('rollDiceButton');
+        var r = 255;
+        var g = 255;
+        var b = 255;
 		var leds = [];
-        for (var i = 1; i <= 25; i++) {
-            leds[i] = document.getElementById('led' + i);
+        for (var num = 0; num < 25; num++) {
+            leds[num] = document.getElementById('led' + num);
+            leds[num].dataset.state = 'off';
+            leds[num].addEventListener('click', (function(num) {
+                return function() {
+                    if (this.dataset.state === 'off') {
+                        this.style.backgroundColor = colorPicker.value;
+                        this.dataset.state = 'on';
+                        updateLED(num, true);
+                    } else {
+                        this.style.backgroundColor = 'black';
+                        this.dataset.state = 'off';
+                        updateLED(num, false);
+                    }
+                    
+                };
+            })(num));
         }
 
         colorPicker.addEventListener('input', function() {
             this.style.backgroundColor = this.value;
-            switchColor();
+            r = parseInt(colorPicker.value.substring(1, 3), 16);
+            g = parseInt(colorPicker.value.substring(3, 5), 16);
+            b = parseInt(colorPicker.value.substring(5, 7), 16);
         });
+
+        
+
+        function updateLED(num, power) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                }
+            };
+            if (power) {
+                xhttp.open("GET", `/update?led=${num}&r=${r}&g=${g}&b=${b}`, true);
+            }
+            else {
+                xhttp.open("GET", `/update?led=${num}&r=0&g=0&b=0`, true);
+            }
+            xhttp.send();
+        }
 
         function switchColor() {
             var colorHex = colorPicker.value;
-            var r = parseInt(colorHex.substring(1, 3), 16);
-            var g = parseInt(colorHex.substring(3, 5), 16);
-            var b = parseInt(colorHex.substring(5, 7), 16);
             
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -208,10 +266,10 @@ const char index_html[] PROGMEM = {
                     console.log(this.responseText);
                 }
             };
-            xhttp.open("GET", `/rolldice?result=${roll}`, true);
+            xhttp.open("GET", `/rolldice?result=${roll}&r=${r}&g=${g}&b=${b}`, true);
             xhttp.send();
             setTimeout(function() {
-                rollDiceButton.disabled = false;
+                rollDiceButton.disabled = false;   
             }, 2000); 
         }
     </script>
@@ -219,12 +277,14 @@ const char index_html[] PROGMEM = {
 </html>
 )rawliteral"};
 
-void printNumPixel(uint8_t num);
 void prerolldice(void);
 void marius(void);
 void wifiSetup(void);
 void loadCredentials(void);
 void saveCredentials(void);
+void printPattern(uint8_t pattern);
+void setLED(uint8_t num);
+void clearLED(uint8_t num);
 
 void setup()
 {
@@ -233,7 +293,7 @@ void setup()
     pinMode(D2, INPUT);
     wifiSetup();
     pixels.begin(); // Initialisierung der NeoPixel
-    printNumPixel(0);
+    printPattern(0);
     // Route for root / web page
     webServer.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
                  { request->send_P(200, "text/html", index_html); });
@@ -241,46 +301,40 @@ void setup()
     // GET request to <ESP_IP>/rolldice
     webServer.on("/rolldice", HTTP_GET, [](AsyncWebServerRequest *request)
                  {
-    String inputResult;
-    if (request->hasParam(PARAM_INPUT_RESULT)) {
-        inputResult = request->getParam(PARAM_INPUT_RESULT)->value();
-        roll = inputResult.toInt();
+    if (request->hasParam(PARAM_R) &&
+        request->hasParam(PARAM_G) &&
+        request->hasParam(PARAM_B) &&
+        request->hasParam(PARAM_RESULT)) {
+        r = request->getParam(PARAM_R)->value().toInt();
+        g = request->getParam(PARAM_G)->value().toInt();
+        b = request->getParam(PARAM_B)->value().toInt();
+        roll = request->getParam(PARAM_RESULT)->value().toInt();
         btn = true;
-	    startMillis = millis();
+        startMillis = millis();
+    }
+                    request->send(200, "text/plain", "OK"); });
 
+    // GET request to <ESP_IP>/update
+    webServer.on("/update", HTTP_GET, [](AsyncWebServerRequest *request)
+                 {
+    uint8_t led = 0;
+    if (request->hasParam(PARAM_R) &&
+        request->hasParam(PARAM_G) &&
+        request->hasParam(PARAM_B) &&
+        request->hasParam(PARAM_LED)) {
+        r = request->getParam(PARAM_R)->value().toInt();
+        g = request->getParam(PARAM_G)->value().toInt();
+        b = request->getParam(PARAM_B)->value().toInt();
+        led = request->getParam(PARAM_LED)->value().toInt();
+        setLED(led);
+        startMillis = millis();
     }
-    else {
-        inputResult = "No message sent";
-    }
-    request->send(200, "text/plain", "OK"); });
+                    request->send(200, "text/plain", "OK"); });
 
     // GET request to <ESP_IP>/deepsleep
     webServer.on("/deepsleep", HTTP_GET, [](AsyncWebServerRequest *request)
                  {
     marius();
-    request->send(200, "text/plain", "OK"); });
-
-    // GET request to <ESP_IP>/color?r=x&g=y&b=z
-    webServer.on("/color", HTTP_GET, [](AsyncWebServerRequest *request)
-                 {
-    String inputColorR;
-    String inputColorG;
-    String inputColorB;
-    if (request->hasParam(PARAM_INPUT_COLORR) && request->hasParam(PARAM_INPUT_COLORG) && request->hasParam(PARAM_INPUT_COLORB)) {
-        inputColorR = request->getParam(PARAM_INPUT_COLORR)->value();
-        inputColorG = request->getParam(PARAM_INPUT_COLORG)->value();
-        inputColorB = request->getParam(PARAM_INPUT_COLORB)->value();
-        r = inputColorR.toInt();
-        g = inputColorG.toInt();
-        b = inputColorB.toInt();
-        printNumPixel(roll); 
-        startMillis = millis();
-    }
-    else {
-      inputColorR = "No message sent";
-      inputColorG = "No message sent";
-      inputColorB = "No message sent";
-    }
     request->send(200, "text/plain", "OK"); });
 
     // Start webServer
@@ -300,7 +354,7 @@ void loop()
 
     if (btn)
     {
-        if (currentMillis - startMillis >= period) // test whether the period has elapsed
+        if (currentMillis - startMillis >= period)
         {
             prerolldice();
             startMillis = currentMillis;
@@ -308,7 +362,7 @@ void loop()
         }
         if (period == 400)
         {
-            printNumPixel(roll);
+            printPattern(roll);
             btn = false;
             period = 0;
         }
@@ -319,56 +373,39 @@ void loop()
     }
     if (currentMillis - startMillis >= LIGHTS_OFF)
     {
-        printNumPixel(0);
+        printPattern(0);
     }
 }
 
 void wifiSetup(void)
 {
     ESPAsync_WiFiManager wm(&webServer, &dnsServer, "AP_Config");
+
     if (digitalRead(D2) == LOW)
     {
         wm.startConfigPortal(ssidAP, pwAP);
         ssid = wm.WiFi_SSID();
         pw = wm.WiFi_Pass();
-        Serial.println("saving creds");
-        Serial.println(ssid);
-        Serial.println(pw);
         saveCredentials();
-        loadCredentials();
-        Serial.println("loading creds");
-        Serial.println(ssid);
-        Serial.println(pw);
     }
     else
     {
         loadCredentials();
-        Serial.println("loading creds");
-        Serial.println(ssid);
-        Serial.println(pw);
-        //     WiFi.begin(ssid, pw);
-        //     int ctr = 0;
-        //     while (WiFi.status() != WL_CONNECTED)
-        //     {
-        //         ctr++;
-        //         delay(1000);
-        //         Serial.print(".");
-        //         if (ctr == 15)
-        //         {
-        //             ESP.deepSleep(0);
-        //         }
-        //     }
-        //     // Print out IP Address
-        //     Serial.println(WiFi.localIP());
-        // }
-        // Serial.println(WiFi.localIP());
-        // ssid = (char *)wm.WiFi_SSID().c_str();
-        // pw = (char *)wm.WiFi_Pass().c_str();
-        // saveCredentials();
-        // Serial.println("saved creds");
-        // Serial.println();
+        WiFi.begin(ssid, pw);
+
+        for (int ctr = 0; ctr < 15; ctr++)
+        {
+            delay(1000);
+            Serial.print(".");
+            if (WiFi.status() == WL_CONNECTED)
+                break;
+            if (ctr == 14)
+                ESP.deepSleep(0);
+        }
+        Serial.println(WiFi.localIP());
     }
 }
+
 /** Load WLAN credentials from EEPROM */
 void loadCredentials()
 {
@@ -400,7 +437,7 @@ void saveCredentials()
 void prerolldice(void)
 {
     uint8_t preroll = random(6) + 1;
-    printNumPixel(preroll);
+    printPattern(preroll);
     Serial.print("You rolled: ");
     Serial.print(preroll);
     Serial.println();
@@ -408,84 +445,30 @@ void prerolldice(void)
 
 void marius()
 {
-    printNumPixel(0);
+    printPattern(0);
     ESP.deepSleep(0);
 }
 
-void printNumPixel(uint8_t num)
+void printPattern(uint8_t pattern)
 {
-    switch (num)
+    for (int i = 0; i < 25; i++)
     {
-    case 0:
-        // All LEDs LOW
-        pixels.setPixelColor(0, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(4, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(10, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(12, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(14, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(20, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(24, pixels.Color(0, 0, 0));
-        pixels.show();
-        break;
-    case 1:
-        pixels.setPixelColor(0, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(4, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(10, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(12, pixels.Color(r, g, b));
-        pixels.setPixelColor(14, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(20, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(24, pixels.Color(0, 0, 0));
-        pixels.show();
-        break;
-    case 2:
-        pixels.setPixelColor(0, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(4, pixels.Color(r, g, b));
-        pixels.setPixelColor(10, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(12, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(14, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(20, pixels.Color(r, g, b));
-        pixels.setPixelColor(24, pixels.Color(0, 0, 0));
-        pixels.show();
-        break;
-    case 3:
-        pixels.setPixelColor(0, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(4, pixels.Color(r, g, b));
-        pixels.setPixelColor(10, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(12, pixels.Color(r, g, b));
-        pixels.setPixelColor(14, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(20, pixels.Color(r, g, b));
-        pixels.setPixelColor(24, pixels.Color(0, 0, 0));
-        pixels.show();
-        break;
-    case 4:
-        pixels.setPixelColor(0, pixels.Color(r, g, b));
-        pixels.setPixelColor(4, pixels.Color(r, g, b));
-        pixels.setPixelColor(10, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(12, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(14, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(20, pixels.Color(r, g, b));
-        pixels.setPixelColor(24, pixels.Color(r, g, b));
-        pixels.show();
-        break;
-    case 5:
-        pixels.setPixelColor(0, pixels.Color(r, g, b));
-        pixels.setPixelColor(4, pixels.Color(r, g, b));
-        pixels.setPixelColor(10, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(12, pixels.Color(r, g, b));
-        pixels.setPixelColor(14, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(20, pixels.Color(r, g, b));
-        pixels.setPixelColor(24, pixels.Color(r, g, b));
-        pixels.show();
-        break;
-    case 6:
-        pixels.setPixelColor(0, pixels.Color(r, g, b));
-        pixels.setPixelColor(4, pixels.Color(r, g, b));
-        pixels.setPixelColor(10, pixels.Color(r, g, b));
-        pixels.setPixelColor(12, pixels.Color(0, 0, 0));
-        pixels.setPixelColor(14, pixels.Color(r, g, b));
-        pixels.setPixelColor(20, pixels.Color(r, g, b));
-        pixels.setPixelColor(24, pixels.Color(r, g, b));
-        pixels.show();
-        break;
+        clearLED(i);
     }
+    const std::vector<int> &dice = dicePatterns[pattern];
+    for (int i : dice)
+    {
+        setLED(i);
+    }
+    pixels.show();
+}
+
+void setLED(uint8_t num)
+{
+    pixels.setPixelColor(num, pixels.Color(r, g, b));
+}
+
+void clearLED(uint8_t num)
+{
+    pixels.setPixelColor(num, pixels.Color(0, 0, 0));
 }
