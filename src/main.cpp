@@ -4,7 +4,7 @@
 #include <ESPAsyncTCP.h>
 #include <ESPAsync_WiFiManager.h>
 #include <ESP8266WiFiMulti.h>
-#include <EEPROM.h>
+#include <ESP_EEPROM.h>
 #include <Arduino.h>
 #include <vector>
 
