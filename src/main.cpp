@@ -4,14 +4,19 @@
 #include <ESPAsyncTCP.h>
 #include <ESPAsync_WiFiManager.h>
 #include <ESP8266WiFiMulti.h>
-#include <ESP_EEPROM.h>
+#include <EEPROM.h>
 #include <Arduino.h>
 #include <vector>
 
 // Pins
-#define PIN 2
+#define STATUSLED_PIN D4
+#define RETENTION_PIN D1
+#define LEDS_PIN D2
+#define BTN0_PIN D6
+#define BTN1_PIN D7
+#define BTN2_PIN D5
 #define NUMPIXELS 25
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_RGB + NEO_KHZ400);
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LEDS_PIN, NEO_RGB + NEO_KHZ400);
 
 /* Endpoint params */
 const char *PARAM_R = "r";
@@ -22,13 +27,13 @@ const char *PARAM_RESULT = "result";
 
 /* LED-Out */
 const std::vector<std::vector<int>> dicePatterns = {
-    {},                 // symbol 0
-    {12},               // symbol 1
-    {4, 20},            // symbol 2
-    {4, 12, 20},        // symbol 3
-    {0, 4, 20, 24},     // symbol 4
-    {0, 4, 12, 20, 24}, // symbol 5
-    {0, 4, 14, 20, 24}  // symbol 6
+    {},                    // symbol 0
+    {12},                  // symbol 1
+    {4, 20},               // symbol 2
+    {4, 12, 20},           // symbol 3
+    {0, 4, 20, 24},        // symbol 4
+    {0, 4, 12, 20, 24},    // symbol 5
+    {0, 4, 10, 14, 20, 24} // symbol 6
 };
 
 /* Network AP */
@@ -52,6 +57,7 @@ unsigned long currentMillis = 0;
 unsigned short period = 50;
 const unsigned long DEEP_SLEEP = 180000;
 const unsigned long LIGHTS_OFF = 20000;
+const unsigned long EEPROM_OFFSET = 400000;
 bool btn = false;
 bool d1 = true;
 bool sleep = false;
@@ -281,6 +287,7 @@ const char index_html[] PROGMEM = {
 void prerolldice(void);
 void marius(void);
 void wifiSetup(void);
+void ioSetup(void);
 void loadCredentials(void);
 void saveCredentials(void);
 void printPattern(uint8_t pattern);
@@ -289,12 +296,14 @@ void clearLED(uint8_t num);
 
 void setup()
 {
+
     Serial.begin(9600);
-    pinMode(D1, INPUT);
-    pinMode(D2, INPUT);
-    wifiSetup();
-    pixels.begin(); // Initialisierung der NeoPixel
+    ioSetup();
+    digitalWrite(RETENTION_PIN, HIGH);
+    pixels.begin();
     printPattern(0);
+    wifiSetup();
+
     // Route for root / web page
     webServer.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
                  { request->send_P(200, "text/html", index_html); });
@@ -328,6 +337,7 @@ void setup()
         b = request->getParam(PARAM_B)->value().toInt();
         led = request->getParam(PARAM_LED)->value().toInt();
         setLED(led);
+        pixels.show();
         startMillis = millis();
     }
                     request->send(200, "text/plain", "OK"); });
@@ -335,7 +345,7 @@ void setup()
     // GET request to <ESP_IP>/deepsleep
     webServer.on("/deepsleep", HTTP_GET, [](AsyncWebServerRequest *request)
                  {
-    marius();
+    sleep = true;
     request->send(200, "text/plain", "OK"); });
 
     // Start webServer
@@ -347,10 +357,10 @@ void loop()
 {
     if (sleep)
     {
-        ESP.deepSleep(0);
+        marius();
     }
     currentMillis = millis();
-    d1 = digitalRead(D1);
+    d1 = digitalRead(BTN0_PIN);
     if (!d1)
     {
         roll = random(6) + 1;
@@ -382,30 +392,48 @@ void loop()
     }
 }
 
+void ioSetup()
+{
+    pinMode(BTN0_PIN, INPUT);
+    pinMode(BTN1_PIN, INPUT);
+    pinMode(BTN2_PIN, INPUT_PULLUP);
+    pinMode(RETENTION_PIN, OUTPUT);
+    pinMode(STATUSLED_PIN, OUTPUT);
+}
+
 void wifiSetup(void)
 {
     ESPAsync_WiFiManager wm(&webServer, &dnsServer, "AP_Config");
 
-    if (digitalRead(D2) == LOW)
+    if (digitalRead(BTN1_PIN) == LOW)
     {
         wm.startConfigPortal(ssidAP, pwAP);
         ssid = wm.WiFi_SSID();
         pw = wm.WiFi_Pass();
+        Serial.println("Storing credentials: ");
+        Serial.println(ssid);
+        Serial.println(pw);
         saveCredentials();
     }
     else
     {
+        Serial.print("Restoring saved credentials: ");
         loadCredentials();
+        Serial.println(ssid);
+        Serial.println(pw);
         WiFi.begin(ssid, pw);
 
-        for (int ctr = 0; ctr < 15; ctr++)
+        for (int ctr = 0; ctr < 21; ctr++)
         {
-            delay(1000);
+            delay(500);
             Serial.print(".");
+            digitalWrite(STATUSLED_PIN, (ctr % 2));
             if (WiFi.status() == WL_CONNECTED)
                 break;
             if (ctr == 14)
-                sleep = true;
+            {
+                marius(); // sleep after wifi fail?
+            }
         }
         Serial.println(WiFi.localIP());
     }
@@ -415,10 +443,10 @@ void wifiSetup(void)
 void loadCredentials()
 {
     EEPROM.begin(512);
-    EEPROM.get(128, ssid);
-    EEPROM.get(128 + sizeof(ssid), pw);
+    EEPROM.get(EEPROM_OFFSET, ssid);
+    EEPROM.get(EEPROM_OFFSET + sizeof(ssid), pw);
     char ok[2 + 1] = "OK";
-    EEPROM.get(128 + sizeof(ssid) + sizeof(pw), ok);
+    EEPROM.get(EEPROM_OFFSET + sizeof(ssid) + sizeof(pw), ok);
     EEPROM.end();
     if (String(ok) != String("OK"))
     {
@@ -431,10 +459,10 @@ void loadCredentials()
 void saveCredentials()
 {
     EEPROM.begin(512);
-    EEPROM.put(128, ssid);
-    EEPROM.put(128 + sizeof(ssid), pw);
+    EEPROM.put(EEPROM_OFFSET, ssid);
+    EEPROM.put(EEPROM_OFFSET + sizeof(ssid), pw);
     char ok[2 + 1] = "OK";
-    EEPROM.put(128 + sizeof(ssid) + sizeof(pw), ok);
+    EEPROM.put(EEPROM_OFFSET + sizeof(ssid) + sizeof(pw), ok);
     EEPROM.commit();
     EEPROM.end();
 }
@@ -451,7 +479,7 @@ void prerolldice(void)
 void marius()
 {
     printPattern(0);
-    ESP.deepSleep(0);
+    digitalWrite(RETENTION_PIN, LOW);
 }
 
 void printPattern(uint8_t pattern)
