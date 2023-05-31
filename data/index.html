@@ -3,91 +3,7 @@
 <head>
     <title>Roll Dice Webpage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            color: black;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 10px;
-        }
-
-		.led-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 20px);
-            grid-template-rows: repeat(5, 20px);
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .led {
-            width: 30px;
-            height: 30px;
-            background: black;
-            border: 1px solid black;
-            border-radius: 50%;
-        }
-
-        .color-picker-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        .color-picker {
-            width: 100%;
-            max-width: 300px;
-            padding: 10px;
-            background: white;
-            color: black;
-            border: 2px solid black;
-        }
-
-        .color-picker-heading {
-            margin-bottom: 10px;
-            -webkit-text-stroke: 1px white;
-        }
-
-        .roll-dice-btn {
-            padding: 10px 20px;
-            background: black;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 5px;
-        }
-
-        .roll-dice-btn:hover {
-            background: white;
-            color: black;
-            border: 2px solid black;
-        }
-
-        .roll-dice-btn:disabled {
-            background: gray;
-            cursor: not-allowed;
-        }
-
-        @media only screen and (max-width: 600px) {
-            .color-picker,
-            .roll-dice-btn {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel ="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
     <div class="container">
@@ -209,8 +125,7 @@
             xhttp.open("GET", `/rolldice?result=${roll}&r=${r}&g=${g}&b=${b}`, true);
             xhttp.send();
             setTimeout(function() {
-                rollDiceButton.disabled = false;
-                   
+                rollDiceButton.disabled = false;   
             }, 2000); 
         }
     </script>
