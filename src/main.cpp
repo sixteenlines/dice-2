@@ -1,5 +1,4 @@
 #include <main.hpp>
-
 /* Credentials in RAM */
 String creds[5] = {
     "", // SSID
@@ -16,6 +15,7 @@ AsyncWebServer webServer(80);
 IPAddress localIP;
 IPAddress localGateway;
 IPAddress localSubnet;
+DNSServer dnsServer;
 
 /* Control vars */
 uint8_t roll = 0;
@@ -30,6 +30,26 @@ bool sleep = false;
 uint8_t r = 255;
 uint8_t g = 255;
 uint8_t b = 255;
+
+/* Request Handler class*/
+class CaptiveRequestHandler : public AsyncWebHandler
+{
+public:
+    CaptiveRequestHandler() {}
+    virtual ~CaptiveRequestHandler() {}
+
+    bool canHandle(AsyncWebServerRequest *request)
+    {
+        // request->addInterestingHeader("ANY");
+        return true;
+    }
+
+    void handleRequest(AsyncWebServerRequest *request)
+    {
+        AsyncWebServerResponse *response = request->beginResponse(LittleFS, "/manager.html", "text/html");
+        request->send(response);
+    }
+};
 
 void setup()
 {
@@ -49,6 +69,8 @@ void setup()
 // Main code
 void loop()
 {
+    dnsServer.processNextRequest();
+
     if (sleep)
     {
         marius();
@@ -88,7 +110,7 @@ void loop()
 
 String readFile(const String path)
 {
-    Serial.printf("Reading file: %s\r\n", path);
+    Serial.print("Reading file ");
 
     File file = LittleFS.open(path, "r");
     if (!file || file.isDirectory())
@@ -110,7 +132,7 @@ String readFile(const String path)
 
 void writeFile(const String path, const char *message)
 {
-    Serial.printf("Writing file: %s\r\n", path);
+    Serial.printf("Writing file ");
 
     File file = LittleFS.open(path, "w");
     if (!file)
@@ -157,10 +179,11 @@ bool initWifi(void)
     // Wifi manager boot requested
     if (digitalRead(BTN1_PIN) == LOW)
     {
-        return managerSetup();
+        managerSetup();
+        return true;
     }
     // try to load stored creds
-    else if (loadCredentials)
+    else if (loadCredentials())
     {
         return clientSetup();
     }
@@ -172,7 +195,7 @@ bool initWifi(void)
     }
 }
 
-bool managerSetup()
+void managerSetup(void)
 {
     // Setup AP
     Serial.println("Setting AP (Access Point)");
@@ -181,14 +204,24 @@ bool managerSetup()
     IPAddress IP = WiFi.softAPIP();
     Serial.print("AP IP address: ");
     Serial.println(IP);
+    dnsServer.start(53, "*", IP);
+    hostManager();
+    webServer.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);
 }
 
-bool clientSetup()
+bool clientSetup(void)
 {
     WiFi.mode(WIFI_STA);
-    localIP.fromString(creds[2].c_str());
-    localGateway.fromString(creds[3].c_str());
-    localSubnet.fromString(creds[4].c_str());
+    localIP.fromString(creds[_IPAD].c_str());
+    localGateway.fromString(creds[_GATE].c_str());
+    localSubnet.fromString(creds[_SUBN].c_str());
+    if (!WiFi.config(localIP, localGateway, localSubnet))
+    {
+        Serial.println("Client failed to configure");
+        return false;
+    }
+    WiFi.begin(creds[_SSID].c_str(), creds[_PASS].c_str());
+    Serial.println("Connecting to WiFi...");
     for (int ctr = 0; ctr < 21; ctr++)
     {
         delay(500);
@@ -196,7 +229,7 @@ bool clientSetup()
         digitalWrite(STATUSLED_PIN, (ctr % 2));
         if (WiFi.status() == WL_CONNECTED)
         {
-            Serial.print("Connected to " + creds[0] + "with IP ");
+            Serial.print("Connected to " + creds[_SSID] + "with IP ");
             Serial.println(WiFi.localIP());
             hostIndex();
             return true;
@@ -204,12 +237,13 @@ bool clientSetup()
         if (ctr == 14)
         {
             Serial.println("Couldnt connect with credentials.");
-            return false;
+            break;
         }
     }
+    return false;
 }
 
-/** Load WLAN credentials from EEPROM */
+/** Load WLAN credentials from FS */
 bool loadCredentials()
 {
     for (int i = 0; i < 5; i++)
@@ -316,60 +350,59 @@ void hostIndex(void)
 
 void hostManager()
 {
-    webServer.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-                 { request->send(LittleFS, "/manager.html", "text/html"); });
-
-    webServer.serveStatic("/", LittleFS, "/");
+    // webServer.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+    //              { request->send(LittleFS, "/manager.html", "text/html"); });
 
     webServer.on("/", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
-        for (int i = 0; i < request->params(); i++)
-        {
-            AsyncWebParameter *p = request->getParam(i);
-            if (p->isPost())
+            for (uint8_t i = 0; i < request->params(); i++)
             {
-                String paramName = p->name();
-                String message;
-                uint8_t writeOffset;
+                AsyncWebParameter *p = request->getParam(i);
+                if (p->isPost())
+                {
+                    String paramName = p->name();
+                    String paramValue = p->value().c_str();
+                    String message;
+                    uint8_t writeOffset;
 
-                if (paramName == PARAM_INPUT_0)
-                {
-                    writeOffset = _SSID;
-                    message = "SSID set to: ";
+                    if (paramName == PARAM_INPUT_0)
+                    {
+                        writeOffset = _SSID;
+                        message = "SSID set to: ";
+                    }
+                    else if (paramName == PARAM_INPUT_1)
+                    {
+                        writeOffset = _PASS;
+                        message = "Password set to: ";
+                    }
+                    else if (paramName == PARAM_INPUT_2)
+                    {
+                        writeOffset = _IPAD;
+                        message = "IP Address set to: ";
+                    }
+                    else if (paramName == PARAM_INPUT_3)
+                    {
+                        writeOffset = _GATE;
+                        message = "Gateway set to: ";
+                    }
+                    else if (paramName == PARAM_INPUT_4)
+                    {
+                        writeOffset = _SUBN;
+                        message = "Subnet mask set to: ";
+                    }
+                    else
+                    {
+                        continue; // Skip unrecognized parameters
+                    }
+                    creds[writeOffset] = paramValue;
+                    Serial.print(message);
+                    Serial.println(creds[writeOffset]);
+                    writeFile(paths[writeOffset], creds[writeOffset].c_str());
                 }
-                else if (paramName == PARAM_INPUT_1)
-                {
-                    writeOffset = _PASS;
-                    message = "Password set to: ";
-                }
-                else if (paramName == PARAM_INPUT_2)
-                {
-                    writeOffset = _IPAD;
-                    message = "IP Address set to: ";
-                }
-                else if (paramName == PARAM_INPUT_3)
-                {
-                    writeOffset = _GATE;
-                    message = "Gateway set to: ";
-                }
-                else if (paramName == PARAM_INPUT_4)
-                {
-                    writeOffset = _SUBN;
-                    message = "Subnet mask set to: ";
-                }
-                else
-                {
-                    continue; // Skip unrecognized parameters
-                }
-
-                Serial.print(message);
-                Serial.println(creds[writeOffset]);
-                writeFile(paths[writeOffset], creds[writeOffset].c_str());
             }
-        }
 
-        String response = "Done. ESP will restart, connect to your router and go to IP address: " + creds[_IPAD];
-        request->send(200, "text/plain", response);
-        delay(1500);
-        ESP.restart(); });
+            String response = "Done. ESP will restart, connect to your router and go to IP address: " + creds[_IPAD];
+            request->send(200, "text/plain", response);
+            delay(1500);
+            ESP.restart(); });
 }

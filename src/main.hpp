@@ -4,6 +4,7 @@
 #include <ESPAsyncWebServer.h>
 #include <ESPAsyncTCP.h>
 #include <LittleFS.h>
+#include <DNSServer.h>
 #include <Arduino.h>
 
 /* Pins */
@@ -22,7 +23,7 @@
 #define _GATE 3
 #define _SUBN 4
 
-/* Timer constants */
+/* Timer constants and dns port */
 const unsigned long DEEP_SLEEP = 180000;
 const unsigned long LIGHTS_OFF = 20000;
 
@@ -64,7 +65,7 @@ void prerolldice(void);
 void marius(void);
 bool initWifi(void);
 bool clientSetup(void);
-bool managerSetup(void);
+void managerSetup(void);
 void initIO(void);
 void hostManager(void);
 void hostIndex(void);
