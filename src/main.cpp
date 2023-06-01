@@ -31,26 +31,6 @@ uint8_t r = 255;
 uint8_t g = 255;
 uint8_t b = 255;
 
-/* Request Handler class*/
-class CaptiveRequestHandler : public AsyncWebHandler
-{
-public:
-    CaptiveRequestHandler() {}
-    virtual ~CaptiveRequestHandler() {}
-
-    bool canHandle(AsyncWebServerRequest *request)
-    {
-        // request->addInterestingHeader("ANY");
-        return true;
-    }
-
-    void handleRequest(AsyncWebServerRequest *request)
-    {
-        AsyncWebServerResponse *response = request->beginResponse(LittleFS, "/manager.html", "text/html");
-        request->send(response);
-    }
-};
-
 void setup()
 {
     Serial.begin(115200);
@@ -206,7 +186,6 @@ void managerSetup(void)
     Serial.println(IP);
     dnsServer.start(53, "*", IP);
     hostManager();
-    webServer.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);
 }
 
 bool clientSetup(void)
@@ -350,8 +329,10 @@ void hostIndex(void)
 
 void hostManager()
 {
-    // webServer.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-    //              { request->send(LittleFS, "/manager.html", "text/html"); });
+    webServer.onNotFound([](AsyncWebServerRequest *request)
+                         {
+    if (!handleFileRequest(request, request->url()))
+      request->send(404, "text/plain", "File not found"); });
 
     webServer.on("/", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
@@ -405,4 +386,23 @@ void hostManager()
             request->send(200, "text/plain", response);
             delay(1500);
             ESP.restart(); });
+}
+
+bool handleFileRequest(AsyncWebServerRequest *request, String path)
+{
+    Serial.println("handleFileRead: " + path);
+    String contentType;
+    if (path.endsWith("/"))
+        path += "index.html";
+    if (path.endsWith(".html"))
+        contentType = "text/html";
+    if (path.endsWith(".css"))
+        contentType = "text/css";
+    if (LittleFS.exists(path))
+    {
+        AsyncWebServerResponse *response = request->beginResponse(LittleFS, path, contentType);
+        request->send(response);
+        return true;
+    }
+    return false;
 }

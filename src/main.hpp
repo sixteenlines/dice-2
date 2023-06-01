@@ -74,5 +74,6 @@ void printPattern(uint8_t pattern);
 void setLED(uint8_t num);
 void clearLED(uint8_t num);
 void initFS(void);
+bool handleFileRequest(AsyncWebServerRequest *request, String path);
 void writeFile(const String path, const char *message);
 String readFile(const String path);
