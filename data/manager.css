@@ -65,7 +65,7 @@ input[type=submit]:hover {
 }
 
 input[type=text], input[type=number], select {
-    font-size: 1.6rem; /* Increase the font size to your desired value */
+    font-size: 1.4rem; /* Increase the font size to your desired value */
     width: 70%; /* Adjust the width as needed */
     padding: 12px 20px;
     margin: 18px auto; /* Center the input fields horizontally */

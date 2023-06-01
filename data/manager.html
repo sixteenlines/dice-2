@@ -12,18 +12,21 @@
   <div class="content">
     <div class="card-grid">
       <div class="card">
-        <form action="/" method="POST">
+        <form action="/submit" method="POST">
           <p>
             <label for="ssid">SSID</label>
             <input type="text" id ="ssid" name="ssid"><br>
             <label for="pass">Password</label>
             <input type="text" id ="pass" name="pass"><br>
             <label for="ip">IP Address</label>
-            <input type="text" id ="ip" name="ip" value="172.19.37.200"><br>
+            <input type="text" id ="ip" placeholder="Leave blank = DHCP"
+             name="ip"><br>
             <label for="gateway">Gateway Address</label>
-            <input type="text" id ="gateway" name="gateway" value="172.19.37.1"><br>
+            <input type="text" id ="gateway" placeholder="Leave blank = DHCP"
+             name="gateway" value="172.19.37.1"><br>
             <label for="subnet">Subnet Mask</label>
-            <input type="text" id ="subnet" name="subnet" value="255.255.255.0"><br>
+            <input type="text" id ="subnet" placeholder="Leave blank = DHCP"
+             name="subnet" value="255.255.255.0"><br>
             <input type ="submit" value ="Submit">
           </p>
         </form>

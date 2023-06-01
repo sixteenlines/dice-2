@@ -23,7 +23,7 @@
 #define _GATE 3
 #define _SUBN 4
 
-/* Timer constants and dns port */
+/* Timer constants */
 const unsigned long DEEP_SLEEP = 180000;
 const unsigned long LIGHTS_OFF = 20000;
 
@@ -40,6 +40,7 @@ const char *PARAM_INPUT_1 = "pass";
 const char *PARAM_INPUT_2 = "ip";
 const char *PARAM_INPUT_3 = "gateway";
 const char *PARAM_INPUT_4 = "subnet";
+const String MANAGER = "http://192.168.4.1";
 
 /* File paths to storage */
 const std::vector<String> paths = {

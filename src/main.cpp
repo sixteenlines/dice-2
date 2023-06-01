@@ -23,8 +23,8 @@ unsigned long startMillis = 0;
 unsigned long currentMillis = 0;
 unsigned short period = 50;
 bool btn = false;
-bool d1 = true;
 bool sleep = false;
+bool manager = false;
 
 /* Colors */
 uint8_t r = 255;
@@ -49,42 +49,48 @@ void setup()
 // Main code
 void loop()
 {
-    dnsServer.processNextRequest();
-
-    if (sleep)
+    if (manager)
     {
-        marius();
+        dnsServer.processNextRequest();
     }
-    currentMillis = millis();
-    d1 = digitalRead(BTN0_PIN);
-    if (!d1)
+    else
     {
-        roll = random(6) + 1;
-        btn = true;
-    }
-
-    if (btn)
-    {
-        if (currentMillis - startMillis >= period)
+        if (sleep)
         {
-            prerolldice();
-            startMillis = currentMillis;
-            period += 50;
+            marius();
         }
-        if (period == 400)
+        currentMillis = millis();
+
+        if (!(digitalRead(BTN0_PIN)))
         {
-            printPattern(roll);
-            btn = false;
-            period = 0;
+            roll = random(6) + 1;
+            btn = true;
         }
-    }
-    if (currentMillis - startMillis >= DEEP_SLEEP)
-    {
-        marius();
-    }
-    if (currentMillis - startMillis >= LIGHTS_OFF)
-    {
-        printPattern(0);
+
+        if (btn)
+        {
+            Serial.println("btn");
+            if (currentMillis - startMillis >= period)
+            {
+                prerolldice();
+                startMillis = currentMillis;
+                period += 50;
+            }
+            if (period == 400)
+            {
+                printPattern(roll);
+                btn = false;
+                period = 0;
+            }
+        }
+        if (currentMillis - startMillis >= DEEP_SLEEP)
+        {
+            marius();
+        }
+        if (currentMillis - startMillis >= LIGHTS_OFF)
+        {
+            printPattern(0);
+        }
     }
 }
 
@@ -133,7 +139,7 @@ void writeFile(const String path, const char *message)
     file.close();
 }
 
-void initIO()
+void initIO(void)
 {
     pinMode(BTN0_PIN, INPUT);
     pinMode(BTN1_PIN, INPUT);
@@ -145,7 +151,7 @@ void initIO()
     printPattern(0);
 }
 
-void initFS()
+void initFS(void)
 {
     if (!LittleFS.begin())
     {
@@ -160,6 +166,7 @@ bool initWifi(void)
     if (digitalRead(BTN1_PIN) == LOW)
     {
         managerSetup();
+        manager = true;
         return true;
     }
     // try to load stored creds
@@ -169,7 +176,7 @@ bool initWifi(void)
     }
     else
     {
-        Serial.print("No Credentials saved. To set, boot using AP-Config Mode ");
+        Serial.print("None or invalid credentials. To set, boot using AP-Config Mode ");
         Serial.println("by pressing S0 and S1.");
         return false;
     }
@@ -181,23 +188,31 @@ void managerSetup(void)
     Serial.println("Setting AP (Access Point)");
     WiFi.softAP("MAGIC-DICE-SETUP", "noetmandel");
 
-    IPAddress IP = WiFi.softAPIP();
+    localIP = WiFi.softAPIP();
     Serial.print("AP IP address: ");
-    Serial.println(IP);
-    dnsServer.start(53, "*", IP);
+    Serial.println(localIP);
+    dnsServer.start(53, "*", localIP);
     hostManager();
 }
 
 bool clientSetup(void)
 {
     WiFi.mode(WIFI_STA);
-    localIP.fromString(creds[_IPAD].c_str());
-    localGateway.fromString(creds[_GATE].c_str());
-    localSubnet.fromString(creds[_SUBN].c_str());
-    if (!WiFi.config(localIP, localGateway, localSubnet))
+    if (creds[_IPAD] == "" || creds[_GATE] == "" || creds[_SUBN] == "")
     {
-        Serial.println("Client failed to configure");
-        return false;
+        Serial.println("No Static config provided, using DHCP.");
+    }
+    else
+    {
+        Serial.println("Static config provided.");
+        localIP.fromString(creds[_IPAD].c_str());
+        localGateway.fromString(creds[_GATE].c_str());
+        localSubnet.fromString(creds[_SUBN].c_str());
+        if (!WiFi.config(localIP, localGateway, localSubnet))
+        {
+            Serial.println("Client failed to configure");
+            return false;
+        }
     }
     WiFi.begin(creds[_SSID].c_str(), creds[_PASS].c_str());
     Serial.println("Connecting to WiFi...");
@@ -223,16 +238,16 @@ bool clientSetup(void)
 }
 
 /** Load WLAN credentials from FS */
-bool loadCredentials()
+bool loadCredentials(void)
 {
     for (int i = 0; i < 5; i++)
     {
         creds[i] = readFile(paths[i]);
         Serial.println(creds[i]);
     }
-    if (creds[_SSID] == "" || creds[_IPAD] == "")
+    if (creds[_SSID] == "")
     {
-        Serial.println("Invalid SSID or IP address.");
+        Serial.println("Invalid SSID.");
         return false;
     }
     else
@@ -248,7 +263,7 @@ void prerolldice(void)
     Serial.println();
 }
 
-void marius()
+void marius(void)
 {
     printPattern(0);
     digitalWrite(RETENTION_PIN, LOW);
@@ -327,14 +342,21 @@ void hostIndex(void)
         request->send(200, "text/plain", "OK"); });
 }
 
-void hostManager()
+void hostManager(void)
 {
     webServer.onNotFound([](AsyncWebServerRequest *request)
                          {
     if (!handleFileRequest(request, request->url()))
       request->send(404, "text/plain", "File not found"); });
 
-    webServer.on("/", HTTP_POST, [](AsyncWebServerRequest *request)
+    webServer.on("/generate_204", [](AsyncWebServerRequest *request)
+                 { request->redirect(MANAGER); }); // android captive portal redirect
+    webServer.on("/redirect", [](AsyncWebServerRequest *request)
+                 { request->redirect(MANAGER); }); // microsoft redirect
+    webServer.on("/hotspot-detect.html", [](AsyncWebServerRequest *request)
+                 { request->redirect(MANAGER); }); // apple call home
+
+    webServer.on("/submit", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
             for (uint8_t i = 0; i < request->params(); i++)
             {
@@ -382,7 +404,7 @@ void hostManager()
                 }
             }
 
-            String response = "Done. ESP will restart, connect to your router and go to IP address: " + creds[_IPAD];
+            String response = "Done. ESP will restart.";
             request->send(200, "text/plain", response);
             delay(1500);
             ESP.restart(); });
@@ -393,13 +415,14 @@ bool handleFileRequest(AsyncWebServerRequest *request, String path)
     Serial.println("handleFileRead: " + path);
     String contentType;
     if (path.endsWith("/"))
-        path += "index.html";
+        path = "manager.html";
     if (path.endsWith(".html"))
         contentType = "text/html";
     if (path.endsWith(".css"))
         contentType = "text/css";
     if (LittleFS.exists(path))
     {
+        Serial.println("request: " + path);
         AsyncWebServerResponse *response = request->beginResponse(LittleFS, path, contentType);
         request->send(response);
         return true;
