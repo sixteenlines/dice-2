@@ -66,12 +66,12 @@ const std::vector<std::vector<int>> patterns = {
     {6, 7, 8, 11, 12, 13, 16, 17, 18}, // BIGDOT 7
     {0, 1, 2, 3, 4, 9, 14,
      19, 24, 23, 22, 21,
-     20, 15, 10, 5, 0} // LOADING 8
+     20, 15, 10, 5} // LOADING 8
 };
 
 const uint8_t loading[] = {0, 1, 2, 3, 4, 9, 14,
                            19, 24, 23, 22, 21,
-                           20, 15, 10, 5, 0};
+                           20, 15, 10, 5};
 
 /* function declarations */
 void prerolldice(void);

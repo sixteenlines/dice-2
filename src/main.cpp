@@ -214,43 +214,36 @@ bool clientSetup(void)
     }
     WiFi.begin(creds[_SSID].c_str(), creds[_PASS].c_str());
     Serial.println("Connecting to WiFi...");
-    for (int ctr = 0; ctr <= 48; ctr++)
+    for (int ctr = 0, tries = 0; !(WiFi.status() == WL_CONNECTED); ctr++)
     {
-        if (ctr < 16)
+        if (ctr > 0)
+            clearLED(patterns[LOADING][ctr - 1]);
+        if (ctr == 15)
         {
-            clearLED(patterns[LOADING][ctr]);
-            setLED(patterns[LOADING][ctr + 1], 0, 255, 0);
+            ctr = 0;
+            tries++;
+            clearLED(patterns[LOADING][15]);
         }
-        else if (ctr < 32)
-        {
-            clearLED(patterns[LOADING][ctr - 16]);
-            setLED(patterns[LOADING][ctr + 1 - 16], 0, 0, 255);
-        }
-        else
-        {
-            clearLED(patterns[LOADING][ctr - 32]);
-            setLED(patterns[LOADING][ctr + 1 - 32], 255, 0, 0);
-        }
+        setLED(patterns[LOADING][ctr], 0, 100, 150);
         pixels.show();
         delay(100);
-        Serial.println(ctr);
 
-        if (WiFi.status() == WL_CONNECTED)
+        if (tries == 3)
         {
-            Serial.print("Connected to " + creds[_SSID] + "with IP ");
-            Serial.println(WiFi.localIP());
-            printPattern(BIGDOT, 0, 255, 0);
+            printPattern(BIGDOT, 255, 0, 0);
             delay(100);
             printPattern(0);
-            hostIndex();
-            return true;
+            Serial.println("Couldnt connect with credentials.");
+            return false;
         }
     }
-    printPattern(BIGDOT, 255, 0, 0);
-    delay(100);
+    Serial.print("Connected to " + creds[_SSID] + "with IP ");
+    Serial.println(WiFi.localIP());
+    printPattern(BIGDOT, 0, 255, 0);
+    delay(150);
     printPattern(0);
-    Serial.println("Couldnt connect with credentials.");
-    return false;
+    hostIndex();
+    return true;
 }
 
 /** Load WLAN credentials from FS */
