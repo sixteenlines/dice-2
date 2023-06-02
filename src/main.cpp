@@ -25,11 +25,9 @@ unsigned short period = 50;
 bool btn = false;
 bool sleep = false;
 bool manager = false;
-
-/* Colors */
-uint8_t r = 255;
-uint8_t g = 255;
-uint8_t b = 255;
+uint8_t globalRed = 255;
+uint8_t globalGreen = 255;
+uint8_t globalBlue = 255;
 
 void setup()
 {
@@ -216,24 +214,42 @@ bool clientSetup(void)
     }
     WiFi.begin(creds[_SSID].c_str(), creds[_PASS].c_str());
     Serial.println("Connecting to WiFi...");
-    for (int ctr = 0; ctr < 21; ctr++)
+    for (int ctr = 0; ctr <= 48; ctr++)
     {
-        delay(500);
-        Serial.print(".");
-        digitalWrite(STATUSLED_PIN, (ctr % 2));
+        if (ctr < 16)
+        {
+            clearLED(patterns[LOADING][ctr]);
+            setLED(patterns[LOADING][ctr + 1], 0, 255, 0);
+        }
+        else if (ctr < 32)
+        {
+            clearLED(patterns[LOADING][ctr - 16]);
+            setLED(patterns[LOADING][ctr + 1 - 16], 0, 0, 255);
+        }
+        else
+        {
+            clearLED(patterns[LOADING][ctr - 32]);
+            setLED(patterns[LOADING][ctr + 1 - 32], 255, 0, 0);
+        }
+        pixels.show();
+        delay(100);
+        Serial.println(ctr);
+
         if (WiFi.status() == WL_CONNECTED)
         {
             Serial.print("Connected to " + creds[_SSID] + "with IP ");
             Serial.println(WiFi.localIP());
+            printPattern(BIGDOT, 0, 255, 0);
+            delay(100);
+            printPattern(0);
             hostIndex();
             return true;
         }
-        if (ctr == 14)
-        {
-            Serial.println("Couldnt connect with credentials.");
-            break;
-        }
     }
+    printPattern(BIGDOT, 255, 0, 0);
+    delay(100);
+    printPattern(0);
+    Serial.println("Couldnt connect with credentials.");
     return false;
 }
 
@@ -269,21 +285,37 @@ void marius(void)
     digitalWrite(RETENTION_PIN, LOW);
 }
 
-void printPattern(uint8_t pattern)
+void printPattern(uint8_t patternNum, uint8_t r, uint8_t g, uint8_t b)
 {
+
     for (int i = 0; i < 25; i++)
     {
         clearLED(i);
     }
-    const std::vector<int> &dice = dicePatterns[pattern];
+    const std::vector<int> &dice = patterns[patternNum];
     for (int i : dice)
     {
-        setLED(i);
+        setLED(i, r, g, b);
     }
     pixels.show();
 }
 
-void setLED(uint8_t num)
+void printPattern(uint8_t patternNum)
+{
+
+    for (int i = 0; i < 25; i++)
+    {
+        clearLED(i);
+    }
+    const std::vector<int> &dice = patterns[patternNum];
+    for (int i : dice)
+    {
+        setLED(i, 255, 255, 255);
+    }
+    pixels.show();
+}
+
+void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b)
 {
     pixels.setPixelColor(num, pixels.Color(r, g, b));
 }
@@ -308,9 +340,9 @@ void hostIndex(void)
         request->hasParam(PARAM_G) &&
         request->hasParam(PARAM_B) &&
         request->hasParam(PARAM_RESULT)) {
-            r = request->getParam(PARAM_R)->value().toInt();
-            g = request->getParam(PARAM_G)->value().toInt();
-            b = request->getParam(PARAM_B)->value().toInt();
+            globalRed = request->getParam(PARAM_R)->value().toInt();
+            globalGreen = request->getParam(PARAM_G)->value().toInt();
+            globalBlue = request->getParam(PARAM_B)->value().toInt();
             roll = request->getParam(PARAM_RESULT)->value().toInt();
             btn = true;
             startMillis = millis();
@@ -325,11 +357,11 @@ void hostIndex(void)
         request->hasParam(PARAM_G) &&
         request->hasParam(PARAM_B) &&
         request->hasParam(PARAM_LED)) {
-            r = request->getParam(PARAM_R)->value().toInt();
-            g = request->getParam(PARAM_G)->value().toInt();
-            b = request->getParam(PARAM_B)->value().toInt();
+            uint8_t r = request->getParam(PARAM_R)->value().toInt();
+            uint8_t g = request->getParam(PARAM_G)->value().toInt();
+            uint8_t b = request->getParam(PARAM_B)->value().toInt();
             led = request->getParam(PARAM_LED)->value().toInt();
-            setLED(led);
+            setLED(led, r, g, b);
             pixels.show();
             startMillis = millis();
         }

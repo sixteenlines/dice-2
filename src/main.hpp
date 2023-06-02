@@ -23,6 +23,10 @@
 #define _GATE 3
 #define _SUBN 4
 
+/* LED-pattern macros */
+#define BIGDOT 7
+#define LOADING 8
+
 /* Timer constants */
 const unsigned long DEEP_SLEEP = 180000;
 const unsigned long LIGHTS_OFF = 20000;
@@ -51,15 +55,23 @@ const std::vector<String> paths = {
     "/subnet.txt"};
 
 /* LED-pattern vector */
-const std::vector<std::vector<int>> dicePatterns = {
-    {},                    // symbol 0
-    {12},                  // symbol 1
-    {4, 20},               // symbol 2
-    {4, 12, 20},           // symbol 3
-    {0, 4, 20, 24},        // symbol 4
-    {0, 4, 12, 20, 24},    // symbol 5
-    {0, 4, 10, 14, 20, 24} // symbol 6
+const std::vector<std::vector<int>> patterns = {
+    {},                                // symbol 0
+    {12},                              // symbol 1
+    {4, 20},                           // symbol 2
+    {4, 12, 20},                       // symbol 3
+    {0, 4, 20, 24},                    // symbol 4
+    {0, 4, 12, 20, 24},                // symbol 5
+    {0, 4, 10, 14, 20, 24},            // symbol 6
+    {6, 7, 8, 11, 12, 13, 16, 17, 18}, // BIGDOT 7
+    {0, 1, 2, 3, 4, 9, 14,
+     19, 24, 23, 22, 21,
+     20, 15, 10, 5, 0} // LOADING 8
 };
+
+const uint8_t loading[] = {0, 1, 2, 3, 4, 9, 14,
+                           19, 24, 23, 22, 21,
+                           20, 15, 10, 5, 0};
 
 /* function declarations */
 void prerolldice(void);
@@ -72,7 +84,8 @@ void hostManager(void);
 void hostIndex(void);
 bool loadCredentials(void);
 void printPattern(uint8_t pattern);
-void setLED(uint8_t num);
+void printPattern(uint8_t pattern, uint8_t r, uint8_t g, uint8_t b);
+void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b);
 void clearLED(uint8_t num);
 void initFS(void);
 bool handleFileRequest(AsyncWebServerRequest *request, String path);
