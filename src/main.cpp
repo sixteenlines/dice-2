@@ -69,7 +69,6 @@ void loop()
 
         if (btn)
         {
-            Serial.println("btn");
             if (currentMillis - startMillis >= period)
             {
                 prerolldice();
@@ -186,6 +185,7 @@ void managerSetup(void)
 {
     // Setup AP
     Serial.println("Setting AP (Access Point)");
+    WiFi.softAPConfig(IPAddress(8, 8, 8, 8), IPAddress(8, 8, 8, 8), IPAddress(255, 255, 255, 0));
     WiFi.softAP("MAGIC-DICE-SETUP", "noetmandel");
 
     localIP = WiFi.softAPIP();
@@ -355,6 +355,8 @@ void hostManager(void)
                  { request->redirect(MANAGER); }); // microsoft redirect
     webServer.on("/hotspot-detect.html", [](AsyncWebServerRequest *request)
                  { request->redirect(MANAGER); }); // apple call home
+    webServer.on("/mobile/status.php", [](AsyncWebServerRequest *request)
+                 { request->redirect(MANAGER); }); // ? call home
 
     webServer.on("/submit", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
