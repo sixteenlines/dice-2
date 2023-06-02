@@ -40,7 +40,7 @@ const char *PARAM_INPUT_1 = "pass";
 const char *PARAM_INPUT_2 = "ip";
 const char *PARAM_INPUT_3 = "gateway";
 const char *PARAM_INPUT_4 = "subnet";
-const String MANAGER = "http://192.168.4.1";
+const String MANAGER = "http://8.8.8.8";
 
 /* File paths to storage */
 const std::vector<String> paths = {
