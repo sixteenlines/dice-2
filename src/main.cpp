@@ -75,7 +75,7 @@ void loop()
             }
             if (period == 400)
             {
-                printPattern(roll);
+                printPattern(roll, globalRed, globalGreen, globalBlue);
                 btn = false;
                 period = 0;
             }
@@ -266,7 +266,7 @@ bool loadCredentials(void)
 void prerolldice(void)
 {
     uint8_t preroll = random(6) + 1;
-    printPattern(preroll);
+    printPattern(preroll, globalRed, globalGreen, globalBlue);
     Serial.print("You rolled: ");
     Serial.print(preroll);
     Serial.println();
