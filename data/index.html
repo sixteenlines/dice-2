@@ -114,7 +114,8 @@ function rollDice() {
     var data = `result=${roll}&r=${r}&g=${g}&b=${b}`;
     xhttp.send(data);
     setTimeout(function() {
-        rollDiceButton.disabled = false;   
+        rollDiceButton.disabled = false;
+        
     }, 2000); 
 }
 

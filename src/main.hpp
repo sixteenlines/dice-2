@@ -14,7 +14,6 @@
 #define BTN0_PIN D6
 #define BTN1_PIN D7
 #define BTN2_PIN D5
-#define NUMPIXELS 25
 
 /* credential offset macros */
 #define _SSID 0
