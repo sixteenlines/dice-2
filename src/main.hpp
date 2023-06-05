@@ -10,7 +10,7 @@
 /* Pins */
 #define STATUSLED_PIN D4
 #define RETENTION_PIN D1
-#define LEDS_PIN D2
+#define LEDS_PIN D8
 #define BTN0_PIN D6
 #define BTN1_PIN D7
 #define BTN2_PIN D5
