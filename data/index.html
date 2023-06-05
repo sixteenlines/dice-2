@@ -65,69 +65,59 @@
             r = parseInt(colorPicker.value.substring(1, 3), 16);
             g = parseInt(colorPicker.value.substring(3, 5), 16);
             b = parseInt(colorPicker.value.substring(5, 7), 16);
-        });
+        });    
 
-        
-
-        function updateLED(num, power) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                }
-            };
-            if (power) {
-                xhttp.open("GET", `/update?led=${num}&r=${r}&g=${g}&b=${b}`, true);
-            }
-            else {
-                xhttp.open("GET", `/update?led=${num}&r=0&g=0&b=0`, true);
-            }
-            xhttp.send();
+function updateLED(num, power) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
         }
+    };
+    xhttp.open("POST", "/update", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var data;
+    if (power) {
+        data = `led=${num}&r=${r}&g=${g}&b=${b}`;
+    } else {
+        data = `led=${num}&r=0&g=0&b=0`;
+    }
+    xhttp.send(data);
+}
 
-        function switchColor() {
-            var colorHex = colorPicker.value;
-            
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                }
-            };
-            xhttp.open("GET", `/color?r=${r}&g=${g}&b=${b}`, true);
-            xhttp.send();
+
+function deepSleep() {
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
         }
-
-        function deepSleep() {
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                }
-            };
+    };
             xhttp.open("GET", "/deepsleep", true);
-            xhttp.send();
-            
-        }
+            xhttp.send();         
+}
 
-        function rollDice() {
-            // Disable the button
-            rollDiceButton.disabled = true;
-            var roll = Math.floor(Math.random() * 6 + 1);
-            // Make the GET request
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                }
-            };
-            xhttp.open("GET", `/rolldice?result=${roll}&r=${r}&g=${g}&b=${b}`, true);
-            xhttp.send();
-            setTimeout(function() {
-                rollDiceButton.disabled = false;   
-            }, 2000); 
+function rollDice() {
+    // Disable the button
+    rollDiceButton.disabled = true;
+    var roll = Math.floor(Math.random() * 6 + 1);
+    // Make the POST request
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
         }
+    };
+    xhttp.open("POST", "/rolldice", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var data = `result=${roll}&r=${r}&g=${g}&b=${b}`;
+    xhttp.send(data);
+    setTimeout(function() {
+        rollDiceButton.disabled = false;   
+    }, 2000); 
+}
+
     </script>
 </body>
 </html>

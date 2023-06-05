@@ -25,9 +25,9 @@ unsigned short period = 50;
 bool btn = false;
 bool sleep = false;
 bool manager = false;
-uint8_t globalRed = 255;
-uint8_t globalGreen = 255;
-uint8_t globalBlue = 255;
+uint8_t globalRed = 30;
+uint8_t globalGreen = 30;
+uint8_t globalBlue = 30;
 
 void setup()
 {
@@ -326,39 +326,39 @@ void hostIndex(void)
                                  "text/html", false); });
     webServer.serveStatic("/", LittleFS, "/");
 
-    // GET request to <ESP_IP>/rolldice
-    webServer.on("/rolldice", HTTP_GET, [](AsyncWebServerRequest *request)
+    // POST request to <ESP_IP>/rolldice
+    webServer.on("/rolldice", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
-        if (request->hasParam(PARAM_R) &&
-        request->hasParam(PARAM_G) &&
-        request->hasParam(PARAM_B) &&
-        request->hasParam(PARAM_RESULT)) {
-            globalRed = request->getParam(PARAM_R)->value().toInt();
-            globalGreen = request->getParam(PARAM_G)->value().toInt();
-            globalBlue = request->getParam(PARAM_B)->value().toInt();
-            roll = request->getParam(PARAM_RESULT)->value().toInt();
-            btn = true;
-            startMillis = millis();
-        }
-        request->send(200, "text/plain", "OK"); });
+    if (request->hasParam(PARAM_R, true, false) &&
+        request->hasParam(PARAM_G, true, false) &&
+        request->hasParam(PARAM_B, true, false) &&
+        request->hasParam(PARAM_RESULT, true, false)) {
+        globalRed = request->getParam(PARAM_R, true, false)->value().toInt();
+        globalGreen = request->getParam(PARAM_G, true, false)->value().toInt();
+        globalBlue = request->getParam(PARAM_B, true, false)->value().toInt();
+        roll = request->getParam(PARAM_RESULT, true, false)->value().toInt();
+        btn = true;
+        startMillis = millis();
+    }
+    request->send(200, "text/plain", "OK"); });
 
-    // GET request to <ESP_IP>/update
-    webServer.on("/update", HTTP_GET, [](AsyncWebServerRequest *request)
+    // POST request to <ESP_IP>/update
+    webServer.on("/update", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
-        uint8_t led = 0;
-        if (request->hasParam(PARAM_R) &&
-        request->hasParam(PARAM_G) &&
-        request->hasParam(PARAM_B) &&
-        request->hasParam(PARAM_LED)) {
-            uint8_t r = request->getParam(PARAM_R)->value().toInt();
-            uint8_t g = request->getParam(PARAM_G)->value().toInt();
-            uint8_t b = request->getParam(PARAM_B)->value().toInt();
-            led = request->getParam(PARAM_LED)->value().toInt();
-            setLED(led, r, g, b);
-            pixels.show();
-            startMillis = millis();
-        }
-        request->send(200, "text/plain", "OK"); });
+    uint8_t led = 0;
+    if (request->hasParam(PARAM_R, true, false) &&
+        request->hasParam(PARAM_G, true, false) &&
+        request->hasParam(PARAM_B, true, false) &&
+        request->hasParam(PARAM_LED, true, false)) {
+        uint8_t r = request->getParam(PARAM_R, true, false)->value().toInt();
+        uint8_t g = request->getParam(PARAM_G, true, false)->value().toInt();
+        uint8_t b = request->getParam(PARAM_B, true, false)->value().toInt();
+        led = request->getParam(PARAM_LED, true, false)->value().toInt();
+        setLED(led, r, g, b);
+        pixels.show();
+        startMillis = millis();
+    }
+    request->send(200, "text/plain", "OK"); });
 
     // GET request to <ESP_IP>/deepsleep
     webServer.on("/deepsleep", HTTP_GET, [](AsyncWebServerRequest *request)
