@@ -10,7 +10,7 @@ String creds[5] = {
 
 /* Initializing objects*/
 Adafruit_NeoPixel pixels =
-    Adafruit_NeoPixel(NUM_LEDS, LEDS_PIN, NEO_GRB + NEO_KHZ400);
+    Adafruit_NeoPixel(NUM_LEDS, LEDS_PIN, NEO_RGB + NEO_KHZ400);
 AsyncWebServer webServer(80);
 IPAddress localIP;
 IPAddress localGateway;
