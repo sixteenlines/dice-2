@@ -30,6 +30,8 @@
         </div>
         <button class="roll-dice-btn" id="rollDiceButton"
         onclick="rollDice()">Roll dice</button>
+        <button class="roll-dice-btn" id="clearGridButton" 
+        onclick="clearGrid()">Clear Leds</button>
         <button class="roll-dice-btn" id="deepSleepButton" 
         onclick="deepSleep()">Schlafen</button>
     </div>
@@ -41,6 +43,8 @@
         var g = 255;
         var b = 255;
 		var leds = [];
+
+        //initializing led divs and adding click event listener
         for (var num = 0; num < 25; num++) {
             leds[num] = document.getElementById('led' + num);
             leds[num].dataset.state = 'off';
@@ -49,11 +53,11 @@
                     if (this.dataset.state === 'off') {
                         this.style.backgroundColor = colorPicker.value;
                         this.dataset.state = 'on';
-                        updateLED(num, true);
+                        updateLED(num, 1);
                     } else {
                         this.style.backgroundColor = 'black';
                         this.dataset.state = 'off';
-                        updateLED(num, false);
+                        updateLED(num, 0);
                     }
                     
                 };
@@ -77,11 +81,8 @@ function updateLED(num, power) {
     xhttp.open("POST", "/update", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var data;
-    if (power) {
-        data = `led=${num}&r=${r}&g=${g}&b=${b}`;
-    } else {
-        data = `led=${num}&r=0&g=0&b=0`;
-    }
+    data = `led=${num}&r=${r}&g=${g}&b=${b}&power=${power}`;
+
     xhttp.send(data);
 }
 
@@ -96,6 +97,22 @@ function deepSleep() {
     };
             xhttp.open("GET", "/deepsleep", true);
             xhttp.send();         
+}
+
+function clearGrid() {
+    for (var i = 0; i <= 24; i++) {
+    leds[i].style.backgroundColor = 'black';
+    leds[i].dataset.state = 'off';
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+        }
+    };
+    xhttp.open("GET", "/clear", true);
+    xhttp.send();
+
 }
 
 function rollDice() {

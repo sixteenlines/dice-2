@@ -9,11 +9,12 @@
 
 /* Pins */
 #define STATUSLED_PIN D4
-#define RETENTION_PIN D1
+#define RETENTION_PIN D5
 #define LEDS_PIN D8
-#define BTN0_PIN D6
-#define BTN1_PIN D7
-#define BTN2_PIN D5
+#define BTN0_PIN D1
+#define BTN1_PIN D2
+#define BTN2_PIN D3
+#define NUM_LEDS 25
 
 /* credential offset macros */
 #define _SSID 0
@@ -35,6 +36,7 @@ const char *PARAM_R = "r";
 const char *PARAM_G = "g";
 const char *PARAM_B = "b";
 const char *PARAM_LED = "led";
+const char *PARAM_POWER = "power";
 const char *PARAM_RESULT = "result";
 
 /* Endpoint params manager */
@@ -72,6 +74,16 @@ const uint8_t loading[] = {0, 1, 2, 3, 4, 9, 14,
                            19, 24, 23, 22, 21,
                            20, 15, 10, 5};
 
+/* led class */
+class led
+{
+public:
+    uint8_t r, g, b;
+    bool power;
+
+    led() : r(0), g(0), b(0), power(false) {}
+};
+
 /* function declarations */
 void prerolldice(void);
 void marius(void);
@@ -79,13 +91,16 @@ bool initWifi(void);
 bool clientSetup(void);
 void managerSetup(void);
 void initIO(void);
+void initLeds(void);
 void hostManager(void);
 void hostIndex(void);
 bool loadCredentials(void);
-void printPattern(uint8_t pattern);
 void printPattern(uint8_t pattern, uint8_t r, uint8_t g, uint8_t b);
-void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b);
-void clearLED(uint8_t num);
+void printPattern(uint8_t pattern);
+void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b, bool power);
+void setLED(uint8_t num, bool power);
+void hideLEDS();
+void updateLEDS();
 void initFS(void);
 bool handleFileRequest(AsyncWebServerRequest *request, String path);
 void writeFile(const String path, const char *message);

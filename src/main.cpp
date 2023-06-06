@@ -1,4 +1,4 @@
-#include <main.hpp>
+#include <header_main.hpp>
 /* Credentials in RAM */
 String creds[5] = {
     "", // SSID
@@ -10,30 +10,37 @@ String creds[5] = {
 
 /* Initializing objects*/
 Adafruit_NeoPixel pixels =
-    Adafruit_NeoPixel(25, LEDS_PIN, NEO_GRB + NEO_KHZ400);
+    Adafruit_NeoPixel(NUM_LEDS, LEDS_PIN, NEO_GRB + NEO_KHZ400);
 AsyncWebServer webServer(80);
 IPAddress localIP;
 IPAddress localGateway;
 IPAddress localSubnet;
 DNSServer dnsServer;
+std::vector<led> ledgrid;
 
 /* Control vars */
 uint8_t roll = 0;
-unsigned long startMillis = 0;
-unsigned long currentMillis = 0;
+unsigned long lastActionTime = 0;
+unsigned long currentTime = 0;
 unsigned short period = 50;
 bool btn = false;
 bool sleep = false;
 bool manager = false;
-uint8_t globalRed = 30;
-uint8_t globalGreen = 30;
-uint8_t globalBlue = 30;
+uint8_t diceRed = 45;
+uint8_t diceGreen = 45;
+uint8_t diceBlue = 45;
 
+/*############################*/
+/*########## SETUP ###########*/
+/*############################*/
 void setup()
 {
     Serial.begin(115200);
+    Serial.println();
     initFS();
     initIO();
+    initLeds();
+
     if (initWifi())
     {
         webServer.begin();
@@ -44,7 +51,9 @@ void setup()
     }
 }
 
-// Main code
+/*#################################*/
+/*############ MAIN LOOP ##########*/
+/*#################################*/
 void loop()
 {
     if (manager)
@@ -57,7 +66,7 @@ void loop()
         {
             marius();
         }
-        currentMillis = millis();
+        currentTime = millis();
 
         if (!(digitalRead(BTN0_PIN)))
         {
@@ -67,85 +76,55 @@ void loop()
 
         if (btn)
         {
-            if (currentMillis - startMillis >= period)
+            if (currentTime - lastActionTime >= period)
             {
                 prerolldice();
-                startMillis = currentMillis;
+                lastActionTime = currentTime;
                 period += 50;
             }
             if (period == 400)
             {
-                printPattern(roll, globalRed, globalGreen, globalBlue);
+                printPattern(roll, diceRed, diceGreen, diceBlue);
                 btn = false;
                 period = 0;
             }
         }
-        if (currentMillis - startMillis >= DEEP_SLEEP)
+        if (currentTime - lastActionTime >= DEEP_SLEEP)
         {
             marius();
         }
-        if (currentMillis - startMillis >= LIGHTS_OFF)
+        if (currentTime - lastActionTime >= LIGHTS_OFF)
         {
-            printPattern(0);
+            hideLEDS();
         }
     }
 }
 
-String readFile(const String path)
+/*########################################*/
+/*###########  INIT FUNCTIONS  ###########*/
+/*########################################*/
+
+void initLeds(void)
 {
-    Serial.print("Reading file ");
-
-    File file = LittleFS.open(path, "r");
-    if (!file || file.isDirectory())
+    for (int i = 0; i < NUM_LEDS; i++)
     {
-        Serial.println("- failed to open file for reading");
-        return String();
+        ledgrid.push_back(led());
     }
 
-    String fileContent;
-    while (file.available())
-    {
-        fileContent = file.readStringUntil('\n');
-        break;
-    }
-
-    file.close();
-    return fileContent;
-}
-
-void writeFile(const String path, const char *message)
-{
-    Serial.printf("Writing file ");
-
-    File file = LittleFS.open(path, "w");
-    if (!file)
-    {
-        Serial.println("- failed to open file for writing");
-        return;
-    }
-
-    if (file.print(message))
-    {
-        Serial.println("- file written");
-    }
-    else
-    {
-        Serial.println("- write failed");
-    }
-
-    file.close();
+    pixels.begin();
+    updateLEDS();
+    Serial.println("LED init success");
 }
 
 void initIO(void)
 {
     pinMode(BTN0_PIN, INPUT);
     pinMode(BTN1_PIN, INPUT);
-    pinMode(BTN2_PIN, INPUT_PULLUP);
+    pinMode(BTN2_PIN, INPUT);
     pinMode(RETENTION_PIN, OUTPUT);
     pinMode(STATUSLED_PIN, OUTPUT);
     digitalWrite(RETENTION_PIN, HIGH);
-    pixels.begin();
-    printPattern(0);
+    Serial.println("IO init success");
 }
 
 void initFS(void)
@@ -179,6 +158,9 @@ bool initWifi(void)
     }
 }
 
+/*############################################*/
+/*##########  WIFI CONFIG / SETUP  ###########*/
+/*############################################*/
 void managerSetup(void)
 {
     // Setup AP
@@ -217,22 +199,22 @@ bool clientSetup(void)
     for (int ctr = 0, tries = 0; !(WiFi.status() == WL_CONNECTED); ctr++)
     {
         if (ctr > 0)
-            clearLED(patterns[LOADING][ctr - 1]);
+            setLED(patterns[LOADING][ctr - 1], 0);
         if (ctr == 15)
         {
             ctr = 0;
             tries++;
-            clearLED(patterns[LOADING][15]);
+            setLED(patterns[LOADING][15], 0);
         }
-        setLED(patterns[LOADING][ctr], 0, 100, 150);
-        pixels.show();
+        setLED(patterns[LOADING][ctr], 0, 100, 150, 1);
+        updateLEDS();
         delay(100);
 
         if (tries == 3)
         {
             printPattern(BIGDOT, 255, 0, 0);
             delay(100);
-            printPattern(0);
+            hideLEDS();
             Serial.println("Couldnt connect with credentials.");
             return false;
         }
@@ -241,83 +223,34 @@ bool clientSetup(void)
     Serial.println(WiFi.localIP());
     printPattern(BIGDOT, 0, 255, 0);
     delay(150);
-    printPattern(0);
+    hideLEDS();
     hostIndex();
     return true;
 }
 
-/** Load WLAN credentials from FS */
-bool loadCredentials(void)
-{
-    for (int i = 0; i < 5; i++)
-    {
-        creds[i] = readFile(paths[i]);
-        Serial.println(creds[i]);
-    }
-    if (creds[_SSID] == "")
-    {
-        Serial.println("Invalid SSID.");
-        return false;
-    }
-    else
-        return true;
-}
-
+/*################################################*/
+/*##########  DICE-RANDOMIZER FUNCTION  ##########*/
+/*################################################*/
 void prerolldice(void)
 {
     uint8_t preroll = random(6) + 1;
-    printPattern(preroll, globalRed, globalGreen, globalBlue);
+    printPattern(preroll, diceRed, diceGreen, diceBlue);
     Serial.print("You rolled: ");
     Serial.print(preroll);
     Serial.println();
 }
 
+/*######################################*/
+/*##########  SLEEP FUNCTION  ##########*/
+/*######################################*/
 void marius(void)
 {
-    printPattern(0);
     digitalWrite(RETENTION_PIN, LOW);
 }
 
-void printPattern(uint8_t patternNum, uint8_t r, uint8_t g, uint8_t b)
-{
-
-    for (int i = 0; i < 25; i++)
-    {
-        clearLED(i);
-    }
-    const std::vector<int> &dice = patterns[patternNum];
-    for (int i : dice)
-    {
-        setLED(i, r, g, b);
-    }
-    pixels.show();
-}
-
-void printPattern(uint8_t patternNum)
-{
-
-    for (int i = 0; i < 25; i++)
-    {
-        clearLED(i);
-    }
-    const std::vector<int> &dice = patterns[patternNum];
-    for (int i : dice)
-    {
-        setLED(i, 255, 255, 255);
-    }
-    pixels.show();
-}
-
-void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b)
-{
-    pixels.setPixelColor(num, pixels.Color(r, g, b));
-}
-
-void clearLED(uint8_t num)
-{
-    pixels.setPixelColor(num, pixels.Color(0, 0, 0));
-}
-
+/*########################################*/
+/*########## WEBSITE HOSTING #############*/
+/*########################################*/
 void hostIndex(void)
 {
     // Route for root / web page
@@ -333,34 +266,41 @@ void hostIndex(void)
         request->hasParam(PARAM_G, true, false) &&
         request->hasParam(PARAM_B, true, false) &&
         request->hasParam(PARAM_RESULT, true, false)) {
-        globalRed = request->getParam(PARAM_R, true, false)->value().toInt();
-        globalGreen = request->getParam(PARAM_G, true, false)->value().toInt();
-        globalBlue = request->getParam(PARAM_B, true, false)->value().toInt();
+        diceRed = request->getParam(PARAM_R, true, false)->value().toInt();
+        diceGreen = request->getParam(PARAM_G, true, false)->value().toInt();
+        diceBlue = request->getParam(PARAM_B, true, false)->value().toInt();
         roll = request->getParam(PARAM_RESULT, true, false)->value().toInt();
         btn = true;
-        startMillis = millis();
+        lastActionTime = millis();
     }
     request->send(200, "text/plain", "OK"); });
 
     // POST request to <ESP_IP>/update
     webServer.on("/update", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
-    uint8_t led = 0;
     if (request->hasParam(PARAM_R, true, false) &&
         request->hasParam(PARAM_G, true, false) &&
         request->hasParam(PARAM_B, true, false) &&
         request->hasParam(PARAM_LED, true, false)) {
+        uint8_t num = request->getParam(PARAM_LED, true, false)->value().toInt();
         uint8_t r = request->getParam(PARAM_R, true, false)->value().toInt();
         uint8_t g = request->getParam(PARAM_G, true, false)->value().toInt();
         uint8_t b = request->getParam(PARAM_B, true, false)->value().toInt();
-        led = request->getParam(PARAM_LED, true, false)->value().toInt();
-        setLED(led, r, g, b);
-        pixels.show();
-        startMillis = millis();
+        bool power = request->getParam(PARAM_POWER, true, false)->value().toInt();
+        setLED(num, r, g, b, power);
+        Serial.println(power);
+        updateLEDS();
+        lastActionTime = millis();
     }
     request->send(200, "text/plain", "OK"); });
 
-    // GET request to <ESP_IP>/deepsleephttps://img.freepik.com/premium-vector/vector-illustrator-dice_195186-5174.jpg?w=740
+    // clear LED grid
+    webServer.on("/clear", HTTP_GET, [](AsyncWebServerRequest *request)
+                 {
+        printPattern(0);
+        request->send(200, "text/plain", "OK"); });
+
+    // GET request to sleep
     webServer.on("/deepsleep", HTTP_GET, [](AsyncWebServerRequest *request)
                  {
         sleep = true;
@@ -433,8 +373,74 @@ void hostManager(void)
 
             String response = "Done. ESP will restart.";
             request->send(200, "text/plain", response);
-            delay(1500);
+            printPattern(BIGDOT, 0, 255, 255);
+            delay(150);
+            printPattern(0);
             ESP.restart(); });
+}
+
+/*#############################################*/
+/*##########  FILE SYSTEM FUNCTIONS  ##########*/
+/*#############################################*/
+String readFile(const String path)
+{
+    Serial.print("Reading file ");
+
+    File file = LittleFS.open(path, "r");
+    if (!file || file.isDirectory())
+    {
+        Serial.println("- failed to open file for reading");
+        return String();
+    }
+
+    String fileContent;
+    while (file.available())
+    {
+        fileContent = file.readStringUntil('\n');
+        break;
+    }
+
+    file.close();
+    return fileContent;
+}
+
+void writeFile(const String path, const char *message)
+{
+    Serial.printf("Writing file ");
+
+    File file = LittleFS.open(path, "w");
+    if (!file)
+    {
+        Serial.println("- failed to open file for writing");
+        return;
+    }
+
+    if (file.print(message))
+    {
+        Serial.println("- file written");
+    }
+    else
+    {
+        Serial.println("- write failed");
+    }
+
+    file.close();
+}
+
+bool loadCredentials(void)
+{
+    for (int i = 0; i < 5; i++)
+    {
+        creds[i] = readFile(paths[i]);
+        Serial.println(creds[i]);
+    }
+    if (creds[_SSID] == "")
+    {
+        Serial.println("Invalid SSID.");
+        return false;
+    }
+    else
+        return true;
 }
 
 bool handleFileRequest(AsyncWebServerRequest *request, String path)
@@ -455,4 +461,79 @@ bool handleFileRequest(AsyncWebServerRequest *request, String path)
         return true;
     }
     return false;
+}
+
+/*###################################*/
+/*########## LED functions ##########*/
+/*###################################*/
+void printPattern(uint8_t pattern, uint8_t r, uint8_t g, uint8_t b)
+{
+    for (int num = 0; num < 25; num++)
+    {
+        setLED(num, 0, 0, 0, 0);
+    }
+    const std::vector<int> &dice = patterns[pattern];
+    for (int num : dice)
+    {
+        setLED(num, r, g, b, 1);
+    }
+    updateLEDS();
+}
+
+void printPattern(uint8_t pattern)
+{
+    for (int num = 0; num < 25; num++)
+    {
+        setLED(num, 0, 0, 0, 0);
+    }
+    const std::vector<int> &dice = patterns[pattern];
+    for (int num : dice)
+    {
+        setLED(num, diceRed, diceGreen, diceBlue, 1);
+    }
+    updateLEDS();
+}
+
+void setLED(uint8_t num, bool power)
+{
+    ledgrid[num].power = power;
+}
+
+void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b, bool power)
+{
+    ledgrid[num].r = r;
+    ledgrid[num].g = g;
+    ledgrid[num].b = b;
+    ledgrid[num].power = power;
+}
+
+void hideLEDS()
+{
+    for (int num = 0; num < 25; num++)
+    {
+        setLED(num, 0);
+    }
+    updateLEDS();
+}
+
+void updateLEDS(void)
+{
+    for (int num = 0; num < NUM_LEDS; num++)
+    {
+        if (ledgrid[num].power)
+        {
+            pixels.setPixelColor(num,
+                                 pixels.Color(ledgrid[num].r,
+                                              ledgrid[num].g,
+                                              ledgrid[num].b));
+        }
+        else
+        {
+            pixels.setPixelColor(num,
+                                 pixels.Color(0,
+                                              0,
+                                              0));
+        }
+    }
+    pixels.show();
 }
