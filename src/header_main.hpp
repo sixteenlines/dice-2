@@ -36,7 +36,6 @@ const char *PARAM_R = "r";
 const char *PARAM_G = "g";
 const char *PARAM_B = "b";
 const char *PARAM_LED = "led";
-const char *PARAM_POWER = "power";
 const char *PARAM_RESULT = "result";
 
 /* Endpoint params manager */
@@ -97,10 +96,9 @@ void hostIndex(void);
 bool loadCredentials(void);
 void printPattern(uint8_t pattern, uint8_t r, uint8_t g, uint8_t b);
 void printPattern(uint8_t pattern);
-void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b, bool power);
-void setLED(uint8_t num, bool power);
+void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b);
+void showLEDS();
 void hideLEDS();
-void updateLEDS();
 void initFS(void);
 bool handleFileRequest(AsyncWebServerRequest *request, String path);
 void writeFile(const String path, const char *message);

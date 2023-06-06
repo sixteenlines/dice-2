@@ -112,7 +112,7 @@ void initLeds(void)
     }
 
     pixels.begin();
-    updateLEDS();
+    showLEDS();
     Serial.println("LED init success");
 }
 
@@ -199,15 +199,15 @@ bool clientSetup(void)
     for (int ctr = 0, tries = 0; !(WiFi.status() == WL_CONNECTED); ctr++)
     {
         if (ctr > 0)
-            setLED(patterns[LOADING][ctr - 1], 0);
+            setLED(patterns[LOADING][ctr - 1], 0, 0, 0);
         if (ctr == 15)
         {
             ctr = 0;
             tries++;
-            setLED(patterns[LOADING][15], 0);
+            setLED(patterns[LOADING][15], 0, 0, 0);
         }
-        setLED(patterns[LOADING][ctr], 0, 100, 150, 1);
-        updateLEDS();
+        setLED(patterns[LOADING][ctr], 0, 100, 150);
+        showLEDS();
         delay(100);
 
         if (tries == 3)
@@ -223,7 +223,7 @@ bool clientSetup(void)
     Serial.println(WiFi.localIP());
     printPattern(BIGDOT, 0, 255, 0);
     delay(150);
-    hideLEDS();
+    printPattern(0);
     hostIndex();
     return true;
 }
@@ -286,10 +286,8 @@ void hostIndex(void)
         uint8_t r = request->getParam(PARAM_R, true, false)->value().toInt();
         uint8_t g = request->getParam(PARAM_G, true, false)->value().toInt();
         uint8_t b = request->getParam(PARAM_B, true, false)->value().toInt();
-        bool power = request->getParam(PARAM_POWER, true, false)->value().toInt();
-        setLED(num, r, g, b, power);
-        Serial.println(power);
-        updateLEDS();
+        setLED(num, r, g, b);
+        showLEDS();
         lastActionTime = millis();
     }
     request->send(200, "text/plain", "OK"); });
@@ -470,70 +468,54 @@ void printPattern(uint8_t pattern, uint8_t r, uint8_t g, uint8_t b)
 {
     for (int num = 0; num < 25; num++)
     {
-        setLED(num, 0, 0, 0, 0);
+        setLED(num, 0, 0, 0);
     }
     const std::vector<int> &dice = patterns[pattern];
     for (int num : dice)
     {
-        setLED(num, r, g, b, 1);
+        setLED(num, r, g, b);
     }
-    updateLEDS();
+    showLEDS();
 }
 
 void printPattern(uint8_t pattern)
 {
     for (int num = 0; num < 25; num++)
     {
-        setLED(num, 0, 0, 0, 0);
+        setLED(num, 0, 0, 0);
     }
     const std::vector<int> &dice = patterns[pattern];
     for (int num : dice)
     {
-        setLED(num, diceRed, diceGreen, diceBlue, 1);
+        setLED(num, diceRed, diceGreen, diceBlue);
     }
-    updateLEDS();
+    showLEDS();
 }
 
-void setLED(uint8_t num, bool power)
-{
-    ledgrid[num].power = power;
-}
-
-void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b, bool power)
+void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b)
 {
     ledgrid[num].r = r;
     ledgrid[num].g = g;
     ledgrid[num].b = b;
-    ledgrid[num].power = power;
 }
 
 void hideLEDS()
 {
-    for (int num = 0; num < 25; num++)
+    for (int num = 0; num < NUM_LEDS; num++)
     {
-        setLED(num, 0);
+        pixels.setPixelColor(num, pixels.Color(0, 0, 0));
     }
-    updateLEDS();
+    pixels.show();
 }
 
-void updateLEDS(void)
+void showLEDS(void)
 {
     for (int num = 0; num < NUM_LEDS; num++)
     {
-        if (ledgrid[num].power)
-        {
-            pixels.setPixelColor(num,
-                                 pixels.Color(ledgrid[num].r,
-                                              ledgrid[num].g,
-                                              ledgrid[num].b));
-        }
-        else
-        {
-            pixels.setPixelColor(num,
-                                 pixels.Color(0,
-                                              0,
-                                              0));
-        }
+        pixels.setPixelColor(num,
+                             pixels.Color(ledgrid[num].r,
+                                          ledgrid[num].g,
+                                          ledgrid[num].b));
     }
     pixels.show();
 }

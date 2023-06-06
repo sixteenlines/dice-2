@@ -81,7 +81,10 @@ function updateLED(num, power) {
     xhttp.open("POST", "/update", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var data;
-    data = `led=${num}&r=${r}&g=${g}&b=${b}&power=${power}`;
+    if (power)
+    data = `led=${num}&r=${r}&g=${g}&b=${b}`;
+    else
+    data = `led=${num}&r=0&g=0&b=0`;
 
     xhttp.send(data);
 }
@@ -116,6 +119,11 @@ function clearGrid() {
 }
 
 function rollDice() {
+    //clear grid
+    for (var i = 0; i <= 24; i++) {
+    leds[i].style.backgroundColor = 'black';
+    leds[i].dataset.state = 'off';
+    }
     // Disable the button
     rollDiceButton.disabled = true;
     var roll = Math.floor(Math.random() * 6 + 1);
