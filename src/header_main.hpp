@@ -11,9 +11,9 @@
 #define STATUSLED_PIN D4
 #define RETENTION_PIN D1
 #define LEDS_PIN D2
-#define BTN0_PIN D5
+#define BTN0_PIN D6
 #define BTN1_PIN D7
-#define BTN2_PIN D6
+#define BTN2_PIN D5
 #define NUM_LEDS 25
 
 /* credential offset macros */
@@ -28,7 +28,7 @@
 #define LOADING 8
 
 /* Timer constants */
-const unsigned long DEEP_SLEEP = 180000;
+const unsigned long DEEP_SLEEP = 120000;
 const unsigned long LIGHTS_OFF = 20000;
 
 /* Endpoint params index */

@@ -120,7 +120,7 @@ void initIO(void)
 {
     pinMode(BTN0_PIN, INPUT);
     pinMode(BTN1_PIN, INPUT);
-    pinMode(BTN2_PIN, INPUT);
+    pinMode(BTN2_PIN, INPUT_PULLUP);
     pinMode(RETENTION_PIN, OUTPUT);
     pinMode(STATUSLED_PIN, OUTPUT);
     digitalWrite(RETENTION_PIN, HIGH);
