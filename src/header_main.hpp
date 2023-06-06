@@ -9,11 +9,11 @@
 
 /* Pins */
 #define STATUSLED_PIN D4
-#define RETENTION_PIN D5
-#define LEDS_PIN D8
-#define BTN0_PIN D1
-#define BTN1_PIN D2
-#define BTN2_PIN D3
+#define RETENTION_PIN D1
+#define LEDS_PIN D2
+#define BTN0_PIN D5
+#define BTN1_PIN D7
+#define BTN2_PIN D6
 #define NUM_LEDS 25
 
 /* credential offset macros */
