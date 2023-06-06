@@ -8,6 +8,10 @@ String creds[5] = {
     ""  // Subnet
 };
 
+/* Timer values */
+unsigned long deep_sleep = 120000;
+unsigned long led_sleep = 20000;
+
 /* Initializing objects*/
 Adafruit_NeoPixel pixels =
     Adafruit_NeoPixel(NUM_LEDS, LEDS_PIN, NEO_RGB + NEO_KHZ400);
@@ -89,11 +93,11 @@ void loop()
                 period = 0;
             }
         }
-        if (currentTime - lastActionTime >= DEEP_SLEEP)
+        if (currentTime - lastActionTime >= deep_sleep)
         {
             marius();
         }
-        if (currentTime - lastActionTime >= LIGHTS_OFF)
+        if (currentTime - lastActionTime >= led_sleep)
         {
             hideLEDS();
         }
@@ -297,6 +301,21 @@ void hostIndex(void)
                  {
         printPattern(0);
         request->send(200, "text/plain", "OK"); });
+
+    // GET request settings page
+    webServer.on("/settings", HTTP_GET, [](AsyncWebServerRequest *request)
+                 { request->send(LittleFS, "/settings.html", "text/html", false); });
+    webServer.serveStatic("/", LittleFS, "/");
+
+    // POST request to save settings
+    webServer.on("/settings/save", HTTP_POST, [](AsyncWebServerRequest *request)
+                 {
+    if (request->hasParam(PARAM_DEVICE_TIMEOUT, true, false) &&
+        request->hasParam(PARAM_LED_TIMEOUT, true, false) ) {
+        deep_sleep = request->getParam(PARAM_DEVICE_TIMEOUT, true, false)->value().toInt() *1000;
+        led_sleep = request->getParam(PARAM_LED_TIMEOUT, true, false)->value().toInt() *1000;
+    }
+    request->send(200, "text/plain", "OK"); });
 
     // GET request to sleep
     webServer.on("/deepsleep", HTTP_GET, [](AsyncWebServerRequest *request)

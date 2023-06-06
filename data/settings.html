@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roll Dice Webpage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel ="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <label class="range-label" for="range1">LED timeout: <span id="range1-value">20s</span></label>
+        <input type="range" class="range-input" id="range1" min="5" max="60" value="20">
+
+        <label class="range-label" for="range2">Device timeout: <span id="range2-value">180s</span></label>
+        <input type="range" class="range-input" id="range2" min="60" max="300" value="180">
+    </div>
+    <div class = "container">
+        <button class="ctrl-btn" id="backButton" 
+        onclick="window.location.href = 'manager.html';">Wifi-Setup</button>
+        <button class="ctrl-btn" id="saveButton" 
+        onclick="settings()">Save and exit</button>
+        <button class="ctrl-btn" id="backButton" 
+        onclick="window.location.href = 'index.html';">Discard and exit</button>
+    </div>
+
+<script>
+function settings() {
+    var range1Value = document.getElementById('range1').value;
+    var range2Value = document.getElementById('range2').value;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+        }
+    };
+    xhttp.open("POST", "/settings/save", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var data;
+    data = `toLed=${range1Value}&toDevice=${range2Value}`;
+
+    xhttp.send(data);
+    window.location.href = "index.html";
+}
+
+// Function to update the range value display with "seconds"
+function updateRangeValue(rangeId, valueId) {
+  const rangeInput = document.getElementById(rangeId);
+  const valueSpan = document.getElementById(valueId);
+  valueSpan.textContent = rangeInput.value + "s";
+}
+
+// Update range values on input change
+document.getElementById('range1').addEventListener('input', function() {
+  updateRangeValue('range1', 'range1-value');
+});
+
+document.getElementById('range2').addEventListener('input', function() {
+  updateRangeValue('range2', 'range2-value');
+});
+
+
+</script>
+</body>
+</html>

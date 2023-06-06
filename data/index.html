@@ -28,12 +28,14 @@
             <h1 class="color-picker-heading">Color:</h1>
             <input type="color" id="colorPicker" class="color-picker" value="#ffffff">
         </div>
-        <button class="roll-dice-btn" id="rollDiceButton"
+        <button class="ctrl-btn" id="rollDiceButton"
         onclick="rollDice()">Roll dice</button>
-        <button class="roll-dice-btn" id="clearGridButton" 
+        <button class="ctrl-btn" id="clearGridButton" 
         onclick="clearGrid()">Clear Leds</button>
-        <button class="roll-dice-btn" id="deepSleepButton" 
+        <button class="ctrl-btn" id="deepSleepButton" 
         onclick="deepSleep()">Schlafen</button>
+        <button class="ctrl-btn" id="settingsButton" 
+        onclick="window.location.href = 'settings.html';">Settings</button>
     </div>
 
     <script>
@@ -88,7 +90,6 @@ function updateLED(num, power) {
 
     xhttp.send(data);
 }
-
 
 function deepSleep() {
 

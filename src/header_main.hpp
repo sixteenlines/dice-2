@@ -27,16 +27,14 @@
 #define BIGDOT 7
 #define LOADING 8
 
-/* Timer constants */
-const unsigned long DEEP_SLEEP = 120000;
-const unsigned long LIGHTS_OFF = 20000;
-
 /* Endpoint params index */
 const char *PARAM_R = "r";
 const char *PARAM_G = "g";
 const char *PARAM_B = "b";
 const char *PARAM_LED = "led";
 const char *PARAM_RESULT = "result";
+const char *PARAM_LED_TIMEOUT = "toLed";
+const char *PARAM_DEVICE_TIMEOUT = "toDevice";
 
 /* Endpoint params manager */
 const char *PARAM_INPUT_0 = "ssid";
