@@ -143,10 +143,13 @@ void initFS(void)
 
 void initSettings(void)
 {
-    deep_sleep = readFile(paths[_DEVICE_TO]).toInt();
-    Serial.println(deep_sleep);
-    led_sleep = readFile(paths[_LED_TO]).toInt();
-    Serial.println(led_sleep);
+    if (!(readFile(paths[_DEVICE_TO]).toInt() == 0))
+    {
+        deep_sleep = readFile(paths[_DEVICE_TO]).toInt();
+        Serial.println(deep_sleep);
+        led_sleep = readFile(paths[_LED_TO]).toInt();
+        Serial.println(led_sleep);
+    }
 }
 
 bool initWifi(void)

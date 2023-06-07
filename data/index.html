@@ -68,6 +68,15 @@
 			var g = 255;
 			var b = 255;
 			var leds = [];
+			const patterns = [
+				[], // symbol 0
+				[12], // symbol 1
+				[4, 20], // symbol 2
+				[4, 12, 20], // symbol 3
+				[0, 4, 20, 24], // symbol 4
+				[0, 4, 12, 20, 24], // symbol 5
+				[0, 4, 10, 14, 20, 24], // symbol 6
+			];
 
 			//initializing led divs and adding click event listener
 			for (var num = 0; num < 25; num++) {
@@ -168,6 +177,11 @@
 				xhttp.send(data);
 				setTimeout(function () {
 					rollDiceButton.disabled = false;
+					const pattern = patterns[roll];
+					pattern.forEach(function (element) {
+						leds[element].style.backgroundColor = colorPicker.value;
+						leds[element].dataset.state = "on";
+					});
 				}, 2000);
 			}
 		</script>
