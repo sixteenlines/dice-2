@@ -1,148 +1,175 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Roll Dice Webpage</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel ="stylesheet" type="text/css" href="index.css">
-</head>
-<body>
-    <div class="container">
-        <div class="led-grid">
-            <div class="led" id="led4"></div><div class="led" id="led3"></div>
-            <div class="led" id="led2"></div><div class="led" id="led1"></div>
-            <div class="led" id="led0"></div>
-            <div class="led" id="led9"></div><div class="led" id="led8"></div>
-            <div class="led" id="led7"></div><div class="led" id="led6"></div>
-            <div class="led" id="led5"></div>
-            <div class="led" id="led14"></div><div class="led" id="led13"></div>
-            <div class="led" id="led12"></div><div class="led" id="led11"></div>
-            <div class="led" id="led10"></div>
-            <div class="led" id="led19"></div><div class="led" id="led18"></div>
-            <div class="led" id="led17"></div><div class="led" id="led16"></div>
-            <div class="led" id="led15"></div>
-            <div class="led" id="led24"></div><div class="led" id="led23"></div>
-            <div class="led" id="led22"></div><div class="led" id="led21"></div>
-            <div class="led" id="led20"></div>
-        </div>
-        <div class="color-picker-container">
-            <h1 class="color-picker-heading">Color:</h1>
-            <input type="color" id="colorPicker" class="color-picker" value="#ffffff">
-        </div>
-        <button class="ctrl-btn" id="rollDiceButton"
-        onclick="rollDice()">Roll dice</button>
-        <button class="ctrl-btn" id="clearGridButton" 
-        onclick="clearGrid()">Clear Leds</button>
-        <button class="ctrl-btn" id="deepSleepButton" 
-        onclick="deepSleep()">Schlafen</button>
-        <button class="ctrl-btn" id="settingsButton" 
-        onclick="window.location.href = 'settings.html';">Settings</button>
-    </div>
+	<head>
+		<title>Roll Dice Webpage</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="index.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="led-grid">
+				<div class="led" id="led4"></div>
+				<div class="led" id="led3"></div>
+				<div class="led" id="led2"></div>
+				<div class="led" id="led1"></div>
+				<div class="led" id="led0"></div>
+				<div class="led" id="led9"></div>
+				<div class="led" id="led8"></div>
+				<div class="led" id="led7"></div>
+				<div class="led" id="led6"></div>
+				<div class="led" id="led5"></div>
+				<div class="led" id="led14"></div>
+				<div class="led" id="led13"></div>
+				<div class="led" id="led12"></div>
+				<div class="led" id="led11"></div>
+				<div class="led" id="led10"></div>
+				<div class="led" id="led19"></div>
+				<div class="led" id="led18"></div>
+				<div class="led" id="led17"></div>
+				<div class="led" id="led16"></div>
+				<div class="led" id="led15"></div>
+				<div class="led" id="led24"></div>
+				<div class="led" id="led23"></div>
+				<div class="led" id="led22"></div>
+				<div class="led" id="led21"></div>
+				<div class="led" id="led20"></div>
+			</div>
+			<div class="color-picker-container">
+				<h1 class="color-picker-heading">Color:</h1>
+				<input
+					type="color"
+					id="colorPicker"
+					class="color-picker"
+					value="#ffffff"
+				/>
+			</div>
+			<button class="ctrl-btn" id="rollDiceButton" onclick="rollDice()">
+				Roll dice
+			</button>
+			<button class="ctrl-btn" id="clearGridButton" onclick="clearGrid()">
+				Clear Leds
+			</button>
+			<button class="ctrl-btn" id="deepSleepButton" onclick="deepSleep()">
+				Schlafen
+			</button>
+			<button
+				class="ctrl-btn"
+				id="settingsButton"
+				onclick="window.location.href = 'settings.html';"
+			>
+				Settings
+			</button>
+		</div>
 
-    <script>
-        var colorPicker = document.getElementById('colorPicker');
-        var rollDiceButton = document.getElementById('rollDiceButton');
-        var r = 255;
-        var g = 255;
-        var b = 255;
-		var leds = [];
+		<script>
+			var colorPicker = document.getElementById("colorPicker");
+			var rollDiceButton = document.getElementById("rollDiceButton");
+			var r = 255;
+			var g = 255;
+			var b = 255;
+			var leds = [];
 
-        //initializing led divs and adding click event listener
-        for (var num = 0; num < 25; num++) {
-            leds[num] = document.getElementById('led' + num);
-            leds[num].dataset.state = 'off';
-            leds[num].addEventListener('click', (function(num) {
-                return function() {
-                    if (this.dataset.state === 'off') {
-                        this.style.backgroundColor = colorPicker.value;
-                        this.dataset.state = 'on';
-                        updateLED(num, 1);
-                    } else {
-                        this.style.backgroundColor = 'black';
-                        this.dataset.state = 'off';
-                        updateLED(num, 0);
-                    }
-                    
-                };
-            })(num));
-        }
+			//initializing led divs and adding click event listener
+			for (var num = 0; num < 25; num++) {
+				leds[num] = document.getElementById("led" + num);
+				leds[num].dataset.state = "off";
+				leds[num].addEventListener(
+					"click",
+					(function (num) {
+						return function () {
+							if (this.dataset.state === "off") {
+								this.style.backgroundColor = colorPicker.value;
+								this.dataset.state = "on";
+								updateLED(num, 1);
+							} else {
+								this.style.backgroundColor = "black";
+								this.dataset.state = "off";
+								updateLED(num, 0);
+							}
+						};
+					})(num)
+				);
+			}
 
-        colorPicker.addEventListener('input', function() {
-            this.style.backgroundColor = this.value;
-            r = parseInt(colorPicker.value.substring(1, 3), 16);
-            g = parseInt(colorPicker.value.substring(3, 5), 16);
-            b = parseInt(colorPicker.value.substring(5, 7), 16);
-        });    
+			colorPicker.addEventListener("input", function () {
+				this.style.backgroundColor = this.value;
+				r = parseInt(colorPicker.value.substring(1, 3), 16);
+				g = parseInt(colorPicker.value.substring(3, 5), 16);
+				b = parseInt(colorPicker.value.substring(5, 7), 16);
+			});
 
-function updateLED(num, power) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-        }
-    };
-    xhttp.open("POST", "/update", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var data;
-    if (power)
-    data = `led=${num}&r=${r}&g=${g}&b=${b}`;
-    else
-    data = `led=${num}&r=0&g=0&b=0`;
+			function updateLED(num, power) {
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						console.log(this.responseText);
+					}
+				};
+				xhttp.open("POST", "/update", true);
+				xhttp.setRequestHeader(
+					"Content-type",
+					"application/x-www-form-urlencoded"
+				);
+				var data;
+				if (power) data = `led=${num}&r=${r}&g=${g}&b=${b}`;
+				else data = `led=${num}&r=0&g=0&b=0`;
 
-    xhttp.send(data);
-}
+				xhttp.send(data);
+			}
 
-function deepSleep() {
+			function deepSleep() {
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						console.log(this.responseText);
+					}
+				};
+				xhttp.open("GET", "/deepsleep", true);
+				xhttp.send();
+			}
 
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-        }
-    };
-            xhttp.open("GET", "/deepsleep", true);
-            xhttp.send();         
-}
+			function clearGrid() {
+				for (var i = 0; i <= 24; i++) {
+					leds[i].style.backgroundColor = "black";
+					leds[i].dataset.state = "off";
+				}
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						console.log(this.responseText);
+					}
+				};
+				xhttp.open("GET", "/clear", true);
+				xhttp.send();
+			}
 
-function clearGrid() {
-    for (var i = 0; i <= 24; i++) {
-    leds[i].style.backgroundColor = 'black';
-    leds[i].dataset.state = 'off';
-    }
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-        }
-    };
-    xhttp.open("GET", "/clear", true);
-    xhttp.send();
-
-}
-
-function rollDice() {
-    //clear grid
-    for (var i = 0; i <= 24; i++) {
-    leds[i].style.backgroundColor = 'black';
-    leds[i].dataset.state = 'off';
-    }
-    // Disable the button
-    rollDiceButton.disabled = true;
-    var roll = Math.floor(Math.random() * 6 + 1);
-    // Make the POST request
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-        }
-    };
-    xhttp.open("POST", "/rolldice", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var data = `result=${roll}&r=${r}&g=${g}&b=${b}`;
-    xhttp.send(data);
-    setTimeout(function() {
-        rollDiceButton.disabled = false;
-    }, 2000); 
-}
-    </script>
-</body>
+			function rollDice() {
+				//clear grid
+				for (var i = 0; i <= 24; i++) {
+					leds[i].style.backgroundColor = "black";
+					leds[i].dataset.state = "off";
+				}
+				// Disable the button
+				rollDiceButton.disabled = true;
+				var roll = Math.floor(Math.random() * 6 + 1);
+				// Make the POST request
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						console.log(this.responseText);
+					}
+				};
+				xhttp.open("POST", "/rolldice", true);
+				xhttp.setRequestHeader(
+					"Content-type",
+					"application/x-www-form-urlencoded"
+				);
+				var data = `result=${roll}&r=${r}&g=${g}&b=${b}`;
+				xhttp.send(data);
+				setTimeout(function () {
+					rollDiceButton.disabled = false;
+				}, 2000);
+			}
+		</script>
+	</body>
 </html>

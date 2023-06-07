@@ -44,6 +44,7 @@ void setup()
     initFS();
     initIO();
     initLeds();
+    initSettings();
 
     if (initWifi())
     {
@@ -138,6 +139,14 @@ void initFS(void)
         Serial.println("An error has occurred while mounting LittleFS");
     }
     Serial.println("LittleFS mounted successfully");
+}
+
+void initSettings(void)
+{
+    deep_sleep = readFile(paths[_DEVICE_TO]).toInt();
+    Serial.println(deep_sleep);
+    led_sleep = readFile(paths[_LED_TO]).toInt();
+    Serial.println(led_sleep);
 }
 
 bool initWifi(void)
@@ -314,7 +323,9 @@ void hostIndex(void)
         request->hasParam(PARAM_LED_TIMEOUT, true, false) ) {
         deep_sleep = request->getParam(PARAM_DEVICE_TIMEOUT, true, false)->value().toInt() *1000;
         led_sleep = request->getParam(PARAM_LED_TIMEOUT, true, false)->value().toInt() *1000;
-    }
+    }   writeFile("/settings/devicetimeout.txt", std::to_string(deep_sleep).c_str());
+        writeFile("/settings/ledtimeout.txt", std::to_string(led_sleep).c_str());
+    
     request->send(200, "text/plain", "OK"); });
 
     // GET request to sleep

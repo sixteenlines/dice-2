@@ -1,63 +1,156 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Roll Dice Webpage</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel ="stylesheet" type="text/css" href="index.css">
-</head>
-<body>
-    <div class="container">
-        <label class="range-label" for="range1">LED timeout: <span id="range1-value">20s</span></label>
-        <input type="range" class="range-input" id="range1" min="5" max="60" value="20">
+	<head>
+		<title>Roll Dice Webpage</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="index.css" />
+	</head>
+	<body>
+		<div class="container">
+			<label class="range-label" for="range1"
+				>LED timeout: <span id="range1-value">20s</span></label
+			>
+			<input
+				type="range"
+				class="range-input"
+				id="range1"
+				min="5"
+				max="60"
+				value="20"
+			/>
 
-        <label class="range-label" for="range2">Device timeout: <span id="range2-value">180s</span></label>
-        <input type="range" class="range-input" id="range2" min="60" max="300" value="180">
-    </div>
-    <div class = "container">
-        <button class="ctrl-btn" id="backButton" 
-        onclick="window.location.href = 'manager.html';">Wifi-Setup</button>
-        <button class="ctrl-btn" id="saveButton" 
-        onclick="settings()">Save and exit</button>
-        <button class="ctrl-btn" id="backButton" 
-        onclick="window.location.href = 'index.html';">Discard and exit</button>
-    </div>
+			<label class="range-label" for="range2"
+				>Device timeout: <span id="range2-value">180s</span></label
+			>
+			<input
+				type="range"
+				class="range-input"
+				id="range2"
+				min="60"
+				max="300"
+				value="180"
+			/>
+		</div>
+		<div class="container">
+			<button class="ctrl-btn" id="managerButton">Wifi-Setup</button>
+			<button class="ctrl-btn" id="saveButton" onclick="settings()">
+				Save and exit
+			</button>
+			<button
+				class="ctrl-btn"
+				id="backButton"
+				onclick="window.location.href = 'index.html';"
+			>
+				Discard and exit
+			</button>
+		</div>
+		<!-- Modal overlay -->
+		<div class="modal-overlay">
+			<div class="modal-content">
+				<span class="modal-close">&times;</span>
+				<form class="modal-form" action="/submit" method="POST">
+					<h1>Wifi Settings</h1>
+					<label for="ssid">SSID</label>
+					<input type="text" id="ssid" name="ssid" /><br />
+					<label for="pass">Password</label>
+					<input type="password" id="pass" name="pass" /><br />
+					<label for="ip">IP Address</label>
+					<input
+						type="text"
+						id="ip"
+						placeholder="Leave blank = DHCP"
+						name="ip"
+					/><br />
+					<label for="gateway">Gateway Address</label>
+					<input
+						type="text"
+						id="gateway"
+						placeholder="Leave blank = DHCP"
+						name="gateway"
+						value="172.19.37.1"
+					/><br />
+					<label for="subnet">Subnet Mask</label>
+					<input
+						type="text"
+						id="subnet"
+						placeholder="Leave blank = DHCP"
+						name="subnet"
+						value="255.255.255.0"
+					/><br />
+					<input type="submit" value="Submit" />
+				</form>
+			</div>
+		</div>
+		<script>
+			function settings() {
+				var range1Value = document.getElementById("range1").value;
+				var range2Value = document.getElementById("range2").value;
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						console.log(this.responseText);
+					}
+				};
+				xhttp.open("POST", "/settings/save", true);
+				xhttp.setRequestHeader(
+					"Content-type",
+					"application/x-www-form-urlencoded"
+				);
+				var data;
+				data = `toLed=${range1Value}&toDevice=${range2Value}`;
 
-<script>
-function settings() {
-    var range1Value = document.getElementById('range1').value;
-    var range2Value = document.getElementById('range2').value;
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-        }
-    };
-    xhttp.open("POST", "/settings/save", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var data;
-    data = `toLed=${range1Value}&toDevice=${range2Value}`;
+				xhttp.send(data);
+				window.location.href = "index.html";
+			}
 
-    xhttp.send(data);
-    window.location.href = "index.html";
-}
+			// Function to update the range value display with "seconds"
+			function updateRangeValue(rangeId, valueId) {
+				const rangeInput = document.getElementById(rangeId);
+				const valueSpan = document.getElementById(valueId);
+				valueSpan.textContent = rangeInput.value + "s";
+			}
 
-// Function to update the range value display with "seconds"
-function updateRangeValue(rangeId, valueId) {
-  const rangeInput = document.getElementById(rangeId);
-  const valueSpan = document.getElementById(valueId);
-  valueSpan.textContent = rangeInput.value + "s";
-}
+			// Update range values on input change
+			document
+				.getElementById("range1")
+				.addEventListener("input", function () {
+					updateRangeValue("range1", "range1-value");
+				});
 
-// Update range values on input change
-document.getElementById('range1').addEventListener('input', function() {
-  updateRangeValue('range1', 'range1-value');
-});
+			document
+				.getElementById("range2")
+				.addEventListener("input", function () {
+					updateRangeValue("range2", "range2-value");
+				});
 
-document.getElementById('range2').addEventListener('input', function() {
-  updateRangeValue('range2', 'range2-value');
-});
+			// Button 2 click event handler
+			document
+				.getElementById("managerButton")
+				.addEventListener("click", function () {
+					// Show the modal overlay
+					document.querySelector(".modal-overlay").style.display =
+						"flex";
+				});
 
+			// Close modal overlay
+			document
+				.querySelector(".modal-close")
+				.addEventListener("click", function () {
+					document.querySelector(".modal-overlay").style.display =
+						"none";
+				});
+			// Close modal when the form is submitted
+			document
+				.querySelector(".modal-form")
+				.addEventListener("submit", function (e) {
+					e.preventDefault();
+					// Code to handle form submission
+					// ...
 
-</script>
-</body>
+					// Hide the modal overlay
+					document.querySelector(".modal-overlay").style.display =
+						"none";
+				});
+		</script>
+	</body>
 </html>
