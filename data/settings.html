@@ -55,9 +55,13 @@
 					<label for="pass">Password</label>
 					<div class="password-toggle">
 						<input type="password" id="pass" name="pass" />
-						<span class="toggle-icon" id="password-toggle"
-							>&#128065;</span
-						>
+						<img
+							class="toggle-icon"
+							id="password-toggle"
+							src="eye-slash.png"
+							alt="Toggle Password Visibility"
+							onclick="togglePasswordVisibility()"
+						/>
 					</div>
 					<label for="ip">IP Address</label>
 					<input
@@ -134,19 +138,18 @@
 				valueSpan.textContent = rangeInput.value + "s";
 			}
 
-			// Password toggle event handler
-			const passwordToggle = document.getElementById("password-toggle");
-			const passwordInput = document.getElementById("pass");
-			passwordToggle.addEventListener("click", function () {
+			function togglePasswordVisibility() {
+				var passwordInput = document.getElementById("pass");
+				var toggleIcon = document.getElementById("password-toggle");
+
 				if (passwordInput.type === "password") {
 					passwordInput.type = "text";
-					passwordToggle.style.color = "#000000";
+					toggleIcon.src = "eye.png";
 				} else {
 					passwordInput.type = "password";
-					passwordToggle.style.color = "#aaaaaa";
+					toggleIcon.src = "eye-slash.png";
 				}
-			});
-
+			}
 			// Update range values on input change
 			document
 				.getElementById("range1")
