@@ -31,9 +31,9 @@ unsigned short period = 50;
 bool btn = false;
 bool sleep = false;
 bool manager = false;
-uint8_t diceRed = 45;
-uint8_t diceGreen = 45;
-uint8_t diceBlue = 45;
+uint8_t diceRed = 120;
+uint8_t diceGreen = 120;
+uint8_t diceBlue = 120;
 
 /*############################*/
 /*########## SETUP ###########*/
