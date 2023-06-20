@@ -11,9 +11,9 @@
 /* Pins */
 #define STATUSLED_PIN D4
 #define RETENTION_PIN D1
-#define LEDS_PIN D2
-#define BTN0_PIN D6
-#define BTN1_PIN D7
+#define LEDS_PIN D8
+#define BTN0_PIN D7
+#define BTN1_PIN D6
 #define BTN2_PIN D5
 #define NUM_LEDS 25
 

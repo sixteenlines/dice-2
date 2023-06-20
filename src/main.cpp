@@ -40,8 +40,6 @@ uint8_t diceBlue = 120;
 /*############################*/
 void setup()
 {
-    Serial.begin(115200);
-    Serial.println();
     initFS();
     initIO();
     initLeds();
@@ -119,7 +117,6 @@ void initLeds(void)
 
     pixels.begin();
     showLEDS();
-    Serial.println("LED init success");
 }
 
 void initIO(void)
@@ -130,16 +127,11 @@ void initIO(void)
     pinMode(RETENTION_PIN, OUTPUT);
     pinMode(STATUSLED_PIN, OUTPUT);
     digitalWrite(RETENTION_PIN, HIGH);
-    Serial.println("IO init success");
 }
 
 void initFS(void)
 {
-    if (!LittleFS.begin())
-    {
-        Serial.println("An error has occurred while mounting LittleFS");
-    }
-    Serial.println("LittleFS mounted successfully");
+    LittleFS.begin();
 }
 
 void initSettings(void)
@@ -169,8 +161,6 @@ bool initWifi(void)
     }
     else
     {
-        Serial.print("None or invalid credentials. To set, boot using AP-Config Mode ");
-        Serial.println("by pressing S0 and S1.");
         return false;
     }
 }
@@ -181,13 +171,10 @@ bool initWifi(void)
 void managerSetup(void)
 {
     // Setup AP
-    Serial.println("Setting AP (Access Point)");
     WiFi.softAPConfig(IPAddress(8, 8, 8, 8), IPAddress(8, 8, 8, 8), IPAddress(255, 255, 255, 0));
     WiFi.softAP("MAGIC-DICE-SETUP", "noetmandel");
 
     localIP = WiFi.softAPIP();
-    Serial.print("AP IP address: ");
-    Serial.println(localIP);
     dnsServer.start(53, "*", localIP);
     hostManager();
 }
@@ -195,24 +182,19 @@ void managerSetup(void)
 bool clientSetup(void)
 {
     WiFi.mode(WIFI_STA);
-    if (creds[_IPAD] == "" || creds[_GATE] == "" || creds[_SUBN] == "")
+    if (!(creds[_IPAD] == "" || creds[_GATE] == "" || creds[_SUBN] == ""))
     {
-        Serial.println("No Static config provided, using DHCP.");
-    }
-    else
-    {
-        Serial.println("Static config provided.");
         localIP.fromString(creds[_IPAD].c_str());
         localGateway.fromString(creds[_GATE].c_str());
         localSubnet.fromString(creds[_SUBN].c_str());
         if (!WiFi.config(localIP, localGateway, localSubnet))
         {
-            Serial.println("Client failed to configure");
             return false;
         }
     }
+
     WiFi.begin(creds[_SSID].c_str(), creds[_PASS].c_str());
-    Serial.println("Connecting to WiFi...");
+
     for (int ctr = 0, tries = 0; !(WiFi.status() == WL_CONNECTED); ctr++)
     {
         if (ctr > 0)
@@ -232,12 +214,9 @@ bool clientSetup(void)
             printPattern(BIGDOT, 255, 0, 0);
             delay(100);
             hideLEDS();
-            Serial.println("Couldnt connect with credentials.");
             return false;
         }
     }
-    Serial.print("Connected to " + creds[_SSID] + "with IP ");
-    Serial.println(WiFi.localIP());
     printPattern(BIGDOT, 0, 255, 0);
     delay(150);
     printPattern(0);
@@ -252,9 +231,6 @@ void prerolldice(void)
 {
     uint8_t preroll = random(6) + 1;
     printPattern(preroll, diceRed, diceGreen, diceBlue);
-    Serial.print("You rolled: ");
-    Serial.print(preroll);
-    Serial.println();
 }
 
 /*######################################*/
@@ -404,8 +380,6 @@ void hostManager(void)
                         continue; // Skip unrecognized parameters
                     }
                     creds[writeOffset] = paramValue;
-                    Serial.print(message);
-                    Serial.println(creds[writeOffset]);
                     writeFile(paths[writeOffset], creds[writeOffset].c_str());
                 }
             }
@@ -423,12 +397,9 @@ void hostManager(void)
 /*#############################################*/
 String readFile(const String path)
 {
-    Serial.print("Reading file ");
-
     File file = LittleFS.open(path, "r");
     if (!file || file.isDirectory())
     {
-        Serial.println("- failed to open file for reading");
         return String();
     }
 
@@ -445,24 +416,12 @@ String readFile(const String path)
 
 void writeFile(const String path, const char *message)
 {
-    Serial.printf("Writing file ");
 
     File file = LittleFS.open(path, "w");
     if (!file)
     {
-        Serial.println("- failed to open file for writing");
         return;
     }
-
-    if (file.print(message))
-    {
-        Serial.println("- file written");
-    }
-    else
-    {
-        Serial.println("- write failed");
-    }
-
     file.close();
 }
 
@@ -471,11 +430,9 @@ bool loadCredentials(void)
     for (int i = 0; i < 5; i++)
     {
         creds[i] = readFile(paths[i]);
-        Serial.println(creds[i]);
     }
     if (creds[_SSID] == "")
     {
-        Serial.println("Invalid SSID.");
         return false;
     }
     else
@@ -492,7 +449,6 @@ String getSettings()
 
 bool handleFileRequest(AsyncWebServerRequest *request, String path)
 {
-    Serial.println("handleFileRead: " + path);
     String contentType;
     if (path.endsWith("/"))
         path = "manager.html";
@@ -502,7 +458,6 @@ bool handleFileRequest(AsyncWebServerRequest *request, String path)
         contentType = "text/css";
     if (LittleFS.exists(path))
     {
-        Serial.println("request: " + path);
         AsyncWebServerResponse *response = request->beginResponse(LittleFS, path, contentType);
         request->send(response);
         return true;
