@@ -5,6 +5,7 @@
 #include <ESPAsyncTCP.h>
 #include <LittleFS.h>
 #include <DNSServer.h>
+#include <Arduino_JSON.h>
 #include <Arduino.h>
 
 /* Pins */
@@ -16,28 +17,27 @@
 #define BTN2_PIN D5
 #define NUM_LEDS 25
 
-/* credential offset macros */
+/* offset macros */
 #define _SSID 0
 #define _PASS 1
 #define _IPAD 2
 #define _GATE 3
 #define _SUBN 4
+#define _DEVICE_TO 5
+#define _LED_TO 6
 
 /* LED-pattern macros */
 #define BIGDOT 7
 #define LOADING 8
-
-/* Timer constants */
-const unsigned long DEEP_SLEEP = 180000;
-const unsigned long LIGHTS_OFF = 20000;
 
 /* Endpoint params index */
 const char *PARAM_R = "r";
 const char *PARAM_G = "g";
 const char *PARAM_B = "b";
 const char *PARAM_LED = "led";
-const char *PARAM_POWER = "power";
 const char *PARAM_RESULT = "result";
+const char *PARAM_LED_TIMEOUT = "toLed";
+const char *PARAM_DEVICE_TIMEOUT = "toDevice";
 
 /* Endpoint params manager */
 const char *PARAM_INPUT_0 = "ssid";
@@ -49,11 +49,13 @@ const String MANAGER = "http://8.8.8.8";
 
 /* File paths to storage */
 const std::vector<String> paths = {
-    "/ssid.txt",
-    "/password.txt",
-    "/ip.txt",
-    "/gateway.txt",
-    "/subnet.txt"};
+    "/creds/ssid.txt",
+    "/creds/password.txt",
+    "/creds/ip.txt",
+    "/creds/gateway.txt",
+    "/creds/subnet.txt",
+    "/settings/devicetimeout.txt",
+    "/settings/ledtimeout.txt"};
 
 /* LED-pattern vector */
 const std::vector<std::vector<int>> patterns = {
@@ -97,11 +99,12 @@ void hostIndex(void);
 bool loadCredentials(void);
 void printPattern(uint8_t pattern, uint8_t r, uint8_t g, uint8_t b);
 void printPattern(uint8_t pattern);
-void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b, bool power);
-void setLED(uint8_t num, bool power);
-void hideLEDS();
-void updateLEDS();
+void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b);
+void showLEDS(void);
+void hideLEDS(void);
 void initFS(void);
+void initSettings(void);
 bool handleFileRequest(AsyncWebServerRequest *request, String path);
 void writeFile(const String path, const char *message);
 String readFile(const String path);
+String getSettings();

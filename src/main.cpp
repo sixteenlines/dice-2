@@ -8,15 +8,20 @@ String creds[5] = {
     ""  // Subnet
 };
 
+/* Timer values */
+unsigned long deep_sleep = 120000;
+unsigned long led_sleep = 20000;
+
 /* Initializing objects*/
 Adafruit_NeoPixel pixels =
-    Adafruit_NeoPixel(NUM_LEDS, LEDS_PIN, NEO_GRB + NEO_KHZ400);
+    Adafruit_NeoPixel(NUM_LEDS, LEDS_PIN, NEO_RGB + NEO_KHZ400);
 AsyncWebServer webServer(80);
 IPAddress localIP;
 IPAddress localGateway;
 IPAddress localSubnet;
 DNSServer dnsServer;
 std::vector<led> ledgrid;
+JSONVar settings;
 
 /* Control vars */
 uint8_t roll = 0;
@@ -26,9 +31,9 @@ unsigned short period = 50;
 bool btn = false;
 bool sleep = false;
 bool manager = false;
-uint8_t diceRed = 45;
-uint8_t diceGreen = 45;
-uint8_t diceBlue = 45;
+uint8_t diceRed = 120;
+uint8_t diceGreen = 120;
+uint8_t diceBlue = 120;
 
 /*############################*/
 /*########## SETUP ###########*/
@@ -38,6 +43,7 @@ void setup()
     initFS();
     initIO();
     initLeds();
+    initSettings();
 
     if (initWifi())
     {
@@ -87,11 +93,11 @@ void loop()
                 period = 0;
             }
         }
-        if (currentTime - lastActionTime >= DEEP_SLEEP)
+        if (currentTime - lastActionTime >= deep_sleep)
         {
             marius();
         }
-        if (currentTime - lastActionTime >= LIGHTS_OFF)
+        if (currentTime - lastActionTime >= led_sleep)
         {
             hideLEDS();
         }
@@ -110,14 +116,14 @@ void initLeds(void)
     }
 
     pixels.begin();
-    updateLEDS();
+    showLEDS();
 }
 
 void initIO(void)
 {
     pinMode(BTN0_PIN, INPUT);
     pinMode(BTN1_PIN, INPUT);
-    pinMode(BTN2_PIN, INPUT);
+    pinMode(BTN2_PIN, INPUT_PULLUP);
     pinMode(RETENTION_PIN, OUTPUT);
     pinMode(STATUSLED_PIN, OUTPUT);
     digitalWrite(RETENTION_PIN, HIGH);
@@ -126,6 +132,17 @@ void initIO(void)
 void initFS(void)
 {
     LittleFS.begin();
+}
+
+void initSettings(void)
+{
+    if (!(readFile(paths[_DEVICE_TO]).toInt() == 0))
+    {
+        deep_sleep = readFile(paths[_DEVICE_TO]).toInt();
+        Serial.println(deep_sleep);
+        led_sleep = readFile(paths[_LED_TO]).toInt();
+        Serial.println(led_sleep);
+    }
 }
 
 bool initWifi(void)
@@ -181,15 +198,15 @@ bool clientSetup(void)
     for (int ctr = 0, tries = 0; !(WiFi.status() == WL_CONNECTED); ctr++)
     {
         if (ctr > 0)
-            setLED(patterns[LOADING][ctr - 1], 0);
+            setLED(patterns[LOADING][ctr - 1], 0, 0, 0);
         if (ctr == 15)
         {
             ctr = 0;
             tries++;
-            setLED(patterns[LOADING][15], 0);
+            setLED(patterns[LOADING][15], 0, 0, 0);
         }
-        setLED(patterns[LOADING][ctr], 0, 100, 150, 1);
-        updateLEDS();
+        setLED(patterns[LOADING][ctr], 0, 100, 150);
+        showLEDS();
         delay(100);
 
         if (tries == 3)
@@ -202,7 +219,7 @@ bool clientSetup(void)
     }
     printPattern(BIGDOT, 0, 255, 0);
     delay(150);
-    hideLEDS();
+    printPattern(0);
     hostIndex();
     return true;
 }
@@ -262,9 +279,8 @@ void hostIndex(void)
         uint8_t r = request->getParam(PARAM_R, true, false)->value().toInt();
         uint8_t g = request->getParam(PARAM_G, true, false)->value().toInt();
         uint8_t b = request->getParam(PARAM_B, true, false)->value().toInt();
-        bool power = request->getParam(PARAM_POWER, true, false)->value().toInt();
-        setLED(num, r, g, b, power);
-        updateLEDS();
+        setLED(num, r, g, b);
+        showLEDS();
         lastActionTime = millis();
     }
     request->send(200, "text/plain", "OK"); });
@@ -274,6 +290,30 @@ void hostIndex(void)
                  {
         printPattern(0);
         request->send(200, "text/plain", "OK"); });
+
+    // GET request settings page
+    webServer.on("/settings", HTTP_GET, [](AsyncWebServerRequest *request)
+                 { request->send(LittleFS, "/settings.html", "text/html", false); });
+    webServer.serveStatic("/", LittleFS, "/");
+
+    // Request for the latest sensor readings
+    webServer.on("/loadsettings", HTTP_GET, [](AsyncWebServerRequest *request)
+                 {
+        String json = getSettings();
+        request->send(200, "application/json", json);
+        json = String(); });
+
+    // POST request to save settings
+    webServer.on("/savesettings", HTTP_POST, [](AsyncWebServerRequest *request)
+                 {
+    if (request->hasParam(PARAM_DEVICE_TIMEOUT, true, false) &&
+        request->hasParam(PARAM_LED_TIMEOUT, true, false) ) {
+        deep_sleep = request->getParam(PARAM_DEVICE_TIMEOUT, true, false)->value().toInt() *1000;
+        led_sleep = request->getParam(PARAM_LED_TIMEOUT, true, false)->value().toInt() *1000;
+    }   writeFile("/settings/devicetimeout.txt", std::to_string(deep_sleep).c_str());
+        writeFile("/settings/ledtimeout.txt", std::to_string(led_sleep).c_str());
+    
+    request->send(200, "text/plain", "OK"); });
 
     // GET request to sleep
     webServer.on("/deepsleep", HTTP_GET, [](AsyncWebServerRequest *request)
@@ -399,6 +439,14 @@ bool loadCredentials(void)
         return true;
 }
 
+String getSettings()
+{
+    settings["ledtimeout"] = String(led_sleep / 1000);
+    settings["devicetimeout"] = String(deep_sleep / 1000);
+    String jsonString = JSON.stringify(settings);
+    return jsonString;
+}
+
 bool handleFileRequest(AsyncWebServerRequest *request, String path)
 {
     String contentType;
@@ -424,70 +472,54 @@ void printPattern(uint8_t pattern, uint8_t r, uint8_t g, uint8_t b)
 {
     for (int num = 0; num < 25; num++)
     {
-        setLED(num, 0, 0, 0, 0);
+        setLED(num, 0, 0, 0);
     }
     const std::vector<int> &dice = patterns[pattern];
     for (int num : dice)
     {
-        setLED(num, r, g, b, 1);
+        setLED(num, r, g, b);
     }
-    updateLEDS();
+    showLEDS();
 }
 
 void printPattern(uint8_t pattern)
 {
     for (int num = 0; num < 25; num++)
     {
-        setLED(num, 0, 0, 0, 0);
+        setLED(num, 0, 0, 0);
     }
     const std::vector<int> &dice = patterns[pattern];
     for (int num : dice)
     {
-        setLED(num, diceRed, diceGreen, diceBlue, 1);
+        setLED(num, diceRed, diceGreen, diceBlue);
     }
-    updateLEDS();
+    showLEDS();
 }
 
-void setLED(uint8_t num, bool power)
-{
-    ledgrid[num].power = power;
-}
-
-void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b, bool power)
+void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b)
 {
     ledgrid[num].r = r;
     ledgrid[num].g = g;
     ledgrid[num].b = b;
-    ledgrid[num].power = power;
 }
 
 void hideLEDS()
 {
-    for (int num = 0; num < 25; num++)
+    for (int num = 0; num < NUM_LEDS; num++)
     {
-        setLED(num, 0);
+        pixels.setPixelColor(num, pixels.Color(0, 0, 0));
     }
-    updateLEDS();
+    pixels.show();
 }
 
-void updateLEDS(void)
+void showLEDS(void)
 {
     for (int num = 0; num < NUM_LEDS; num++)
     {
-        if (ledgrid[num].power)
-        {
-            pixels.setPixelColor(num,
-                                 pixels.Color(ledgrid[num].r,
-                                              ledgrid[num].g,
-                                              ledgrid[num].b));
-        }
-        else
-        {
-            pixels.setPixelColor(num,
-                                 pixels.Color(0,
-                                              0,
-                                              0));
-        }
+        pixels.setPixelColor(num,
+                             pixels.Color(ledgrid[num].r,
+                                          ledgrid[num].g,
+                                          ledgrid[num].b));
     }
     pixels.show();
 }
