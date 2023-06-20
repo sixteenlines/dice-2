@@ -21,6 +21,7 @@ IPAddress localGateway;
 IPAddress localSubnet;
 DNSServer dnsServer;
 std::vector<led> ledgrid;
+JSONVar settings;
 
 /* Control vars */
 uint8_t roll = 0;
@@ -319,8 +320,15 @@ void hostIndex(void)
                  { request->send(LittleFS, "/settings.html", "text/html", false); });
     webServer.serveStatic("/", LittleFS, "/");
 
+    // Request for the latest sensor readings
+    webServer.on("/loadsettings", HTTP_GET, [](AsyncWebServerRequest *request)
+                 {
+        String json = getSettings();
+        request->send(200, "application/json", json);
+        json = String(); });
+
     // POST request to save settings
-    webServer.on("/settings/save", HTTP_POST, [](AsyncWebServerRequest *request)
+    webServer.on("/savesettings", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
     if (request->hasParam(PARAM_DEVICE_TIMEOUT, true, false) &&
         request->hasParam(PARAM_LED_TIMEOUT, true, false) ) {
@@ -472,6 +480,14 @@ bool loadCredentials(void)
     }
     else
         return true;
+}
+
+String getSettings()
+{
+    settings["ledtimeout"] = String(led_sleep / 1000);
+    settings["devicetimeout"] = String(deep_sleep / 1000);
+    String jsonString = JSON.stringify(settings);
+    return jsonString;
 }
 
 bool handleFileRequest(AsyncWebServerRequest *request, String path)

@@ -33,7 +33,7 @@
 		</div>
 		<div class="container">
 			<button class="ctrl-btn" id="managerButton">Wifi-Setup</button>
-			<button class="ctrl-btn" id="saveButton" onclick="settings()">
+			<button class="ctrl-btn" id="saveButton" onclick="saveSettings()">
 				Save and exit
 			</button>
 			<button
@@ -87,25 +87,44 @@
 			</div>
 		</div>
 		<script>
-			function settings() {
+			function saveSettings() {
 				var range1Value = document.getElementById("range1").value;
 				var range2Value = document.getElementById("range2").value;
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function () {
 					if (this.readyState == 4 && this.status == 200) {
 						console.log(this.responseText);
+						window.location.href = "index.html";
 					}
 				};
-				xhttp.open("POST", "/settings/save", true);
+				xhttp.open("POST", "/savesettings", true);
 				xhttp.setRequestHeader(
 					"Content-type",
 					"application/x-www-form-urlencoded"
 				);
-				var data;
-				data = `toLed=${range1Value}&toDevice=${range2Value}`;
-
+				var data = `toLed=${range1Value}&toDevice=${range2Value}`;
 				xhttp.send(data);
-				window.location.href = "index.html";
+			}
+
+			function getSettings() {
+				var range1Input = document.getElementById("range1");
+				var range1Value = document.getElementById("range1-value");
+				var range2Input = document.getElementById("range2");
+				var range2Value = document.getElementById("range2-value");
+
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/loadsettings", true);
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === 4 && xhr.status === 200) {
+						var data = JSON.parse(xhr.responseText);
+						console.log(data);
+						range1Input.value = data.ledtimeout;
+						range1Value.textContent = data.ledtimeout + "s";
+						range2Input.value = data.devicetimeout;
+						range2Value.textContent = data.devicetimeout + "s";
+					}
+				};
+				xhr.send();
 			}
 
 			// Function to update the range value display with "seconds"
@@ -169,6 +188,7 @@
 					document.querySelector(".modal-overlay").style.display =
 						"none";
 				});
+			document.addEventListener("DOMContentLoaded", getSettings);
 		</script>
 	</body>
 </html>

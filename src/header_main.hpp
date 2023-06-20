@@ -5,6 +5,7 @@
 #include <ESPAsyncTCP.h>
 #include <LittleFS.h>
 #include <DNSServer.h>
+#include <Arduino_JSON.h>
 #include <Arduino.h>
 
 /* Pins */
@@ -106,3 +107,4 @@ void initSettings(void);
 bool handleFileRequest(AsyncWebServerRequest *request, String path);
 void writeFile(const String path, const char *message);
 String readFile(const String path);
+String getSettings();
