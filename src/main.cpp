@@ -35,9 +35,7 @@ uint8_t diceRed = 120;
 uint8_t diceGreen = 120;
 uint8_t diceBlue = 120;
 
-/*############################*/
-/*########## SETUP ###########*/
-/*############################*/
+/*###################################### SETUP ##############################*/
 void setup()
 {
     initFS();
@@ -55,9 +53,7 @@ void setup()
     }
 }
 
-/*#################################*/
-/*############ MAIN LOOP ##########*/
-/*#################################*/
+/*###################################### MAIN ###############################*/
 void loop()
 {
     if (manager)
@@ -104,10 +100,7 @@ void loop()
     }
 }
 
-/*########################################*/
-/*###########  INIT FUNCTIONS  ###########*/
-/*########################################*/
-
+// Creates 25 LED objects for easy manip
 void initLeds(void)
 {
     for (int i = 0; i < NUM_LEDS; i++)
@@ -123,7 +116,7 @@ void initIO(void)
 {
     pinMode(BTN0_PIN, INPUT);
     pinMode(BTN1_PIN, INPUT);
-    pinMode(BTN2_PIN, INPUT_PULLUP);
+    pinMode(BTN2_PIN, INPUT);
     pinMode(RETENTION_PIN, OUTPUT);
     pinMode(STATUSLED_PIN, OUTPUT);
     digitalWrite(RETENTION_PIN, HIGH);
@@ -133,7 +126,7 @@ void initFS(void)
 {
     LittleFS.begin();
 }
-
+// Tries to read timeout settings from flash
 void initSettings(void)
 {
     if (!(readFile(paths[_DEVICE_TO]).toInt() == 0))
@@ -165,9 +158,6 @@ bool initWifi(void)
     }
 }
 
-/*############################################*/
-/*##########  WIFI CONFIG / SETUP  ###########*/
-/*############################################*/
 void managerSetup(void)
 {
     // Setup AP
@@ -184,19 +174,22 @@ bool clientSetup(void)
     WiFi.mode(WIFI_STA);
     if (!(creds[_IPAD] == "" || creds[_GATE] == "" || creds[_SUBN] == ""))
     {
+        // if credentials are loaded we set them
         localIP.fromString(creds[_IPAD].c_str());
         localGateway.fromString(creds[_GATE].c_str());
         localSubnet.fromString(creds[_SUBN].c_str());
+        // then try if credentials are valid ips/netmask
         if (!WiFi.config(localIP, localGateway, localSubnet))
         {
             return false;
         }
     }
-
+    // try to connect with credentials
     WiFi.begin(creds[_SSID].c_str(), creds[_PASS].c_str());
 
     for (int ctr = 0, tries = 0; !(WiFi.status() == WL_CONNECTED); ctr++)
     {
+        // print loading circle and check wifi connection
         if (ctr > 0)
             setLED(patterns[LOADING][ctr - 1], 0, 0, 0);
         if (ctr == 15)
@@ -209,7 +202,7 @@ bool clientSetup(void)
         showLEDS();
         delay(100);
 
-        if (tries == 3)
+        if (tries == 3) // after 3 loading cycles, blink red dot and return
         {
             printPattern(BIGDOT, 255, 0, 0);
             delay(100);
@@ -217,33 +210,27 @@ bool clientSetup(void)
             return false;
         }
     }
-    printPattern(BIGDOT, 0, 255, 0);
+    printPattern(BIGDOT, 0, 255, 0); // success = green dot
     delay(150);
     printPattern(0);
     hostIndex();
     return true;
 }
 
-/*################################################*/
-/*##########  DICE-RANDOMIZER FUNCTION  ##########*/
-/*################################################*/
+// prints a random die roll to the matrix
 void prerolldice(void)
 {
     uint8_t preroll = random(6) + 1;
     printPattern(preroll, diceRed, diceGreen, diceBlue);
 }
 
-/*######################################*/
-/*##########  SLEEP FUNCTION  ##########*/
-/*######################################*/
+// pulls self-retention pin low, device turns off
 void marius(void)
 {
     digitalWrite(RETENTION_PIN, LOW);
 }
 
-/*########################################*/
-/*########## WEBSITE HOSTING #############*/
-/*########################################*/
+/*################################### WEBSITE STUFF #########################*/
 void hostIndex(void)
 {
     // Route for root / web page
@@ -252,7 +239,7 @@ void hostIndex(void)
                                  "text/html", false); });
     webServer.serveStatic("/", LittleFS, "/");
 
-    // POST request to <ESP_IP>/rolldice
+    // Answer POST request to /rolldice
     webServer.on("/rolldice", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
     if (request->hasParam(PARAM_R, true, false) &&
@@ -268,7 +255,7 @@ void hostIndex(void)
     }
     request->send(200, "text/plain", "OK"); });
 
-    // POST request to <ESP_IP>/update
+    // Answer POST request to /update
     webServer.on("/update", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
     if (request->hasParam(PARAM_R, true, false) &&
@@ -285,25 +272,25 @@ void hostIndex(void)
     }
     request->send(200, "text/plain", "OK"); });
 
-    // clear LED grid
+    // Answer GET request to /clear
     webServer.on("/clear", HTTP_GET, [](AsyncWebServerRequest *request)
                  {
         printPattern(0);
         request->send(200, "text/plain", "OK"); });
 
-    // GET request settings page
+    // Answer GET request /settings
     webServer.on("/settings", HTTP_GET, [](AsyncWebServerRequest *request)
                  { request->send(LittleFS, "/settings.html", "text/html", false); });
     webServer.serveStatic("/", LittleFS, "/");
 
-    // Request for the latest sensor readings
+    // Answer GET request /loadsettings
     webServer.on("/loadsettings", HTTP_GET, [](AsyncWebServerRequest *request)
                  {
         String json = getSettings();
         request->send(200, "application/json", json);
         json = String(); });
 
-    // POST request to save settings
+    // Answer POST request to save settings
     webServer.on("/savesettings", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
     if (request->hasParam(PARAM_DEVICE_TIMEOUT, true, false) &&
@@ -315,7 +302,7 @@ void hostIndex(void)
     
     request->send(200, "text/plain", "OK"); });
 
-    // GET request to sleep
+    // Answer GET request to /deepsleep
     webServer.on("/deepsleep", HTTP_GET, [](AsyncWebServerRequest *request)
                  {
         sleep = true;
@@ -329,8 +316,9 @@ void hostManager(void)
     if (!handleFileRequest(request, request->url()))
       request->send(404, "text/plain", "File not found"); });
 
+    // Catch for various captive portal default redirects
     webServer.on("/generate_204", [](AsyncWebServerRequest *request)
-                 { request->redirect(MANAGER); }); // android captive portal redirect
+                 { request->redirect(MANAGER); }); // android captive portal
     webServer.on("/redirect", [](AsyncWebServerRequest *request)
                  { request->redirect(MANAGER); }); // microsoft redirect
     webServer.on("/hotspot-detect.html", [](AsyncWebServerRequest *request)
