@@ -47,6 +47,13 @@ const char *PARAM_INPUT_3 = "gateway";
 const char *PARAM_INPUT_4 = "subnet";
 const String MANAGER = "http://8.8.8.8";
 
+/* Access Point settings */
+const String AP_SSID = "MAGIC-DICE-SETUP";
+const String AP_PW = "eis2020x";
+
+/* Serial format macros */
+const String INDENT = "         ";
+
 /* file paths to storage */
 const std::vector<String> paths = {
     "/creds/ssid.txt",

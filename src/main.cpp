@@ -37,18 +37,20 @@ uint8_t diceBlue = 120;
 /*###################################### SETUP ##############################*/
 void setup()
 {
-    initFS();
     initIO();
-    initLeds();
+    initFS();
     initSettings();
+    initLeds();
 
     if (initWifi())
     {
+        Serial.println("[\e[0;32m  OK  \e[0;37m] Initializing WiFi");
         webServer.begin();
     }
     else
     {
-        sleepRequested = true;
+        Serial.println("[\e[0;31mFAILED\e[0;37m] Initializing WiFi");
+        sleepRequested = true; // optional power down if Wifi fails
     }
 }
 
@@ -110,21 +112,28 @@ void initLeds()
 
     pixels.begin();
     showLEDS();
+    Serial.println("[\e[0;32m  OK  \e[0;37m] Initializing LED matrix");
 }
 
 void initIO()
 {
+    Serial.begin(115200);
+    Serial.println();
     pinMode(BTN0_PIN, INPUT);
     pinMode(BTN1_PIN, INPUT);
     pinMode(BTN2_PIN, INPUT);
     pinMode(RETENTION_PIN, OUTPUT);
     pinMode(STATUSLED_PIN, OUTPUT);
     digitalWrite(RETENTION_PIN, HIGH);
+    Serial.println("[\e[0;32m  OK  \e[0;37m] Initializing system I/O");
 }
 
 void initFS()
 {
-    LittleFS.begin();
+    if (LittleFS.begin())
+        Serial.println("[\e[0;32m  OK  \e[0;37m] Initializing file system");
+    else
+        Serial.println("[\e[0;31mFAILED\e[0;37m] Initializing file system");
 }
 // Tries to read timeout settings from flash
 void initSettings()
@@ -132,10 +141,18 @@ void initSettings()
     if (!(readFile(paths[_DEVICE_TO]).toInt() == 0))
     {
         deep_sleep = readFile(paths[_DEVICE_TO]).toInt();
-        Serial.println(deep_sleep);
         led_sleep = readFile(paths[_LED_TO]).toInt();
-        Serial.println(led_sleep);
+        Serial.println("[\e[0;32m  OK  \e[0;37m] Loading settings");
     }
+    else
+    {
+        Serial.println("[\e[0;31mFAILED\e[0;37m] Loading settings");
+        Serial.println(INDENT + "Loading default:");
+    }
+    Serial.print("         Device timeout: ");
+    Serial.println(deep_sleep);
+    Serial.print("         LED timeout: ");
+    Serial.println(led_sleep);
 }
 
 bool initWifi()
@@ -161,9 +178,12 @@ bool initWifi()
 // Setup Access Point mode with wifi manager
 void managerSetup()
 {
-    WiFi.softAPConfig(IPAddress(8, 8, 8, 8), IPAddress(8, 8, 8, 8), IPAddress(255, 255, 255, 0));
-    WiFi.softAP("MAGIC-DICE-SETUP", "noetmandel");
-
+    Serial.println("[\e[0;32m  OK  \e[0;37m] Requesting Access Point");
+    WiFi.softAPConfig(IPAddress(8, 8, 8, 8), IPAddress(8, 8, 8, 8),
+                      IPAddress(255, 255, 255, 0));
+    WiFi.softAP(AP_SSID, AP_PW);
+    Serial.print("         ");
+    Serial.println("Connect to: " + AP_SSID + " with password: " + AP_PW);
     localIP = WiFi.softAPIP();
     dnsServer.start(53, "*", localIP);
     hostManager();
@@ -175,22 +195,25 @@ bool clientSetup()
     WiFi.mode(WIFI_STA);
     if (!(creds[_IPAD] == "" || creds[_GATE] == "" || creds[_SUBN] == ""))
     {
-        // if credentials are loaded we set them
         localIP.fromString(creds[_IPAD].c_str());
         localGateway.fromString(creds[_GATE].c_str());
         localSubnet.fromString(creds[_SUBN].c_str());
-        // then try if credentials are valid ips/netmask
-        if (!WiFi.config(localIP, localGateway, localSubnet))
+        if (WiFi.config(localIP, localGateway, localSubnet))
         {
+            Serial.println("[\e[0;32m  OK  \e[0;37m] Setting WiFi Config");
+        }
+        else
+        {
+            Serial.println("[\e[0;31mFAILED\e[0;37m] Setting WiFi Config");
             return false;
         }
     }
-    // try to connect with credentials
+    Serial.print(INDENT + "Connecting to WiFi");
     WiFi.begin(creds[_SSID].c_str(), creds[_PASS].c_str());
 
     for (int ctr = 0, tries = 0; !(WiFi.status() == WL_CONNECTED); ctr++)
     {
-        // print loading circle and check wifi connection
+        // print loading square and check wifi connection
         if (ctr > 0)
             setLED(patterns[LOADING][ctr - 1], 0, 0, 0);
         if (ctr == 15)
@@ -202,12 +225,15 @@ bool clientSetup()
         setLED(patterns[LOADING][ctr], 0, 100, 150);
         showLEDS();
         delay(100);
+        Serial.print(".");
 
         if (tries == 3) // after 3 loading cycles, blink red dot and return
         {
             printPattern(BIGDOT, 255, 0, 0);
             delay(100);
             hideLEDS();
+            Serial.println();
+            Serial.println("[\e[0;31mFAILED\e[0;37m] Connecting to WiFi");
             return false;
         }
     }
@@ -215,6 +241,8 @@ bool clientSetup()
     delay(150);
     printPattern(0);
     hostIndex();
+    Serial.println();
+    Serial.println("[\e[0;32m  OK  \e[0;37m] Connecting to WiFi");
     return true;
 }
 
@@ -250,7 +278,8 @@ void hostIndex()
         diceRed = request->getParam(PARAM_R, true, false)->value().toInt();
         diceGreen = request->getParam(PARAM_G, true, false)->value().toInt();
         diceBlue = request->getParam(PARAM_B, true, false)->value().toInt();
-        dieRollResult = request->getParam(PARAM_RESULT, true, false)->value().toInt();
+        dieRollResult = request->getParam(PARAM_RESULT, true, false)
+                                ->value().toInt();
         rollRequested = true;
         lastActionTime = millis();
     }
@@ -281,7 +310,8 @@ void hostIndex()
 
     // Answer GET request /settings
     webServer.on("/settings", HTTP_GET, [](AsyncWebServerRequest *request)
-                 { request->send(LittleFS, "/settings.html", "text/html", false); });
+                 { request->send(LittleFS, "/settings.html", "text/html",
+                                 false); });
     webServer.serveStatic("/", LittleFS, "/");
 
     // Answer GET request /loadsettings
@@ -296,10 +326,14 @@ void hostIndex()
                  {
     if (request->hasParam(PARAM_DEVICE_TIMEOUT, true, false) &&
         request->hasParam(PARAM_LED_TIMEOUT, true, false) ) {
-        deep_sleep = request->getParam(PARAM_DEVICE_TIMEOUT, true, false)->value().toInt() *1000;
-        led_sleep = request->getParam(PARAM_LED_TIMEOUT, true, false)->value().toInt() *1000;
-    }   writeFile("/settings/devicetimeout.txt", std::to_string(deep_sleep).c_str());
-        writeFile("/settings/ledtimeout.txt", std::to_string(led_sleep).c_str());
+        deep_sleep = request->getParam(PARAM_DEVICE_TIMEOUT, true, false)
+                            ->value().toInt() *1000;
+        led_sleep = request->getParam(PARAM_LED_TIMEOUT, true, false)
+                            ->value().toInt() *1000;
+    }   writeFile("/settings/devicetimeout.txt", 
+                    std::to_string(deep_sleep).c_str());
+        writeFile("/settings/ledtimeout.txt", 
+                    std::to_string(led_sleep).c_str());
     
     request->send(200, "text/plain", "OK"); });
 
@@ -325,7 +359,7 @@ void hostManager()
     webServer.on("/hotspot-detect.html", [](AsyncWebServerRequest *request)
                  { request->redirect(MANAGER); }); // apple call home
     webServer.on("/mobile/status.php", [](AsyncWebServerRequest *request)
-                 { request->redirect(MANAGER); }); // ? call home
+                 { request->redirect(MANAGER); }); // various call home
 
     webServer.on("/submit", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
@@ -379,9 +413,11 @@ void hostManager()
 
 String readFile(const String path)
 {
+    Serial.println(INDENT + "Reading file at " + path);
     File file = LittleFS.open(path, "r");
     if (!file || file.isDirectory())
     {
+        Serial.println("[\e[0;31mFAILED\e[0;37m] Reading file");
         return String();
     }
 
@@ -391,6 +427,14 @@ String readFile(const String path)
         fileContent = file.readStringUntil('\n');
         break;
     }
+    if (fileContent == "")
+    {
+        Serial.println("[\e[0;31mFAILED\e[0;37m] Reading file: empty");
+    }
+    else
+    {
+        Serial.println("[\e[0;32m  OK  \e[0;37m] Reading file: " + fileContent);
+    }
 
     file.close();
     return fileContent;
@@ -398,27 +442,36 @@ String readFile(const String path)
 
 void writeFile(const String path, const char *message)
 {
-
+    Serial.println(INDENT + "Writing file at " + path);
     File file = LittleFS.open(path, "w");
     if (!file)
     {
+        Serial.println("[\e[0;31mFAILED\e[0;37m] Writing file");
         return;
     }
+    Serial.println("[\e[0;32m  OK  \e[0;37m] Writing file");
     file.close();
 }
 
 bool loadCredentials()
 {
+    Serial.println(INDENT + "Loading credentials:");
     for (int i = 0; i < 5; i++)
     {
         creds[i] = readFile(paths[i]);
+        if (creds[i] != "")
+            Serial.println(paths[i] + " = " + creds[i]);
     }
     if (creds[_SSID] == "")
     {
+        Serial.println("[\e[0;31mFAILED\e[0;37m] Loading credentials");
         return false;
     }
     else
+    {
+        Serial.println("[\e[0;32m  OK  \e[0;37m] Loading credentials");
         return true;
+    }
 }
 
 String getSettings()
@@ -440,7 +493,8 @@ bool handleFileRequest(AsyncWebServerRequest *request, String path)
         contentType = "text/css";
     if (LittleFS.exists(path))
     {
-        AsyncWebServerResponse *response = request->beginResponse(LittleFS, path, contentType);
+        AsyncWebServerResponse *response =
+            request->beginResponse(LittleFS, path, contentType);
         request->send(response);
         return true;
     }
