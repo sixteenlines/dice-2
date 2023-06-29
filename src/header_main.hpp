@@ -67,7 +67,7 @@ const std::vector<std::vector<int>> patterns = {
     {0, 4, 12, 20, 24},                // symbol 5
     {0, 4, 10, 14, 20, 24},            // symbol 6
     {6, 7, 8, 11, 12, 13, 16, 17, 18}, // BIGDOT 7
-    {0, 1, 2, 3, 4, 9, 14,             // LOADING 8
+    {0, 1, 2, 3, 4, 9, 14,             // SQUARE 8
      19, 24, 23, 22, 21,
      20, 15, 10, 5}};
 
@@ -82,23 +82,23 @@ public:
 };
 
 /* function declarations */
-void prerolldice(void);
-void marius(void);
-bool initWifi(void);
-bool clientSetup(void);
-void managerSetup(void);
-void initIO(void);
-void initLeds(void);
-void hostManager(void);
-void hostIndex(void);
-bool loadCredentials(void);
+void prerolldice();
+void marius();
+bool initWifi();
+bool clientSetup();
+void managerSetup();
+void initIO();
+void initLeds();
+void hostManager();
+void hostIndex();
+bool loadCredentials();
 void printPattern(uint8_t pattern, uint8_t r, uint8_t g, uint8_t b);
 void printPattern(uint8_t pattern);
 void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b);
-void showLEDS(void);
-void hideLEDS(void);
-void initFS(void);
-void initSettings(void);
+void showLEDS();
+void hideLEDS();
+void initFS();
+void initSettings();
 bool handleFileRequest(AsyncWebServerRequest *request, String path);
 void writeFile(const String path, const char *message);
 String readFile(const String path);

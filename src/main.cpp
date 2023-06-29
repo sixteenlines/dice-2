@@ -8,13 +8,13 @@ String creds[5] = {
     ""  // Subnet
 };
 
-/* Timer values */
+/* Timeout default values */
 unsigned long deep_sleep = 120000;
 unsigned long led_sleep = 20000;
 
 /* Initializing objects*/
 Adafruit_NeoPixel pixels =
-    Adafruit_NeoPixel(NUM_LEDS, LEDS_PIN, NEO_RGB + NEO_KHZ400);
+    Adafruit_NeoPixel(NUM_LEDS, LEDS_PIN, NEO_GRB + NEO_KHZ400);
 AsyncWebServer webServer(80);
 IPAddress localIP;
 IPAddress localGateway;
@@ -24,13 +24,12 @@ std::vector<led> ledgrid;
 JSONVar settings;
 
 /* Control vars */
-uint8_t roll = 0;
+uint8_t dieRollResult = 0;
 unsigned long lastActionTime = 0;
 unsigned long currentTime = 0;
-unsigned short period = 50;
-bool btn = false;
-bool sleep = false;
-bool manager = false;
+bool rollRequested = false;
+bool sleepRequested = false;
+bool managerRequested = false;
 uint8_t diceRed = 120;
 uint8_t diceGreen = 120;
 uint8_t diceBlue = 120;
@@ -49,20 +48,20 @@ void setup()
     }
     else
     {
-        sleep = true;
+        sleepRequested = true;
     }
 }
 
 /*###################################### MAIN ###############################*/
 void loop()
 {
-    if (manager)
+    if (managerRequested)
     {
         dnsServer.processNextRequest();
     }
     else
     {
-        if (sleep)
+        if (sleepRequested)
         {
             marius();
         }
@@ -70,23 +69,24 @@ void loop()
 
         if (!(digitalRead(BTN0_PIN)))
         {
-            roll = random(6) + 1;
-            btn = true;
+            dieRollResult = random(6) + 1;
+            rollRequested = true;
         }
 
-        if (btn)
+        if (rollRequested)
         {
-            if (currentTime - lastActionTime >= period)
+            static unsigned short prerollDisplayDuration = 50;
+            if (currentTime - lastActionTime >= prerollDisplayDuration)
             {
                 prerolldice();
                 lastActionTime = currentTime;
-                period += 50;
+                prerollDisplayDuration += 50;
             }
-            if (period == 400)
+            if (prerollDisplayDuration == 400)
             {
-                printPattern(roll, diceRed, diceGreen, diceBlue);
-                btn = false;
-                period = 0;
+                printPattern(dieRollResult, diceRed, diceGreen, diceBlue);
+                rollRequested = false;
+                prerollDisplayDuration = 50;
             }
         }
         if (currentTime - lastActionTime >= deep_sleep)
@@ -101,7 +101,7 @@ void loop()
 }
 
 // Creates 25 LED objects for easy manip
-void initLeds(void)
+void initLeds()
 {
     for (int i = 0; i < NUM_LEDS; i++)
     {
@@ -112,7 +112,7 @@ void initLeds(void)
     showLEDS();
 }
 
-void initIO(void)
+void initIO()
 {
     pinMode(BTN0_PIN, INPUT);
     pinMode(BTN1_PIN, INPUT);
@@ -122,12 +122,12 @@ void initIO(void)
     digitalWrite(RETENTION_PIN, HIGH);
 }
 
-void initFS(void)
+void initFS()
 {
     LittleFS.begin();
 }
 // Tries to read timeout settings from flash
-void initSettings(void)
+void initSettings()
 {
     if (!(readFile(paths[_DEVICE_TO]).toInt() == 0))
     {
@@ -138,13 +138,13 @@ void initSettings(void)
     }
 }
 
-bool initWifi(void)
+bool initWifi()
 {
     // Wifi manager boot requested
     if (digitalRead(BTN1_PIN) == LOW)
     {
         managerSetup();
-        manager = true;
+        managerRequested = true;
         return true;
     }
     // try to load stored creds
@@ -158,9 +158,9 @@ bool initWifi(void)
     }
 }
 
-void managerSetup(void)
+// Setup Access Point mode with wifi manager
+void managerSetup()
 {
-    // Setup AP
     WiFi.softAPConfig(IPAddress(8, 8, 8, 8), IPAddress(8, 8, 8, 8), IPAddress(255, 255, 255, 0));
     WiFi.softAP("MAGIC-DICE-SETUP", "noetmandel");
 
@@ -169,7 +169,8 @@ void managerSetup(void)
     hostManager();
 }
 
-bool clientSetup(void)
+// Setup station mode with credentials in ram
+bool clientSetup()
 {
     WiFi.mode(WIFI_STA);
     if (!(creds[_IPAD] == "" || creds[_GATE] == "" || creds[_SUBN] == ""))
@@ -218,20 +219,20 @@ bool clientSetup(void)
 }
 
 // prints a random die roll to the matrix
-void prerolldice(void)
+void prerolldice()
 {
     uint8_t preroll = random(6) + 1;
     printPattern(preroll, diceRed, diceGreen, diceBlue);
 }
 
 // pulls self-retention pin low, device turns off
-void marius(void)
+void marius()
 {
     digitalWrite(RETENTION_PIN, LOW);
 }
 
-/*################################### WEBSITE STUFF #########################*/
-void hostIndex(void)
+/*############################## WEBSITE STUFF ##############################*/
+void hostIndex()
 {
     // Route for root / web page
     webServer.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
@@ -249,8 +250,8 @@ void hostIndex(void)
         diceRed = request->getParam(PARAM_R, true, false)->value().toInt();
         diceGreen = request->getParam(PARAM_G, true, false)->value().toInt();
         diceBlue = request->getParam(PARAM_B, true, false)->value().toInt();
-        roll = request->getParam(PARAM_RESULT, true, false)->value().toInt();
-        btn = true;
+        dieRollResult = request->getParam(PARAM_RESULT, true, false)->value().toInt();
+        rollRequested = true;
         lastActionTime = millis();
     }
     request->send(200, "text/plain", "OK"); });
@@ -305,11 +306,11 @@ void hostIndex(void)
     // Answer GET request to /deepsleep
     webServer.on("/deepsleep", HTTP_GET, [](AsyncWebServerRequest *request)
                  {
-        sleep = true;
+        sleepRequested = true;
         request->send(200, "text/plain", "OK"); });
 }
 
-void hostManager(void)
+void hostManager()
 {
     webServer.onNotFound([](AsyncWebServerRequest *request)
                          {
@@ -335,33 +336,27 @@ void hostManager(void)
                 {
                     String paramName = p->name();
                     String paramValue = p->value().c_str();
-                    String message;
                     uint8_t writeOffset;
 
                     if (paramName == PARAM_INPUT_0)
                     {
                         writeOffset = _SSID;
-                        message = "SSID set to: ";
                     }
                     else if (paramName == PARAM_INPUT_1)
                     {
                         writeOffset = _PASS;
-                        message = "Password set to: ";
                     }
                     else if (paramName == PARAM_INPUT_2)
                     {
                         writeOffset = _IPAD;
-                        message = "IP Address set to: ";
                     }
                     else if (paramName == PARAM_INPUT_3)
                     {
                         writeOffset = _GATE;
-                        message = "Gateway set to: ";
                     }
                     else if (paramName == PARAM_INPUT_4)
                     {
                         writeOffset = _SUBN;
-                        message = "Subnet mask set to: ";
                     }
                     else
                     {
@@ -380,9 +375,8 @@ void hostManager(void)
             ESP.restart(); });
 }
 
-/*#############################################*/
-/*##########  FILE SYSTEM FUNCTIONS  ##########*/
-/*#############################################*/
+/*############################## FILESYSTEM STUFF ###########################*/
+
 String readFile(const String path)
 {
     File file = LittleFS.open(path, "r");
@@ -413,7 +407,7 @@ void writeFile(const String path, const char *message)
     file.close();
 }
 
-bool loadCredentials(void)
+bool loadCredentials()
 {
     for (int i = 0; i < 5; i++)
     {
@@ -453,9 +447,9 @@ bool handleFileRequest(AsyncWebServerRequest *request, String path)
     return false;
 }
 
-/*###################################*/
-/*########## LED functions ##########*/
-/*###################################*/
+/*############################ LED MATRIX CONTROL ###########################*/
+
+// Print pattern in specific color
 void printPattern(uint8_t pattern, uint8_t r, uint8_t g, uint8_t b)
 {
     for (int num = 0; num < 25; num++)
@@ -470,6 +464,7 @@ void printPattern(uint8_t pattern, uint8_t r, uint8_t g, uint8_t b)
     showLEDS();
 }
 
+// Print pattern in global color
 void printPattern(uint8_t pattern)
 {
     for (int num = 0; num < 25; num++)
@@ -484,6 +479,7 @@ void printPattern(uint8_t pattern)
     showLEDS();
 }
 
+// Preload color for specific LED
 void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b)
 {
     ledgrid[num].r = r;
@@ -491,6 +487,7 @@ void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b)
     ledgrid[num].b = b;
 }
 
+// Turns the matrix off without losing current pattern
 void hideLEDS()
 {
     for (int num = 0; num < NUM_LEDS; num++)
@@ -500,7 +497,8 @@ void hideLEDS()
     pixels.show();
 }
 
-void showLEDS(void)
+// Updates the matrix to reflect preloaded LED colors
+void showLEDS()
 {
     for (int num = 0; num < NUM_LEDS; num++)
     {
