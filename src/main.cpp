@@ -8,14 +8,13 @@ String creds[5] = {
     ""  // Subnet
 };
 
-/* Timeout default values */
-unsigned long deep_sleep = 120000;
-unsigned long led_sleep = 20000;
+unsigned long deep_sleep;
+unsigned long led_sleep;
 
 /* Initializing objects*/
 Adafruit_NeoPixel pixels =
     Adafruit_NeoPixel(NUM_LEDS, LEDS_PIN, NEO_GRB + NEO_KHZ400);
-AsyncWebServer webServer(80);
+AsyncWebServer webServer(80); // webserver at Port 80
 IPAddress localIP;
 IPAddress localGateway;
 IPAddress localSubnet;
@@ -59,13 +58,14 @@ void loop()
 {
     if (managerRequested)
     {
+        // we only handle dns requests while the wifi manager is running
         dnsServer.processNextRequest();
     }
     else
     {
         if (sleepRequested)
         {
-            marius();
+            sleep();
         }
         currentTime = millis();
 
@@ -77,6 +77,7 @@ void loop()
 
         if (rollRequested)
         {
+            // rolling a few times to simulate a real die
             static unsigned short prerollDisplayDuration = 50;
             if (currentTime - lastActionTime >= prerollDisplayDuration)
             {
@@ -93,7 +94,7 @@ void loop()
         }
         if (currentTime - lastActionTime >= deep_sleep)
         {
-            marius();
+            sleep();
         }
         if (currentTime - lastActionTime >= led_sleep)
         {
@@ -119,11 +120,11 @@ void initIO()
 {
     Serial.begin(115200);
     Serial.println();
-    pinMode(BTN0_PIN, INPUT);
-    pinMode(BTN1_PIN, INPUT);
-    pinMode(BTN2_PIN, INPUT);
+    pinMode(BTN0_PIN, INPUT); // used for rolling manually
+    pinMode(BTN1_PIN, INPUT); // hold on boot for wifi manager
+    pinMode(BTN2_PIN, INPUT); // free
     pinMode(RETENTION_PIN, OUTPUT);
-    pinMode(STATUSLED_PIN, OUTPUT);
+    pinMode(STATUSLED_PIN, OUTPUT); // can be used to control onboard led
     digitalWrite(RETENTION_PIN, HIGH);
     Serial.println("[\e[0;32m  OK  \e[0;37m] Initializing system I/O");
 }
@@ -138,10 +139,11 @@ void initFS()
 // Tries to read timeout settings from flash
 void initSettings()
 {
-    if (!(readFile(paths[_DEVICE_TO]).toInt() == 0))
+
+    deep_sleep = readFile(paths[_DEVICE_TO]).toInt();
+    led_sleep = readFile(paths[_LED_TO]).toInt();
+    if (deep_sleep != 0 && led_sleep != 0)
     {
-        deep_sleep = readFile(paths[_DEVICE_TO]).toInt();
-        led_sleep = readFile(paths[_LED_TO]).toInt();
         Serial.println("[\e[0;32m  OK  \e[0;37m] Loading settings");
     }
     else
@@ -182,8 +184,7 @@ void managerSetup()
     WiFi.softAPConfig(IPAddress(8, 8, 8, 8), IPAddress(8, 8, 8, 8),
                       IPAddress(255, 255, 255, 0));
     WiFi.softAP(AP_SSID, AP_PW);
-    Serial.print("         ");
-    Serial.println("Connect to: " + AP_SSID + " with password: " + AP_PW);
+    Serial.println(INDENT + "Connect to: " + AP_SSID + " with password: " + AP_PW);
     localIP = WiFi.softAPIP();
     dnsServer.start(53, "*", localIP);
     hostManager();
@@ -240,7 +241,7 @@ bool clientSetup()
     printPattern(BIGDOT, 0, 255, 0); // success = green dot
     delay(150);
     printPattern(0);
-    hostIndex();
+    hostIndex(); // host the usual webpage
     Serial.println();
     Serial.println("[\e[0;32m  OK  \e[0;37m] Connecting to WiFi");
     return true;
@@ -254,7 +255,7 @@ void prerolldice()
 }
 
 // pulls self-retention pin low, device turns off
-void marius()
+void sleep()
 {
     digitalWrite(RETENTION_PIN, LOW);
 }
@@ -402,6 +403,7 @@ void hostManager()
             }
 
             String response = "Done. ESP will restart.";
+            Serial.println(INDENT + response);
             request->send(200, "text/plain", response);
             printPattern(BIGDOT, 0, 255, 255);
             delay(150);
@@ -446,10 +448,17 @@ void writeFile(const String path, const char *message)
     File file = LittleFS.open(path, "w");
     if (!file)
     {
-        Serial.println("[\e[0;31mFAILED\e[0;37m] Writing file");
+        Serial.println("[\e[0;31mFAILED\e[0;37m] Opening file");
         return;
     }
-    Serial.println("[\e[0;32m  OK  \e[0;37m] Writing file");
+    else if (file.print(message))
+    {
+        Serial.println("[\e[0;32m  OK  \e[0;37m] Writing file");
+    }
+    else
+    {
+        Serial.println("[\e[0;31mFAILED\e[0;37m] Reading file");
+    }
     file.close();
 }
 

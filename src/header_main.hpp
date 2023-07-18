@@ -49,7 +49,7 @@ const String MANAGER = "http://8.8.8.8";
 
 /* Access Point settings */
 const String AP_SSID = "MAGIC-DICE-SETUP";
-const String AP_PW = "eis2020x";
+const String AP_PW = "eisdiele";
 
 /* Serial format macros */
 const String INDENT = "         ";
@@ -90,7 +90,7 @@ public:
 
 /* function declarations */
 void prerolldice();
-void marius();
+void sleep();
 bool initWifi();
 bool clientSetup();
 void managerSetup();
