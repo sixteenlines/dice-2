@@ -28,7 +28,7 @@ Nach absenden des Formulars startet der Controller neu, bei erfolgreicher Verbin
 
 Wurde im Formular eine statische IP vergeben, kann man das Webinterface unter der eingestellten IP erreichen.
 
-Wird DHCP verwendet kann die erhaltene IP über die [serielle Schnittstelle](#Serielle-Schnitstelle) ausgelesen werden.
+Wird DHCP verwendet kann die erhaltene IP über die [serielle Schnittstelle](#serielle-schnitstelle) ausgelesen werden.
 
 Es kann nun über betätigen des linken Tasters oder den Button im Webinterface gewürfelt werden.
 
