@@ -68,12 +68,12 @@ Ebenso ist im Webinterface die Matrix als <div> Container widergespiegelt. Unter
 
 Ebenso findet sich hier der WiFi-Manager wieder, falls in ein anderes Netzwerk gewechselt werden soll. Nach Eingabe muss jedoch der Controller erst [neu gestartet](#einschalten) werden.
 
-### Serielle Schnitstelle
+### Serielle Schnittstelle
 
 Verbindet man das Gerät über USB, können mithilfe eines Terminalprogramms Debugging-Informationen und von DHCP erhaltene IP-Adressen ausgelesen werden.
 
 Der Controller sendet standardmäßig mit einer Baudrate von 115200.
 
-Zur Fehlerdiagnose ist Empfohlen, den Controller zu verbinden, die entsprechende serielle Schnittstelle zu öffnen und zunächst einen [reset](#einschalten) durchzuführen.
+Zur Fehlerdiagnose ist ratsam, den Controller zu verbinden, die entsprechende serielle Schnittstelle zu öffnen und zunächst einen [reset](#einschalten) durchzuführen.
 
 Es werden nun sämtliche Schritte des Bootvorgangs gespiegelt. Außerdem werden Anfragen an den Webserver gelogt.
