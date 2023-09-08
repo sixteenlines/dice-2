@@ -1,0 +1,231 @@
+%TF.GenerationSoftware,KiCad,Pcbnew,7.0.7*%
+%TF.CreationDate,2023-09-08T08:11:20+02:00*%
+%TF.ProjectId,D1Mini_Wuerfel_aktuell,44314d69-6e69-45f5-9775-657266656c5f,rev?*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,Copper,L2,Bot*%
+%TF.FilePolarity,Positive*%
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+G04 Created by KiCad (PCBNEW 7.0.7) date 2023-09-08 08:11:20*
+%MOMM*%
+%LPD*%
+G01*
+G04 APERTURE LIST*
+G04 Aperture macros list*
+%AMOutline5P*
+0 Free polygon, 5 corners , with rotation*
+0 The origin of the aperture is its center*
+0 number of corners: always 5*
+0 $1 to $10 corner X, Y*
+0 $11 Rotation angle, in degrees counterclockwise*
+0 create outline with 5 corners*
+4,1,5,$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$1,$2,$11*%
+%AMOutline6P*
+0 Free polygon, 6 corners , with rotation*
+0 The origin of the aperture is its center*
+0 number of corners: always 6*
+0 $1 to $12 corner X, Y*
+0 $13 Rotation angle, in degrees counterclockwise*
+0 create outline with 6 corners*
+4,1,6,$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$1,$2,$13*%
+%AMOutline7P*
+0 Free polygon, 7 corners , with rotation*
+0 The origin of the aperture is its center*
+0 number of corners: always 7*
+0 $1 to $14 corner X, Y*
+0 $15 Rotation angle, in degrees counterclockwise*
+0 create outline with 7 corners*
+4,1,7,$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$1,$2,$15*%
+%AMOutline8P*
+0 Free polygon, 8 corners , with rotation*
+0 The origin of the aperture is its center*
+0 number of corners: always 8*
+0 $1 to $16 corner X, Y*
+0 $17 Rotation angle, in degrees counterclockwise*
+0 create outline with 8 corners*
+4,1,8,$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$1,$2,$17*%
+G04 Aperture macros list end*
+%TA.AperFunction,ComponentPad*%
+%ADD10Outline8P,-1.050000X0.434924X-0.434924X1.050000X0.434924X1.050000X1.050000X0.434924X1.050000X-0.434924X0.434924X-1.050000X-0.434924X-1.050000X-1.050000X-0.434924X180.000000*%
+%TD*%
+%TA.AperFunction,ComponentPad*%
+%ADD11Outline8P,-1.050000X0.434924X-0.434924X1.050000X0.434924X1.050000X1.050000X0.434924X1.050000X-0.434924X0.434924X-1.050000X-0.434924X-1.050000X-1.050000X-0.434924X0.000000*%
+%TD*%
+%TA.AperFunction,ComponentPad*%
+%ADD12Outline8P,-0.900000X0.372792X-0.372792X0.900000X0.372792X0.900000X0.900000X0.372792X0.900000X-0.372792X0.372792X-0.900000X-0.372792X-0.900000X-0.900000X-0.372792X270.000000*%
+%TD*%
+%TA.AperFunction,ComponentPad*%
+%ADD13Outline8P,-0.900000X0.372792X-0.372792X0.900000X0.372792X0.900000X0.900000X0.372792X0.900000X-0.372792X0.372792X-0.900000X-0.372792X-0.900000X-0.900000X-0.372792X90.000000*%
+%TD*%
+%TA.AperFunction,ComponentPad*%
+%ADD14Outline8P,-1.050000X0.434924X-0.434924X1.050000X0.434924X1.050000X1.050000X0.434924X1.050000X-0.434924X0.434924X-1.050000X-0.434924X-1.050000X-1.050000X-0.434924X270.000000*%
+%TD*%
+%TA.AperFunction,ComponentPad*%
+%ADD15R,2.000000X2.000000*%
+%TD*%
+%TA.AperFunction,ComponentPad*%
+%ADD16O,1.600000X2.000000*%
+%TD*%
+%TA.AperFunction,ViaPad*%
+%ADD17C,2.000000*%
+%TD*%
+%TA.AperFunction,ViaPad*%
+%ADD18C,1.200000*%
+%TD*%
+%TA.AperFunction,Conductor*%
+%ADD19C,2.000000*%
+%TD*%
+%TA.AperFunction,Conductor*%
+%ADD20C,0.300000*%
+%TD*%
+G04 APERTURE END LIST*
+D10*
+%TO.P,U2,1,+VIN*%
+%TO.N,U2_VIN*%
+X147540000Y-131000000D03*
+%TO.P,U2,2,GND*%
+%TO.N,GND*%
+X145000000Y-131000000D03*
+%TO.P,U2,3,+VOUT*%
+%TO.N,+5V*%
+X142460000Y-131000000D03*
+%TD*%
+%TO.P,D26,1,1*%
+%TO.N,+5V*%
+X146560000Y-135250000D03*
+%TO.P,D26,2,2*%
+%TO.N,+5VD*%
+X138940000Y-135250000D03*
+%TD*%
+D11*
+%TO.P,D28,1,1*%
+%TO.N,/D7*%
+X149170000Y-149000000D03*
+%TO.P,D28,2,2*%
+%TO.N,Net-(D27-Pad2)*%
+X159330000Y-149000000D03*
+%TD*%
+D12*
+%TO.P,BAT1,1,1*%
+%TO.N,+9V*%
+X105250000Y-143580000D03*
+%TO.P,BAT1,2,2*%
+%TO.N,GND*%
+X105250000Y-133420000D03*
+%TD*%
+D13*
+%TO.P,R2,1,1*%
+%TO.N,/D8*%
+X160500000Y-120580000D03*
+%TO.P,R2,2,2*%
+%TO.N,Net-(D5-DIN)*%
+X160500000Y-110420000D03*
+%TD*%
+D11*
+%TO.P,R1_THT1,1,1*%
+%TO.N,+9V*%
+X105170000Y-137160000D03*
+%TO.P,R1_THT1,2,2*%
+%TO.N,XFET*%
+X115330000Y-137160000D03*
+%TD*%
+%TO.P,D27,1,1*%
+%TO.N,XFET*%
+X138420000Y-144000000D03*
+%TO.P,D27,2,2*%
+%TO.N,Net-(D27-Pad2)*%
+X148580000Y-144000000D03*
+%TD*%
+D14*
+%TO.P,K1,1,1*%
+%TO.N,+5V*%
+X107000000Y-105460000D03*
+%TO.P,K1,2,2*%
+%TO.N,Net-(D21-DOUT)*%
+X107000000Y-108000000D03*
+%TO.P,K1,3,3*%
+%TO.N,GND*%
+X107000000Y-110540000D03*
+%TD*%
+D15*
+%TO.P,U1,1,~{RST}*%
+%TO.N,unconnected-(U1-~{RST}-Pad1)*%
+X128070000Y-152945000D03*
+D16*
+%TO.P,U1,2,A0*%
+%TO.N,unconnected-(U1-A0-Pad2)*%
+X125530000Y-152945000D03*
+%TO.P,U1,3,D0*%
+%TO.N,unconnected-(U1-D0-Pad3)*%
+X122990000Y-152945000D03*
+%TO.P,U1,4,SCK/D5*%
+%TO.N,/D5*%
+X120450000Y-152945000D03*
+%TO.P,U1,5,MISO/D6*%
+%TO.N,/D6*%
+X117910000Y-152945000D03*
+%TO.P,U1,6,MOSI/D7*%
+%TO.N,/D7*%
+X115370000Y-152945000D03*
+%TO.P,U1,7,CS/D8*%
+%TO.N,/D8*%
+X112830000Y-152945000D03*
+%TO.P,U1,8,3V3*%
+%TO.N,unconnected-(U1-3V3-Pad8)*%
+X110290000Y-152945000D03*
+%TO.P,U1,9,5V*%
+%TO.N,+5VD*%
+X110290000Y-130085000D03*
+%TO.P,U1,10,GND*%
+%TO.N,GND*%
+X112830000Y-130085000D03*
+%TO.P,U1,11,D4*%
+%TO.N,unconnected-(U1-D4-Pad11)*%
+X115370000Y-130085000D03*
+%TO.P,U1,12,D3*%
+%TO.N,unconnected-(U1-D3-Pad12)*%
+X117910000Y-130085000D03*
+%TO.P,U1,13,SDA/D2*%
+%TO.N,unconnected-(U1-SDA{slash}D2-Pad13)*%
+X120450000Y-130085000D03*
+%TO.P,U1,14,SCL/D1*%
+%TO.N,D1*%
+X122990000Y-130085000D03*
+%TO.P,U1,15,RX*%
+%TO.N,unconnected-(U1-RX-Pad15)*%
+X125530000Y-130085000D03*
+%TO.P,U1,16,TX*%
+%TO.N,unconnected-(U1-TX-Pad16)*%
+X128070000Y-130085000D03*
+%TD*%
+D17*
+%TO.N,GND*%
+X107500000Y-127250000D03*
+X107500000Y-121500000D03*
+D18*
+%TO.N,XFET*%
+X134750000Y-135500000D03*
+X134750000Y-144000000D03*
+%TO.N,/D7*%
+X117250000Y-150649500D03*
+X117250000Y-147750000D03*
+%TO.N,D1*%
+X122750000Y-138250000D03*
+X122750000Y-133500000D03*
+%TD*%
+D19*
+%TO.N,GND*%
+X107500000Y-121500000D02*
+X107500000Y-127250000D01*
+D20*
+%TO.N,XFET*%
+X134750000Y-135500000D02*
+X134750000Y-144000000D01*
+%TO.N,/D7*%
+X117250000Y-150649500D02*
+X117250000Y-147750000D01*
+%TO.N,D1*%
+X122750000Y-138125000D02*
+X122750000Y-133375000D01*
+%TD*%
+M02*
