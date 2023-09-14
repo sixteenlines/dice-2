@@ -5,12 +5,12 @@
       "Application": "Pcbnew",
       "Version": "7.0.7"
     },
-    "CreationDate": "2023-09-08T08:11:20+02:00"
+    "CreationDate": "2023-09-14T14:46:07+02:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
-      "Name": "D1Mini_Wuerfel_aktuell",
-      "GUID": "44314d69-6e69-45f5-9775-657266656c5f",
+      "Name": "WebW_rfel",
+      "GUID": "57656257-fc72-4666-956c-2e6b69636164",
       "Revision": "rev?"
     },
     "Size": {
@@ -34,47 +34,47 @@
   ],
   "FilesAttributes": [
     {
-      "Path": "D1Mini_Wuerfel_aktuell-F_Cu.gbr",
+      "Path": "WebW\\u00FCrfel-F_Cu.gbr",
       "FileFunction": "Copper,L1,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "D1Mini_Wuerfel_aktuell-B_Cu.gbr",
+      "Path": "WebW\\u00FCrfel-B_Cu.gbr",
       "FileFunction": "Copper,L2,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "D1Mini_Wuerfel_aktuell-F_Paste.gbr",
+      "Path": "WebW\\u00FCrfel-F_Paste.gbr",
       "FileFunction": "SolderPaste,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "D1Mini_Wuerfel_aktuell-B_Paste.gbr",
+      "Path": "WebW\\u00FCrfel-B_Paste.gbr",
       "FileFunction": "SolderPaste,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "D1Mini_Wuerfel_aktuell-F_Silkscreen.gbr",
+      "Path": "WebW\\u00FCrfel-F_Silkscreen.gbr",
       "FileFunction": "Legend,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "D1Mini_Wuerfel_aktuell-B_Silkscreen.gbr",
+      "Path": "WebW\\u00FCrfel-B_Silkscreen.gbr",
       "FileFunction": "Legend,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "D1Mini_Wuerfel_aktuell-F_Mask.gbr",
+      "Path": "WebW\\u00FCrfel-F_Mask.gbr",
       "FileFunction": "SolderMask,Top",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "D1Mini_Wuerfel_aktuell-B_Mask.gbr",
+      "Path": "WebW\\u00FCrfel-B_Mask.gbr",
       "FileFunction": "SolderMask,Bot",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "D1Mini_Wuerfel_aktuell-Edge_Cuts.gbr",
+      "Path": "WebW\\u00FCrfel-Edge_Cuts.gbr",
       "FileFunction": "Profile",
       "FilePolarity": "Positive"
     }

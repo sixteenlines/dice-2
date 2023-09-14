@@ -4,6 +4,11 @@
 
   (paper "A4")
 
+  (title_block
+    (title "D1 Web-Würfel")
+    (company "B.Braun Melsungen")
+  )
+
   (lib_symbols
     (symbol "D1Mini_Wuerfel_aktuell-eagle-import:1254.1017_DRUCKTASTER_12X12MM_34" (in_bom yes) (on_board yes)
       (property "Reference" "S" (at -5.08 5.715 0)

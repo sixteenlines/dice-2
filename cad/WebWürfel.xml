@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>C:\Users\bremdode\repos\dice-2\cad\D1Mini_Wuerfel_aktuell.kicad_sch</source>
+    <date>14.09.2023 08:05:34</date>
+    <tool>Eeschema 7.0.7</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>D1 Web-Würfel</title>
+        <company>B.Braun Melsungen</company>
+        <rev/>
+        <date/>
+        <source>D1Mini_Wuerfel_aktuell.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="BAT1">
+      <value>9V</value>
+      <footprint>D1Mini_Wuerfel_aktuell:BATTERIE_2</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="BATTERIE_2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>35594694-0896-45c9-9e6f-e9426dc80e78</tstamps>
+    </comp>
+    <comp ref="D1">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b32de7d0-1606-46c5-94fa-c18b820d7808</tstamps>
+    </comp>
+    <comp ref="D2">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a891a9a3-949b-4a22-a306-55bd06d7eaa7</tstamps>
+    </comp>
+    <comp ref="D3">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>dd1a6cbb-0633-4ac0-b122-852bc89bebe9</tstamps>
+    </comp>
+    <comp ref="D4">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9682579b-8efe-413b-a2ec-0bbecbe4d238</tstamps>
+    </comp>
+    <comp ref="D5">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9c754db1-13e1-401d-a085-55ecdd46ebc2</tstamps>
+    </comp>
+    <comp ref="D6">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c99dd2f7-5d91-4346-8bf1-baf95af17064</tstamps>
+    </comp>
+    <comp ref="D7">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a98ae356-aec2-4470-a20c-79dca8068daf</tstamps>
+    </comp>
+    <comp ref="D8">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>64e9749b-eabb-4557-8c9b-88a95e813114</tstamps>
+    </comp>
+    <comp ref="D9">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4d48d708-ea43-49f4-a655-531b2d826f23</tstamps>
+    </comp>
+    <comp ref="D10">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0bf7e835-e0d6-4131-aa98-b6656e89c7db</tstamps>
+    </comp>
+    <comp ref="D11">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f7b46d07-2f44-46cd-983b-72e588651553</tstamps>
+    </comp>
+    <comp ref="D12">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8b865537-f738-44bb-aad8-8cadd046e83a</tstamps>
+    </comp>
+    <comp ref="D13">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>82ee20f7-208a-44ba-8676-881071b3ba5b</tstamps>
+    </comp>
+    <comp ref="D14">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>50fa804b-4535-4d53-bea5-48f7fadd2807</tstamps>
+    </comp>
+    <comp ref="D15">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a9dde4c5-9967-4b18-b210-a129c4d0d0b9</tstamps>
+    </comp>
+    <comp ref="D16">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7ae5e7e5-36ed-4c99-8ee8-8ac30896e6c4</tstamps>
+    </comp>
+    <comp ref="D17">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>86ae0c27-3f57-469c-a57d-da56545a52b6</tstamps>
+    </comp>
+    <comp ref="D18">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>24813216-4463-4308-822b-ba39e4c4e1cd</tstamps>
+    </comp>
+    <comp ref="D19">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d42892cd-50c7-4735-8568-ae4cf6d7e2ba</tstamps>
+    </comp>
+    <comp ref="D20">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9372eac8-1d45-48dc-9fca-3a9b44d1a100</tstamps>
+    </comp>
+    <comp ref="D21">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6d9ec97d-26ba-4227-959e-eba34bfbbdb1</tstamps>
+    </comp>
+    <comp ref="D22">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>dcbfe417-38e5-4432-9f97-02ed33e8ffee</tstamps>
+    </comp>
+    <comp ref="D23">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3d3c5123-625c-4a4d-846e-3a97c8531975</tstamps>
+    </comp>
+    <comp ref="D24">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f950841e-11a7-4444-be5a-fdb24cd23ec4</tstamps>
+    </comp>
+    <comp ref="D25">
+      <value>WS2812B</value>
+      <footprint>D1Mini_Wuerfel_aktuell:WS2812B_9</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>958d8afd-0e30-4f53-8c75-b6f92da5ee06</tstamps>
+    </comp>
+    <comp ref="D26">
+      <value>1N4148</value>
+      <footprint>D1Mini_Wuerfel_aktuell:DO35_1</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="1N4148_1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2e66ce9a-677a-43b3-80df-f504dde70b46</tstamps>
+    </comp>
+    <comp ref="D27">
+      <value>1N5817</value>
+      <footprint>D1Mini_Wuerfel_aktuell:DO41_40</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="1N5817_40" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>43a38094-0810-4fcf-b65d-de60d464abdf</tstamps>
+    </comp>
+    <comp ref="D28">
+      <value>1N5817</value>
+      <footprint>D1Mini_Wuerfel_aktuell:DO41_41</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="1N5817_41" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cdd79594-2f2c-4940-b82a-7dbfaa5323ef</tstamps>
+    </comp>
+    <comp ref="K1">
+      <value>1x03</value>
+      <footprint>D1Mini_Wuerfel_aktuell:1X03_BUCHSE_8</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="K1X03_BUCHSE_8" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>67d336ad-de02-4779-9118-b6726d5017b5</tstamps>
+    </comp>
+    <comp ref="R1_SMT1">
+      <value>100K</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>41844c2a-c317-4ad8-8fca-383a5625049c</tstamps>
+    </comp>
+    <comp ref="R1_THT1">
+      <value>100K</value>
+      <footprint>D1Mini_Wuerfel_aktuell:0207_37</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="R_KOHLE_1M_0207_37" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2ffc2472-89ff-4657-8a4a-187e31d5d042</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>330</value>
+      <footprint>D1Mini_Wuerfel_aktuell:0207_44</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="R_KOHLE_330-OHM_0207_44" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>08195f0f-9c6c-48ad-9df8-bb9814cde0d2</tstamps>
+    </comp>
+    <comp ref="S1">
+      <value>SPST</value>
+      <footprint>D1Mini_Wuerfel_aktuell:1254.1017_DRUCKTASTER_34</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="1254.1017_DRUCKTASTER_12X12MM_34" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d3128b5a-1dbe-42dc-b266-f75e05d9cc91</tstamps>
+    </comp>
+    <comp ref="S2">
+      <value>SPST</value>
+      <footprint>D1Mini_Wuerfel_aktuell:1254.1017_DRUCKTASTER_34</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="1254.1017_DRUCKTASTER_12X12MM_34" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>70486d47-3694-42ee-9fa6-42d37a0e2d74</tstamps>
+    </comp>
+    <comp ref="S3">
+      <value>SPST</value>
+      <footprint>D1Mini_Wuerfel_aktuell:1254.1017_DRUCKTASTER_34</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="1254.1017_DRUCKTASTER_12X12MM_34" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bc9bcd36-6a54-4494-b65f-7e838c628ca2</tstamps>
+    </comp>
+    <comp ref="T1">
+      <value>IRF9952</value>
+      <footprint>D1Mini_Wuerfel_aktuell:SO8_SOT96-1_39</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="IRF9952_39" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6a764582-3670-4106-8b19-c27823927c08</tstamps>
+    </comp>
+    <comp ref="T2">
+      <value>FDN337N</value>
+      <footprint>D1Mini_Wuerfel_aktuell:SOT-23_3_42</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="FDN337N_42" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6cfa244e-df67-43b4-9b7c-68068517e4f2</tstamps>
+    </comp>
+    <comp ref="T3">
+      <value>IRLML9301</value>
+      <footprint>D1Mini_Wuerfel_aktuell:SOT-23_3_43</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="IRLML9301TRPBF_43" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5a59bc00-283b-4e2d-8733-8c0589318ee8</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>WeMos_D1_mini</value>
+      <footprint>Module:WEMOS_D1_mini_light</footprint>
+      <datasheet>https://wiki.wemos.cc/products:d1:d1_mini#documentation</datasheet>
+      <libsource lib="MCU_Module" part="WeMos_D1_mini" description="32-bit microcontroller module with WiFi"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <property name="ki_description" value="32-bit microcontroller module with WiFi"/>
+      <property name="ki_keywords" value="ESP8266 WiFi microcontroller ESP8266EX"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7174bb9c-0ed6-4989-ba16-d8eec35fb60d</tstamps>
+    </comp>
+    <comp ref="U2">
+      <value>TSR1-2450</value>
+      <footprint>D1Mini_Wuerfel_aktuell:TRACO-TSR1-24_0</footprint>
+      <libsource lib="D1Mini_Wuerfel_aktuell-eagle-import" part="TSR1-2450_0" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="D1Mini_Wuerfel_aktuell.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>05ad8c83-8236-4246-a577-6fcf7fe4468f</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="1254.1017_DRUCKTASTER_12X12MM_34">
+      <fields>
+        <field name="Reference">S</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:1254.1017_DRUCKTASTER_34</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="1N4148_1">
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:DO35_1</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="1N5817_40">
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:DO41_40</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="1N5817_41">
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:DO41_41</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="BATTERIE_2">
+      <fields>
+        <field name="Reference">X</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:BATTERIE_2</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="power_in"/>
+        <pin num="2" name="2" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="FDN337N_42">
+      <fields>
+        <field name="Reference">T</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:SOT-23_3_42</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="IRF9952_39">
+      <fields>
+        <field name="Reference">T</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:SO8_SOT96-1_39</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+        <pin num="4" name="4" type="passive"/>
+        <pin num="5" name="5" type="passive"/>
+        <pin num="6" name="6" type="passive"/>
+        <pin num="7" name="7" type="passive"/>
+        <pin num="8" name="8" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="IRLML9301TRPBF_43">
+      <fields>
+        <field name="Reference">T</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:SOT-23_3_43</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="K1X03_BUCHSE_8">
+      <fields>
+        <field name="Reference">K</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:1X03_BUCHSE_8</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="R_KOHLE_1M_0207_37">
+      <fields>
+        <field name="Reference">R1_THT1</field>
+        <field name="Value">100K</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:0207_37</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="R_KOHLE_330-OHM_0207_44">
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:0207_44</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="TSR1-2450_0">
+      <fields>
+        <field name="Reference">IC</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:TRACO-TSR1-24_0</field>
+      </fields>
+      <pins>
+        <pin num="1" name="+VIN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="+VOUT" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="D1Mini_Wuerfel_aktuell-eagle-import" part="WS2812B_9">
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Footprint">D1Mini_Wuerfel_aktuell:WS2812B_9</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VDD" type="passive"/>
+        <pin num="2" name="DOUT" type="passive"/>
+        <pin num="3" name="VSS" type="passive"/>
+        <pin num="4" name="DIN" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="MCU_Module" part="WeMos_D1_mini">
+      <description>32-bit microcontroller module with WiFi</description>
+      <docs>https://wiki.wemos.cc/products:d1:d1_mini#documentation</docs>
+      <footprints>
+        <fp>WEMOS*D1*mini*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U1</field>
+        <field name="Value">WeMos_D1_mini</field>
+        <field name="Footprint">Module:WEMOS_D1_mini_light</field>
+        <field name="Datasheet">https://wiki.wemos.cc/products:d1:d1_mini#documentation</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~{RST}" type="input"/>
+        <pin num="2" name="A0" type="input"/>
+        <pin num="3" name="D0" type="bidirectional"/>
+        <pin num="4" name="SCK/D5" type="bidirectional"/>
+        <pin num="5" name="MISO/D6" type="bidirectional"/>
+        <pin num="6" name="MOSI/D7" type="bidirectional"/>
+        <pin num="7" name="CS/D8" type="bidirectional"/>
+        <pin num="8" name="3V3" type="power_out"/>
+        <pin num="9" name="5V" type="power_in"/>
+        <pin num="10" name="GND" type="power_in"/>
+        <pin num="11" name="D4" type="bidirectional"/>
+        <pin num="12" name="D3" type="bidirectional"/>
+        <pin num="13" name="SDA/D2" type="bidirectional"/>
+        <pin num="14" name="SCL/D1" type="bidirectional"/>
+        <pin num="15" name="RX" type="input"/>
+        <pin num="16" name="TX" type="output"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="D1Mini_Wuerfel_aktuell-eagle-import">
+      <uri>C:\Users\bremdode\repos\dice-2\cad/D1Mini_Wuerfel_aktuell-eagle-import.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Device.kicad_sym</uri>
+    </library>
+    <library logical="MCU_Module">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/MCU_Module.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+5V">
+      <node ref="D1" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D10" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D11" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D12" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D13" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D14" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D15" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D16" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D17" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D18" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D19" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D2" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D20" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D21" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D22" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D23" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D24" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D25" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D26" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="D3" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D4" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D5" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D6" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D7" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D8" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="D9" pin="1" pinfunction="VDD" pintype="passive"/>
+      <node ref="K1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U2" pin="3" pinfunction="+VOUT" pintype="power_in"/>
+    </net>
+    <net code="2" name="+5VD">
+      <node ref="D26" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U1" pin="9" pinfunction="5V" pintype="power_in"/>
+    </net>
+    <net code="3" name="+9V">
+      <node ref="BAT1" pin="1" pinfunction="1" pintype="power_in"/>
+      <node ref="R1_SMT1" pin="1" pintype="passive"/>
+      <node ref="R1_THT1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="T1" pin="3" pinfunction="3" pintype="passive"/>
+      <node ref="T3" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="4" name="/D5">
+      <node ref="S3" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="SCK/D5" pintype="bidirectional"/>
+    </net>
+    <net code="5" name="/D6">
+      <node ref="S2" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U1" pin="5" pinfunction="MISO/D6" pintype="bidirectional"/>
+    </net>
+    <net code="6" name="/D7">
+      <node ref="D28" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U1" pin="6" pinfunction="MOSI/D7" pintype="bidirectional"/>
+    </net>
+    <net code="7" name="/D8">
+      <node ref="R2" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U1" pin="7" pinfunction="CS/D8" pintype="bidirectional"/>
+    </net>
+    <net code="8" name="D1">
+      <node ref="T1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="T2" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U1" pin="14" pinfunction="SCL/D1" pintype="bidirectional"/>
+    </net>
+    <net code="9" name="GND">
+      <node ref="BAT1" pin="2" pinfunction="2" pintype="power_in"/>
+      <node ref="D1" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D10" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D11" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D12" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D13" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D14" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D15" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D16" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D17" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D18" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D19" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D2" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D20" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D21" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D22" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D23" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D24" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D25" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D3" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D4" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D5" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D6" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D7" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D8" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="D9" pin="3" pinfunction="VSS" pintype="passive"/>
+      <node ref="K1" pin="3" pinfunction="3" pintype="passive"/>
+      <node ref="S1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="S2" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="S3" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="T1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="T2" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U1" pin="10" pinfunction="GND" pintype="power_in"/>
+      <node ref="U2" pin="2" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="10" name="Net-(D1-DIN)">
+      <node ref="D1" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D2" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="11" name="Net-(D1-DOUT)">
+      <node ref="D1" pin="2" pinfunction="DOUT" pintype="passive"/>
+      <node ref="D10" pin="4" pinfunction="DIN" pintype="passive"/>
+    </net>
+    <net code="12" name="Net-(D2-DIN)">
+      <node ref="D2" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D3" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="13" name="Net-(D3-DIN)">
+      <node ref="D3" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D4" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="14" name="Net-(D4-DIN)">
+      <node ref="D4" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D5" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="15" name="Net-(D5-DIN)">
+      <node ref="D5" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="R2" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="16" name="Net-(D6-DIN)">
+      <node ref="D6" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D7" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="17" name="Net-(D7-DIN)">
+      <node ref="D7" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D8" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="18" name="Net-(D8-DIN)">
+      <node ref="D8" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D9" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="19" name="Net-(D10-DOUT)">
+      <node ref="D10" pin="2" pinfunction="DOUT" pintype="passive"/>
+      <node ref="D9" pin="4" pinfunction="DIN" pintype="passive"/>
+    </net>
+    <net code="20" name="Net-(D11-DIN)">
+      <node ref="D11" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D12" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="21" name="Net-(D11-DOUT)">
+      <node ref="D11" pin="2" pinfunction="DOUT" pintype="passive"/>
+      <node ref="D20" pin="4" pinfunction="DIN" pintype="passive"/>
+    </net>
+    <net code="22" name="Net-(D12-DIN)">
+      <node ref="D12" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D13" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="23" name="Net-(D13-DIN)">
+      <node ref="D13" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D14" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="24" name="Net-(D14-DIN)">
+      <node ref="D14" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D15" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="25" name="Net-(D15-DIN)">
+      <node ref="D15" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D6" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="26" name="Net-(D16-DIN)">
+      <node ref="D16" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D17" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="27" name="Net-(D16-DOUT)">
+      <node ref="D16" pin="2" pinfunction="DOUT" pintype="passive"/>
+      <node ref="D25" pin="4" pinfunction="DIN" pintype="passive"/>
+    </net>
+    <net code="28" name="Net-(D17-DIN)">
+      <node ref="D17" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D18" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="29" name="Net-(D18-DIN)">
+      <node ref="D18" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D19" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="30" name="Net-(D19-DIN)">
+      <node ref="D19" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D20" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="31" name="Net-(D21-DIN)">
+      <node ref="D21" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D22" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="32" name="Net-(D21-DOUT)">
+      <node ref="D21" pin="2" pinfunction="DOUT" pintype="passive"/>
+      <node ref="K1" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="33" name="Net-(D22-DIN)">
+      <node ref="D22" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D23" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="34" name="Net-(D23-DIN)">
+      <node ref="D23" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D24" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="35" name="Net-(D24-DIN)">
+      <node ref="D24" pin="4" pinfunction="DIN" pintype="passive"/>
+      <node ref="D25" pin="2" pinfunction="DOUT" pintype="passive"/>
+    </net>
+    <net code="36" name="Net-(D27-Pad2)">
+      <node ref="D27" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="D28" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="S1" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="37" name="U2_VIN">
+      <node ref="T1" pin="5" pinfunction="5" pintype="passive"/>
+      <node ref="T1" pin="6" pinfunction="6" pintype="passive"/>
+      <node ref="T3" pin="3" pinfunction="3" pintype="passive"/>
+      <node ref="U2" pin="1" pinfunction="+VIN" pintype="power_in"/>
+    </net>
+    <net code="38" name="XFET">
+      <node ref="D27" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="R1_SMT1" pin="2" pintype="passive"/>
+      <node ref="R1_THT1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="T1" pin="4" pinfunction="4" pintype="passive"/>
+      <node ref="T1" pin="7" pinfunction="7" pintype="passive"/>
+      <node ref="T1" pin="8" pinfunction="8" pintype="passive"/>
+      <node ref="T2" pin="3" pinfunction="3" pintype="passive"/>
+      <node ref="T3" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="39" name="unconnected-(U1-3V3-Pad8)">
+      <node ref="U1" pin="8" pinfunction="3V3" pintype="power_out+no_connect"/>
+    </net>
+    <net code="40" name="unconnected-(U1-A0-Pad2)">
+      <node ref="U1" pin="2" pinfunction="A0" pintype="input+no_connect"/>
+    </net>
+    <net code="41" name="unconnected-(U1-D0-Pad3)">
+      <node ref="U1" pin="3" pinfunction="D0" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="42" name="unconnected-(U1-D3-Pad12)">
+      <node ref="U1" pin="12" pinfunction="D3" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="43" name="unconnected-(U1-D4-Pad11)">
+      <node ref="U1" pin="11" pinfunction="D4" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="44" name="unconnected-(U1-RX-Pad15)">
+      <node ref="U1" pin="15" pinfunction="RX" pintype="input+no_connect"/>
+    </net>
+    <net code="45" name="unconnected-(U1-SDA{slash}D2-Pad13)">
+      <node ref="U1" pin="13" pinfunction="SDA/D2" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="46" name="unconnected-(U1-TX-Pad16)">
+      <node ref="U1" pin="16" pinfunction="TX" pintype="output+no_connect"/>
+    </net>
+    <net code="47" name="unconnected-(U1-~{RST}-Pad1)">
+      <node ref="U1" pin="1" pinfunction="~{RST}" pintype="input+no_connect"/>
+    </net>
+  </nets>
+</export>
