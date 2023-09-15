@@ -1199,65 +1199,6 @@
         )
       )
     )
-    (symbol "D1Mini_Wuerfel_aktuell-eagle-import:R_KOHLE_1M_0207_37" (in_bom yes) (on_board yes)
-      (property "Reference" "R1_THT1" (at -1.27 -1.905 90)
-        (effects (font (size 1 1)) (justify right))
-      )
-      (property "Value" "100K" (at 0.635 -1.905 90)
-        (effects (font (size 1.27 1.27)) (justify right))
-      )
-      (property "Footprint" "D1Mini_Wuerfel_aktuell:0207_37" (at 0 -2.54 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "Datasheet" "" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_locked" "" (at 0 0 0)
-        (effects (font (size 1.27 1.27)))
-      )
-      (symbol "R_KOHLE_1M_0207_37_1_0"
-        (polyline
-          (pts
-            (xy -2.54 -1.27)
-            (xy 2.54 -1.27)
-          )
-          (stroke (width 0.3) (type solid))
-          (fill (type none))
-        )
-        (polyline
-          (pts
-            (xy -2.54 1.27)
-            (xy -2.54 -1.27)
-          )
-          (stroke (width 0.3) (type solid))
-          (fill (type none))
-        )
-        (polyline
-          (pts
-            (xy 2.54 -1.27)
-            (xy 2.54 1.27)
-          )
-          (stroke (width 0.3) (type solid))
-          (fill (type none))
-        )
-        (polyline
-          (pts
-            (xy 2.54 1.27)
-            (xy -2.54 1.27)
-          )
-          (stroke (width 0.3) (type solid))
-          (fill (type none))
-        )
-        (pin passive line (at -5.08 0 0) (length 2.54)
-          (name "1" (effects (font (size 0 0))))
-          (number "1" (effects (font (size 1.27 1.27))))
-        )
-        (pin passive line (at 5.08 0 180) (length 2.54)
-          (name "2" (effects (font (size 0 0))))
-          (number "2" (effects (font (size 1.27 1.27))))
-        )
-      )
-    )
     (symbol "D1Mini_Wuerfel_aktuell-eagle-import:R_KOHLE_330-OHM_0207_44" (in_bom yes) (on_board yes)
       (property "Reference" "R" (at -2.54 1.905 0)
         (effects (font (size 2 1.7)) (justify left bottom))
@@ -1857,9 +1798,6 @@
   (junction (at 79.375 148.59) (diameter 0) (color 0 0 0 0)
     (uuid 20790c5a-62a6-40e8-929d-c1341d748172)
   )
-  (junction (at 26.035 85.725) (diameter 0) (color 0 0 0 0)
-    (uuid 36afca67-ba64-4718-8b7d-86bfa7690a31)
-  )
   (junction (at 74.295 64.135) (diameter 0) (color 0 0 0 0)
     (uuid 4a56d6b5-0377-4c94-a6e1-28d680c6a200)
   )
@@ -1868,9 +1806,6 @@
   )
   (junction (at 92.075 64.135) (diameter 0) (color 0 0 0 0)
     (uuid 6563e060-e832-4082-b2de-6b190fe0f437)
-  )
-  (junction (at 26.035 75.565) (diameter 0) (color 0 0 0 0)
-    (uuid 85e189b5-9f3f-4770-b839-fbfd16fde335)
   )
   (junction (at 79.375 157.48) (diameter 0) (color 0 0 0 0)
     (uuid 8a17fb2c-f6ee-4e5e-b14c-1269b9e1d3ba)
@@ -1929,7 +1864,7 @@
     (stroke (width 0) (type default))
     (uuid 09f56877-e5bb-4f1c-8481-296c73f79267)
   )
-  (wire (pts (xy 26.035 85.725) (xy 26.035 90.17))
+  (wire (pts (xy 26.035 84.4042) (xy 26.035 90.17))
     (stroke (width 0) (type default))
     (uuid 0bcd7661-3de9-44ae-b85e-e9033b0dc9be)
   )
@@ -1993,7 +1928,7 @@
     (stroke (width 0) (type default))
     (uuid 23df5880-5e1b-4186-b339-63f8ab42c639)
   )
-  (wire (pts (xy 26.035 64.135) (xy 26.035 75.565))
+  (wire (pts (xy 26.035 64.135) (xy 26.035 76.7842))
     (stroke (width 0) (type default))
     (uuid 23e3e978-4582-45e5-a644-fa5b2e536d86)
   )
@@ -2016,10 +1951,6 @@
   (wire (pts (xy 187.96 107.315) (xy 190.5 104.775))
     (stroke (width 0) (type default))
     (uuid 25ee4af4-d5a3-494c-9cf2-714eb4e4cfc1)
-  )
-  (wire (pts (xy 30.48 75.565) (xy 30.48 76.835))
-    (stroke (width 0) (type default))
-    (uuid 27bd6a4c-2ba9-4430-9eff-3c1519aa9a1a)
   )
   (wire (pts (xy 38.1 71.755) (xy 38.1 90.17))
     (stroke (width 0) (type default))
@@ -2128,10 +2059,6 @@
   (wire (pts (xy 109.22 146.05) (xy 119.38 146.05))
     (stroke (width 0) (type default))
     (uuid 45847321-3db2-4029-8a7a-1647e9ee0da7)
-  )
-  (wire (pts (xy 26.035 85.725) (xy 30.48 85.725))
-    (stroke (width 0) (type default))
-    (uuid 46a9a745-e8a5-4fef-8b27-4be83d10b73c)
   )
   (wire (pts (xy 227.33 61.595) (xy 228.6 61.595))
     (stroke (width 0) (type default))
@@ -2397,10 +2324,6 @@
     (stroke (width 0) (type default))
     (uuid 9977c22b-0ea4-4c4f-8793-060f6ce64b93)
   )
-  (wire (pts (xy 30.48 84.455) (xy 30.48 85.725))
-    (stroke (width 0) (type default))
-    (uuid 99ada48a-5223-4a3b-b250-556f931d0975)
-  )
   (wire (pts (xy 251.46 120.015) (xy 252.73 120.015))
     (stroke (width 0) (type default))
     (uuid 9bc496c0-74b2-4eea-93b8-2dbcf2fe1ca7)
@@ -2645,10 +2568,6 @@
     (stroke (width 0) (type default))
     (uuid e0c8a039-e501-4250-acc0-bb00a93d20ae)
   )
-  (wire (pts (xy 26.035 75.565) (xy 30.48 75.565))
-    (stroke (width 0) (type default))
-    (uuid e1516e89-cb75-4d2d-9fb6-1fabeba9c768)
-  )
   (wire (pts (xy 252.73 92.075) (xy 252.73 93.345))
     (stroke (width 0) (type default))
     (uuid e1b5a15d-f84f-477d-add1-428bb654aea3)
@@ -2807,7 +2726,7 @@
     )
     (pin "1" (uuid 7a24b8ad-f16e-40db-ae1c-d8cf5adb554f))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR030") (unit 1)
         )
@@ -2834,7 +2753,7 @@
     (pin "2" (uuid 142635c1-99a4-4031-b03a-681f901066db))
     (pin "3" (uuid 98ac1505-b311-4c68-8e2c-64a73ff28da1))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "U2") (unit 1)
         )
@@ -2860,7 +2779,7 @@
     (pin "1" (uuid 3b5dd3da-423f-4bba-acfa-003b9dc86498))
     (pin "2" (uuid c03b2cc0-737b-413e-a67a-5e1fcb0b41fa))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "R2") (unit 1)
         )
@@ -2885,7 +2804,7 @@
     )
     (pin "1" (uuid be0722d3-0fa9-4a74-aebb-7a274749c472))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR018") (unit 1)
         )
@@ -2913,7 +2832,7 @@
     (pin "3" (uuid b5b4e4d1-ae05-45c2-b469-7344994316fc))
     (pin "4" (uuid ffea6ec0-e79c-48da-b28c-f4cb9dd25c9f))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D10") (unit 1)
         )
@@ -2938,7 +2857,7 @@
     )
     (pin "1" (uuid f55890a1-8ad3-44e8-a8b0-8a609c67c0ab))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR024") (unit 1)
         )
@@ -2963,7 +2882,7 @@
     )
     (pin "1" (uuid 180f21db-5606-4019-ae4d-50a0940e2875))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR047") (unit 1)
         )
@@ -2988,7 +2907,7 @@
     )
     (pin "1" (uuid c92d6008-2dbe-4af0-a012-5d9f1047d375))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#FLG04") (unit 1)
         )
@@ -3013,7 +2932,7 @@
     )
     (pin "1" (uuid c558fc59-f175-42bf-88e6-9cecd9ba0c68))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR052") (unit 1)
         )
@@ -3038,7 +2957,7 @@
     )
     (pin "1" (uuid 63bd8ed8-c749-46a8-965c-f7ee1e06fd10))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR014") (unit 1)
         )
@@ -3066,7 +2985,7 @@
     (pin "3" (uuid 366c28b7-79e5-4ca9-aef1-e5c1090794b1))
     (pin "4" (uuid e1cda20a-c713-435e-bde7-532384bc80ca))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D18") (unit 1)
         )
@@ -3091,7 +3010,7 @@
     )
     (pin "1" (uuid 13db7537-cad1-42a5-bf5d-c2a012a3e2f4))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR049") (unit 1)
         )
@@ -3116,7 +3035,7 @@
     )
     (pin "1" (uuid afccf663-e57f-4ebd-9a26-8d8ad654f62c))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR042") (unit 1)
         )
@@ -3142,7 +3061,7 @@
     (pin "1" (uuid 49b7607b-9a8d-4bcb-9acf-b53524485c84))
     (pin "2" (uuid 99ec1f42-a520-412a-9cf7-dd5fedcb5d31))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D26") (unit 1)
         )
@@ -3167,35 +3086,9 @@
     )
     (pin "1" (uuid b378ced3-bd0b-4c11-af59-a56f749c35af))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR033") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "D1Mini_Wuerfel_aktuell-eagle-import:R_KOHLE_1M_0207_37") (at 26.035 80.645 270) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
-    (uuid 2ffc2472-89ff-4657-8a4a-187e31d5d042)
-    (property "Reference" "R1_THT1" (at 24.13 79.375 90)
-      (effects (font (size 1 1)) (justify right))
-    )
-    (property "Value" "100K" (at 24.13 81.28 90)
-      (effects (font (size 1.27 1.27)) (justify right))
-    )
-    (property "Footprint" "D1Mini_Wuerfel_aktuell:0207_37" (at 23.495 80.645 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "" (at 26.035 80.645 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid 8c91d001-e972-41a1-bd39-3bed7e6780e8))
-    (pin "2" (uuid e00b6fe0-c802-480f-9f02-5a4203076a52))
-    (instances
-      (project "D1Mini_Wuerfel_aktuell"
-        (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
-          (reference "R1_THT1") (unit 1)
         )
       )
     )
@@ -3218,7 +3111,7 @@
     )
     (pin "1" (uuid f6c259ed-ae7a-4cce-8b32-014587674de9))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR048") (unit 1)
         )
@@ -3244,7 +3137,7 @@
     (pin "1" (uuid 6d0bc7df-39dc-4232-a01e-785fe287e151))
     (pin "2" (uuid 0bacbdf4-d2f5-40c7-ac12-8a266125a150))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "BAT1") (unit 1)
         )
@@ -3269,7 +3162,7 @@
     )
     (pin "1" (uuid be883007-be43-4fb0-9e49-2d57d9cb74c4))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR031") (unit 1)
         )
@@ -3294,7 +3187,7 @@
     )
     (pin "1" (uuid 71e8174d-bfdd-46ce-9742-d89dc6e1b570))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR050") (unit 1)
         )
@@ -3319,7 +3212,7 @@
     )
     (pin "1" (uuid 00cb496e-305c-4d60-8a9d-37bd75823cf0))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR028") (unit 1)
         )
@@ -3347,7 +3240,7 @@
     (pin "3" (uuid 558f46bb-a1cf-41f4-a975-1ce83e51e0b4))
     (pin "4" (uuid 0cf6a90e-ed2a-4cdd-b0d9-d280e46f4f85))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D23") (unit 1)
         )
@@ -3372,7 +3265,7 @@
     )
     (pin "1" (uuid 3624c74e-d13f-4b72-81c9-d016e0a16c8d))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR051") (unit 1)
         )
@@ -3397,7 +3290,7 @@
     )
     (pin "1" (uuid 89be6119-221b-408b-b270-9f7336b0ca76))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR055") (unit 1)
         )
@@ -3405,25 +3298,25 @@
     )
   )
 
-  (symbol (lib_id "Device:R") (at 30.48 80.645 0) (unit 1)
+  (symbol (lib_id "Device:R") (at 26.035 80.5942 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 41844c2a-c317-4ad8-8fca-383a5625049c)
-    (property "Reference" "R1_SMT1" (at 31.75 79.375 0)
+    (property "Reference" "R1_SMT1" (at 27.305 79.3242 0)
       (effects (font (size 1 1)) (justify left))
     )
-    (property "Value" "100K" (at 31.75 81.28 0)
+    (property "Value" "100K" (at 27.305 81.2292 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 28.702 80.645 90)
+    (property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 24.257 80.5942 90)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Datasheet" "~" (at 30.48 80.645 0)
+    (property "Datasheet" "~" (at 26.035 80.5942 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid 34c5f9a1-9f46-4293-9cc7-48c848799d79))
     (pin "2" (uuid 32e69ab3-4bb9-4ba7-8d68-42fbbf38b6b8))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "R1_SMT1") (unit 1)
         )
@@ -3449,7 +3342,7 @@
     (pin "1" (uuid 24ae8549-4dde-4b22-8d7a-cf0d7729fa02))
     (pin "2" (uuid 64d3cc82-df61-4b82-8ef9-de0137a60f82))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D27") (unit 1)
         )
@@ -3474,7 +3367,7 @@
     )
     (pin "1" (uuid 7fc405af-1784-493c-9fb0-46c9f09ec9cb))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR035") (unit 1)
         )
@@ -3499,7 +3392,7 @@
     )
     (pin "1" (uuid 5239c6af-d50f-48e6-93d7-7e5a90d8185e))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR02") (unit 1)
         )
@@ -3527,7 +3420,7 @@
     (pin "3" (uuid de2cfb56-bbf7-48ae-809b-4d3eb0f1a29a))
     (pin "4" (uuid 7c31a4c2-7e07-4057-a643-67128914abdf))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D9") (unit 1)
         )
@@ -3555,7 +3448,7 @@
     (pin "3" (uuid 43404f1e-7bd7-47eb-95b0-a19dd80556e9))
     (pin "4" (uuid a48c0eed-b2f4-4809-ad2e-2e07ed7ac400))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D14") (unit 1)
         )
@@ -3580,7 +3473,7 @@
     )
     (pin "1" (uuid a09c5c97-099b-4a99-ad7c-388701b7c805))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR032") (unit 1)
         )
@@ -3607,7 +3500,7 @@
     (pin "2" (uuid 073857e0-a8e7-4c95-b4e6-2bda1b09ca50))
     (pin "3" (uuid 425a55bc-c9cb-4da8-b56f-e64ebd85a190))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "T3") (unit 1)
         )
@@ -3632,7 +3525,7 @@
     )
     (pin "1" (uuid 9f5e1c1a-8669-44c3-bd7f-3474882f95ec))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR012") (unit 1)
         )
@@ -3657,7 +3550,7 @@
     )
     (pin "1" (uuid bec29341-5a50-4faa-946d-9cd2deb5e895))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR017") (unit 1)
         )
@@ -3682,7 +3575,7 @@
     )
     (pin "1" (uuid 9212e3bf-7250-4a81-850b-92f45ee352b6))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR01") (unit 1)
         )
@@ -3710,7 +3603,7 @@
     (pin "3" (uuid 07e30a86-4527-427e-a135-f9384ef6886d))
     (pin "4" (uuid 2638f67d-da1c-4da5-85e9-59d3bb8dfa1b))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D8") (unit 1)
         )
@@ -3735,7 +3628,7 @@
     )
     (pin "1" (uuid 193f6233-f528-4228-81fb-269c7485936a))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR06") (unit 1)
         )
@@ -3760,7 +3653,7 @@
     )
     (pin "1" (uuid 9d3071c2-8a1c-4c39-993a-bb2551bd704a))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR029") (unit 1)
         )
@@ -3787,7 +3680,7 @@
     (pin "2" (uuid d5f9f85a-57b6-46d4-adbb-f4ef9c68858d))
     (pin "3" (uuid 2e0987e6-7728-4c59-a6c3-0dbda24c9678))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "K1") (unit 1)
         )
@@ -3812,7 +3705,7 @@
     )
     (pin "1" (uuid ae3876c3-2083-4894-be7b-1bb860bc5c44))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR03") (unit 1)
         )
@@ -3844,7 +3737,7 @@
     (pin "7" (uuid 3491b2b9-3a6e-4158-a277-8f859d63c07c))
     (pin "8" (uuid be6607cd-fb59-44d3-ad16-767c68bef400))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "T1") (unit 1)
         )
@@ -3871,7 +3764,7 @@
     (pin "2" (uuid 5faae6fa-f41b-43f5-9c71-b5790324f2dc))
     (pin "3" (uuid 5aaaf3cd-c564-418c-a813-9ecca784e947))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "T2") (unit 1)
         )
@@ -3899,7 +3792,7 @@
     (pin "3" (uuid 50993696-9fc0-4922-bdc7-4a7918796d4d))
     (pin "4" (uuid bb9d9acc-7361-4f50-baa6-6b6a042f28eb))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D21") (unit 1)
         )
@@ -3924,7 +3817,7 @@
     )
     (pin "1" (uuid 20e84acd-fae8-46cf-bba9-c5ed26f9b6df))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR046") (unit 1)
         )
@@ -3950,7 +3843,7 @@
     (pin "1" (uuid 4891c7ae-3983-43c9-a120-e4badc3070f0))
     (pin "2" (uuid 34fd7b02-3315-404c-8d96-88e3eafb0203))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "S2") (unit 1)
         )
@@ -3990,7 +3883,7 @@
     (pin "8" (uuid 67296a4e-ddae-492e-af1f-cf43e717f116))
     (pin "9" (uuid 87556e48-94d5-4dd8-af06-75ebf09ff94c))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "U1") (unit 1)
         )
@@ -4015,7 +3908,7 @@
     )
     (pin "1" (uuid 09bb2a22-b3d9-4423-a630-fd9b44b5d2cb))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#FLG01") (unit 1)
         )
@@ -4040,7 +3933,7 @@
     )
     (pin "1" (uuid 591e5a2e-eded-4634-aa9b-792f8aa1820c))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR09") (unit 1)
         )
@@ -4065,7 +3958,7 @@
     )
     (pin "1" (uuid 09bf7c4b-962f-4af8-ad4a-047bdc382fb4))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR044") (unit 1)
         )
@@ -4090,7 +3983,7 @@
     )
     (pin "1" (uuid 03765c69-0ca8-4951-9c5a-96bcf1b4818e))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR08") (unit 1)
         )
@@ -4115,7 +4008,7 @@
     )
     (pin "1" (uuid 9e9139a4-e45d-4c92-92e5-cd0a5dffa93b))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#FLG03") (unit 1)
         )
@@ -4143,7 +4036,7 @@
     (pin "3" (uuid 4797d837-acba-465b-b65d-c8e4f1c897f5))
     (pin "4" (uuid c7eaa6b7-1890-4a69-8dc5-1af2e67039d3))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D16") (unit 1)
         )
@@ -4171,7 +4064,7 @@
     (pin "3" (uuid f4c1d34b-f527-4dd2-8b85-ad99a1306f3e))
     (pin "4" (uuid 0c17d136-536c-4be0-beb3-78f61ba83b56))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D13") (unit 1)
         )
@@ -4196,7 +4089,7 @@
     )
     (pin "1" (uuid 123ff969-e604-4531-807b-8000b1a5223c))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR011") (unit 1)
         )
@@ -4224,7 +4117,7 @@
     (pin "3" (uuid 17b9235e-e89a-44b2-88e1-516a94685f8a))
     (pin "4" (uuid 1b56f402-835d-491c-ae1e-b2f8829ad55f))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D17") (unit 1)
         )
@@ -4249,7 +4142,7 @@
     )
     (pin "1" (uuid f473ba5f-3702-4a9e-82f4-115c34a95d76))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR016") (unit 1)
         )
@@ -4277,7 +4170,7 @@
     (pin "3" (uuid 50a8d8e4-bc8f-4f29-9c51-ed186b4a7009))
     (pin "4" (uuid 0a736d98-257f-41c5-af68-a12ee446d62c))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D12") (unit 1)
         )
@@ -4302,7 +4195,7 @@
     )
     (pin "1" (uuid 80fab2b6-8a0b-4b13-a49f-10c439f3a485))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR020") (unit 1)
         )
@@ -4330,7 +4223,7 @@
     (pin "3" (uuid 74ec4857-df52-4439-9bd2-08ce2aaa3b20))
     (pin "4" (uuid 96b3bd70-12d0-44af-87f2-88204edd7e58))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D20") (unit 1)
         )
@@ -4355,7 +4248,7 @@
     )
     (pin "1" (uuid 4a0cd21b-60a9-43cd-986a-9dd734ba3e6f))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR041") (unit 1)
         )
@@ -4380,7 +4273,7 @@
     )
     (pin "1" (uuid d75af5e7-d27d-4ee7-93ce-c07b953a2667))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR053") (unit 1)
         )
@@ -4408,7 +4301,7 @@
     (pin "3" (uuid eac3f49c-7bd5-47b8-90f5-1d5268c8d216))
     (pin "4" (uuid 7f79103e-470e-4bf4-a6da-28425c8b46e2))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D25") (unit 1)
         )
@@ -4436,7 +4329,7 @@
     (pin "3" (uuid 12519cca-8f1b-4ca1-8464-1e5e5741e75e))
     (pin "4" (uuid 0075e189-116e-435b-ad6a-3640486fc67c))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D4") (unit 1)
         )
@@ -4461,7 +4354,7 @@
     )
     (pin "1" (uuid 42dd59c7-4c39-4dfb-8eb9-581baf5989c4))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR059") (unit 1)
         )
@@ -4489,7 +4382,7 @@
     (pin "3" (uuid 37e51e91-5902-4bb7-873d-9fa52c3c9e9e))
     (pin "4" (uuid c13d074d-a0e8-4b48-9145-7d90d63d88c4))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D5") (unit 1)
         )
@@ -4514,7 +4407,7 @@
     )
     (pin "1" (uuid 906583ac-f783-4aec-b1e4-944d5c8b4b9d))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR019") (unit 1)
         )
@@ -4539,7 +4432,7 @@
     )
     (pin "1" (uuid 53ead98a-fe1c-4063-a970-9fa8629622d1))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR022") (unit 1)
         )
@@ -4564,7 +4457,7 @@
     )
     (pin "1" (uuid 8f9d7d17-20f9-4527-bf5c-4917a3d565fa))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR062") (unit 1)
         )
@@ -4589,7 +4482,7 @@
     )
     (pin "1" (uuid 79bbf3c5-9d18-440a-a450-38799059c6e1))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR07") (unit 1)
         )
@@ -4617,7 +4510,7 @@
     (pin "3" (uuid 4ca4dce8-9df3-40b2-9428-e5b57496d423))
     (pin "4" (uuid 22f05d06-49c2-4bfd-9165-28d103e868de))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D2") (unit 1)
         )
@@ -4645,7 +4538,7 @@
     (pin "3" (uuid 17823f6b-30f4-4034-b071-5da7ed4d9c18))
     (pin "4" (uuid 4c5d938a-edd9-419f-ac64-6c2dcc6249fb))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D7") (unit 1)
         )
@@ -4673,7 +4566,7 @@
     (pin "3" (uuid f867eee4-d4fc-4364-8c1c-325497a38004))
     (pin "4" (uuid cd58d0f8-f17c-4944-8c67-971b35d83f2f))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D15") (unit 1)
         )
@@ -4698,7 +4591,7 @@
     )
     (pin "1" (uuid 1caa8834-26ab-47ff-b807-cc0842ea9cd1))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR054") (unit 1)
         )
@@ -4726,7 +4619,7 @@
     (pin "3" (uuid 08623487-a2c9-42b6-a4a8-7b3fd9be5812))
     (pin "4" (uuid d3602f95-4115-4691-9f54-c2c36d51c9e6))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D1") (unit 1)
         )
@@ -4751,7 +4644,7 @@
     )
     (pin "1" (uuid 8c0cff7d-db1f-45aa-9b6e-25c6defe6498))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR025") (unit 1)
         )
@@ -4776,7 +4669,7 @@
     )
     (pin "1" (uuid 112a1440-8295-44f0-bc8b-c6058c9d5fb6))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR058") (unit 1)
         )
@@ -4801,7 +4694,7 @@
     )
     (pin "1" (uuid 1c48f922-9bd9-4a20-adf9-1c956ee4d366))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR037") (unit 1)
         )
@@ -4827,7 +4720,7 @@
     (pin "1" (uuid 1429aabf-02c0-452f-b007-28e3724d2479))
     (pin "2" (uuid 9ea04b1d-d205-44c3-9b86-31369d6c5104))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "S3") (unit 1)
         )
@@ -4852,7 +4745,7 @@
     )
     (pin "1" (uuid 73034ecd-2675-4069-8c5d-2c765e846e55))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR021") (unit 1)
         )
@@ -4877,7 +4770,7 @@
     )
     (pin "1" (uuid 37f96400-e233-40e6-a2e4-b4c8b165a260))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR039") (unit 1)
         )
@@ -4902,7 +4795,7 @@
     )
     (pin "1" (uuid c7ca95dc-3673-4a8a-8ea5-5d7cfc7ad47d))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#FLG02") (unit 1)
         )
@@ -4927,7 +4820,7 @@
     )
     (pin "1" (uuid 13fb08af-b3da-4cb2-ae87-469ec222c26e))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR063") (unit 1)
         )
@@ -4952,7 +4845,7 @@
     )
     (pin "1" (uuid d78d607c-531e-4d8f-afa8-50014f642e91))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR060") (unit 1)
         )
@@ -4977,7 +4870,7 @@
     )
     (pin "1" (uuid 38160491-5436-4b98-be96-5452a45752fd))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR010") (unit 1)
         )
@@ -5002,7 +4895,7 @@
     )
     (pin "1" (uuid 8faa5038-0060-4f3d-8c5c-e080e77cd938))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR013") (unit 1)
         )
@@ -5030,7 +4923,7 @@
     (pin "3" (uuid 78a0a7ea-d720-42d8-a286-db70a054357d))
     (pin "4" (uuid ab954289-081d-4374-9c15-84cf6e2cdb76))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D6") (unit 1)
         )
@@ -5055,7 +4948,7 @@
     )
     (pin "1" (uuid 3973bf7e-98ba-48eb-b57b-04ccbf41c03c))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR056") (unit 1)
         )
@@ -5081,7 +4974,7 @@
     (pin "1" (uuid 41af0837-cf98-4966-812a-0267bfc0f50b))
     (pin "2" (uuid f9add81d-678e-4c0b-a0b0-bff1141567b6))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D28") (unit 1)
         )
@@ -5106,7 +4999,7 @@
     )
     (pin "1" (uuid cec67be4-f757-4a01-87f4-bde904892b01))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR040") (unit 1)
         )
@@ -5132,7 +5025,7 @@
     (pin "1" (uuid af38120a-3591-4c91-8d5f-981bc66c2564))
     (pin "2" (uuid 42f9cecd-48ee-4b59-9ca1-4e75c24f705f))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "S1") (unit 1)
         )
@@ -5157,7 +5050,7 @@
     )
     (pin "1" (uuid be8fcbe5-532b-48c1-b123-a8bf02e6af1d))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR05") (unit 1)
         )
@@ -5185,7 +5078,7 @@
     (pin "3" (uuid a2ae581a-c240-4672-9058-90dc4dfe460e))
     (pin "4" (uuid 1d264511-6b3d-4876-9819-7379d3014be0))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D19") (unit 1)
         )
@@ -5210,7 +5103,7 @@
     )
     (pin "1" (uuid e45c0356-6513-4e88-b953-2c9e4dfe7e44))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR023") (unit 1)
         )
@@ -5238,7 +5131,7 @@
     (pin "3" (uuid 6a917d79-b2c5-4fed-b71b-ee7b362d9b25))
     (pin "4" (uuid f22557a3-326a-47ac-89c3-ee04d705076a))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D22") (unit 1)
         )
@@ -5266,7 +5159,7 @@
     (pin "3" (uuid 5f3231af-b7d8-4b3a-afa9-0a23e91029b6))
     (pin "4" (uuid 23da58b1-f0bb-422e-b81f-5fa340bfc707))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D3") (unit 1)
         )
@@ -5291,7 +5184,7 @@
     )
     (pin "1" (uuid 26057eee-792b-427f-8cd4-461d1f98bcae))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR036") (unit 1)
         )
@@ -5316,7 +5209,7 @@
     )
     (pin "1" (uuid 022999ad-e60a-4df7-b7e7-cc7de4f35056))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR026") (unit 1)
         )
@@ -5341,7 +5234,7 @@
     )
     (pin "1" (uuid 8a636e78-7fd4-4ea5-9869-8bbc83f67375))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR057") (unit 1)
         )
@@ -5366,7 +5259,7 @@
     )
     (pin "1" (uuid d4c443d3-6f2c-4087-87ac-8ab930c30e90))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR015") (unit 1)
         )
@@ -5391,7 +5284,7 @@
     )
     (pin "1" (uuid 990eed00-1286-4285-9fd6-336ff10ac0f4))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR027") (unit 1)
         )
@@ -5416,7 +5309,7 @@
     )
     (pin "1" (uuid ffb06187-6ddd-493f-81b5-bf49070a3f88))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR038") (unit 1)
         )
@@ -5441,7 +5334,7 @@
     )
     (pin "1" (uuid a7b5d35a-9d9b-4900-a987-77c064204820))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR04") (unit 1)
         )
@@ -5466,7 +5359,7 @@
     )
     (pin "1" (uuid b2229abc-ade6-499d-8695-88ad0d010c2f))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR045") (unit 1)
         )
@@ -5491,7 +5384,7 @@
     )
     (pin "1" (uuid c945e278-d7cf-493b-9519-e3c0dd679031))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR043") (unit 1)
         )
@@ -5516,7 +5409,7 @@
     )
     (pin "1" (uuid 06c3a9d2-6b45-4dab-9992-62c55d8e15d9))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR064") (unit 1)
         )
@@ -5544,7 +5437,7 @@
     (pin "3" (uuid 19b6b942-21df-406b-93f3-f044ba9f0e96))
     (pin "4" (uuid 76887065-45dd-4c9b-9cc4-84a27b412675))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D11") (unit 1)
         )
@@ -5569,7 +5462,7 @@
     )
     (pin "1" (uuid 0ef2fa08-7a12-4397-a9fb-c44e9009c7ca))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR034") (unit 1)
         )
@@ -5594,7 +5487,7 @@
     )
     (pin "1" (uuid 53044914-978b-41a3-ac9d-e94390a400ea))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR065") (unit 1)
         )
@@ -5622,7 +5515,7 @@
     (pin "3" (uuid d712b34d-0e11-4898-a0b5-7c1ab0881ed0))
     (pin "4" (uuid f4a25202-5b8d-412a-a1e8-10c9e24efe91))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "D24") (unit 1)
         )
@@ -5647,7 +5540,7 @@
     )
     (pin "1" (uuid 9e5156ca-9c72-4dec-b5dc-2394ae2cdbbd))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR066") (unit 1)
         )
@@ -5672,7 +5565,7 @@
     )
     (pin "1" (uuid 44a03b61-6acf-43a8-810f-6a2ba5eb58ea))
     (instances
-      (project "D1Mini_Wuerfel_aktuell"
+      (project "WebWürfel"
         (path "/ba065b6e-c3de-4642-a96c-d814f3371d95"
           (reference "#PWR061") (unit 1)
         )
