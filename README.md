@@ -70,7 +70,7 @@ Ebenso findet sich hier der WiFi-Manager wieder, falls in ein anderes Netzwerk g
 
 ### Offline-Mode
 
-Wird beim Einschalten der recht Taster bis zum Aufleuchten eines blauen Punktes gehalten, startet das Gerät im Offline-Modus. Hierbei wird das Wifi-Modul abgeschaltet um die Akkulaufzeit erheblich zu erhöhen. In diesem Modus ist jedoch lediglich die Würfel-Funktion verfügbar.
+Wird beim Einschalten der rechte Taster bis zum Aufleuchten eines blauen Punktes gehalten, startet das Gerät im Offline-Modus. Hierbei wird das Wifi-Modul abgeschaltet um die Akkulaufzeit erheblich zu erhöhen. In diesem Modus ist jedoch lediglich die Würfel-Funktion verfügbar.
 
 ### Serielle Schnittstelle
 
