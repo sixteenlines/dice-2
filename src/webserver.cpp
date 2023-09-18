@@ -48,7 +48,8 @@ extern String creds[5];
 extern unsigned long deep_sleep;
 extern unsigned long led_sleep;
 
-void dnsNext() {
+void dnsNext()
+{
     // we only handle dns requests while the wifi manager is running
     dnsServer.processNextRequest();
 }
@@ -62,9 +63,9 @@ bool initWifi()
     sleepRequested = false;
     managerRequested = false;
 
-    diceRed = 120;
-    diceGreen = 120;
-    diceBlue = 120;
+    diceRed = 127;
+    diceGreen = 127;
+    diceBlue = 127;
 
     // Wifi manager boot requested
     if (digitalRead(BTN1_PIN) == LOW)
@@ -179,9 +180,9 @@ void hostIndex()
         request->hasParam(PARAM_G, true, false) &&
         request->hasParam(PARAM_B, true, false) &&
         request->hasParam(PARAM_RESULT, true, false)) {
-        diceRed = request->getParam(PARAM_R, true, false)->value().toInt();
-        diceGreen = request->getParam(PARAM_G, true, false)->value().toInt();
-        diceBlue = request->getParam(PARAM_B, true, false)->value().toInt();
+        diceRed = (request->getParam(PARAM_R, true, false)->value().toInt())/2;
+        diceGreen = (request->getParam(PARAM_G, true, false)->value().toInt())/2;
+        diceBlue = (request->getParam(PARAM_B, true, false)->value().toInt())/2;
         dieRollResult = request->getParam(PARAM_RESULT, true, false)
                                 ->value().toInt();
         rollRequested = true;
