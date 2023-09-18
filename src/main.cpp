@@ -23,10 +23,13 @@ extern unsigned long led_sleep;
 /* function declarations */
 void sleep();
 void initIO();
-void prerolldice();
+void rollDice();
+void prerollDice();
 
 /* timer var */
 unsigned long currentTime = 0;
+/* preroll var */
+uint8_t lastPreroll = 0;
 
 /*###################################### SETUP ##############################*/
 void setup()
@@ -42,11 +45,13 @@ void setup()
     }
     else
     {
-        if (sleepRequested) {
+        if (sleepRequested)
+        {
             Serial.println("[\e[0;31mFAILED\e[0;37m] Initializing WiFi");
             Serial.println(INDENT + "Going to Sleep");
         }
-        else {
+        else
+        {
             Serial.println("[\e[0;32m  OK  \e[0;37m] Offline Mode");
         }
     }
@@ -75,20 +80,7 @@ void loop()
 
         if (rollRequested)
         {
-            // rolling a few times to simulate a real die
-            static unsigned short prerollDisplayDuration = 50;
-            if (currentTime - lastActionTime >= prerollDisplayDuration)
-            {
-                prerolldice();
-                lastActionTime = currentTime;
-                prerollDisplayDuration += 50;
-            }
-            if (prerollDisplayDuration == 400)
-            {
-                printPattern(dieRollResult, diceRed, diceGreen, diceBlue);
-                rollRequested = false;
-                prerollDisplayDuration = 50;
-            }
+            rollDice();
         }
         if (currentTime - lastActionTime >= deep_sleep)
         {
@@ -115,10 +107,37 @@ void initIO()
 }
 
 // prints a random die roll to the matrix
-void prerolldice()
+void prerollDice()
 {
     uint8_t preroll = random(6) + 1;
+    while (preroll == lastPreroll)
+    {
+        preroll = random(6) + 1;
+    }
+    lastPreroll = preroll;
     printPattern(preroll, diceRed, diceGreen, diceBlue);
+}
+
+void rollDice()
+{
+    // rolling a few times to simulate a real die
+    static unsigned short prerollDisplayDuration = 50;
+
+    if (prerollDisplayDuration == 300)
+    {
+        if (currentTime - lastActionTime >= 400)
+        {
+            printPattern(dieRollResult, diceRed, diceGreen, diceBlue);
+            rollRequested = false;
+            prerollDisplayDuration = 50;
+        }
+    }
+    else if (currentTime - lastActionTime >= prerollDisplayDuration)
+    {
+        prerollDice();
+        lastActionTime = currentTime;
+        prerollDisplayDuration += 50;
+    }
 }
 
 // pulls self-retention pin low, device turns off
