@@ -68,6 +68,10 @@ Ebenso ist im Webinterface die Matrix als <div> Container widergespiegelt. Unter
 
 Ebenso findet sich hier der WiFi-Manager wieder, falls in ein anderes Netzwerk gewechselt werden soll. Nach Eingabe muss jedoch der Controller erst [neu gestartet](#einschalten) werden.
 
+### Offline-Mode
+
+Wird beim Einschalten der recht Taster bis zum Aufleuchten eines blauen Punktes gehalten, startet das Gerät im Offline-Modus. Hierbei wird das Wifi-Modul abgeschaltet um die Akkulaufzeit erheblich zu erhöhen. In diesem Modus ist jedoch lediglich die Würfel-Funktion verfügbar.
+
 ### Serielle Schnittstelle
 
 Verbindet man das Gerät über USB, können mithilfe eines Terminalprogramms Debugging-Informationen und von DHCP erhaltene IP-Adressen ausgelesen werden.
