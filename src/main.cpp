@@ -19,6 +19,7 @@ extern unsigned long lastActionTime;
 
 extern unsigned long deep_sleep;
 extern unsigned long led_sleep;
+extern unsigned int roll_delay;
 
 /* function declarations */
 void sleep();
@@ -28,8 +29,6 @@ void prerollDice();
 
 /* timer var */
 unsigned long currentTime = 0;
-/* preroll var */
-uint8_t lastPreroll = 0;
 
 /*###################################### SETUP ##############################*/
 void setup()
@@ -109,6 +108,7 @@ void initIO()
 // prints a random die roll to the matrix
 void prerollDice()
 {
+    static uint8_t lastPreroll = 0;
     uint8_t preroll = random(6) + 1;
     while (preroll == lastPreroll)
     {
@@ -123,9 +123,9 @@ void rollDice()
     // rolling a few times to simulate a real die
     static unsigned short prerollDisplayDuration = 50;
 
-    if (prerollDisplayDuration == 300)
+    if (prerollDisplayDuration > roll_delay)
     {
-        if (currentTime - lastActionTime >= 400)
+        if (currentTime - lastActionTime >= (roll_delay + 100))
         {
             printPattern(dieRollResult, diceRed, diceGreen, diceBlue);
             rollRequested = false;

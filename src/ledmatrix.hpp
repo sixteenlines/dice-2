@@ -1,10 +1,17 @@
+#ifndef _ARDUINO_H
+#define _ARDUINO_H
+#include <Arduino.h>
+#endif
+
+#ifndef _VECTOR_H
+#define _VECTOR_H
+#include <vector>
+#endif
+
 #ifndef _MATRIX_HPP
 #define _MATRIX_HPP
 
-#include "macros.hpp"
-#include <vector>
 #include <Adafruit_NeoPixel.h>
-#include <Arduino.h>
 
 /* led class */
 class led

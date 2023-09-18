@@ -1,5 +1,6 @@
 #include "ledmatrix.hpp"
 #include "webserver.hpp"
+#include "macros.hpp"
 
 /* external vars */
 extern uint8_t diceRed;

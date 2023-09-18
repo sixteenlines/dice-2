@@ -1,7 +1,10 @@
+#ifndef _ARDUINO_H
+#define _ARDUINO_H
+#include <Arduino.h>
+#endif
+
 #ifndef _MACROS_HPP
 #define _MACROS_HPP
-
-#include <Arduino.h>
 
 /* Pins */
 #define STATUSLED_PIN D4
@@ -20,6 +23,7 @@
 #define _SUBN 4
 #define _DEVICE_TO 5
 #define _LED_TO 6
+#define _ROLL_DELAY 7
 
 /* LED-pattern macros */
 #define BIGDOT 7

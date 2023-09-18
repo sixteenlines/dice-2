@@ -1,10 +1,12 @@
 #include "filesystem.hpp"
+#include "macros.hpp"
 
 /* Credentials in RAM */
 String creds[5];
 
 unsigned long deep_sleep;
 unsigned long led_sleep;
+unsigned int roll_delay;
 
 JSONVar settings;
 
@@ -29,7 +31,9 @@ void initSettings()
 
     deep_sleep = readFile(paths[_DEVICE_TO]).toInt();
     led_sleep = readFile(paths[_LED_TO]).toInt();
-    if (deep_sleep != 0 && led_sleep != 0)
+    roll_delay = readFile(paths[_ROLL_DELAY]).toInt();
+
+    if (deep_sleep != 0 && led_sleep != 0 && roll_delay != 0)
     {
         Serial.println("[\e[0;32m  OK  \e[0;37m] Loading settings");
     }
@@ -42,6 +46,8 @@ void initSettings()
     Serial.println(deep_sleep);
     Serial.print("         LED timeout: ");
     Serial.println(led_sleep);
+    Serial.print("         Roll delay: ");
+    Serial.println(roll_delay);
 }
 
 /*############################## FILESYSTEM STUFF ###########################*/
@@ -120,6 +126,7 @@ String getSettings()
 {
     settings["ledtimeout"] = String(led_sleep / 1000);
     settings["devicetimeout"] = String(deep_sleep / 1000);
+    settings["rolldelay"] = String(roll_delay);
     String jsonString = JSON.stringify(settings);
     return jsonString;
 }

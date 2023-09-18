@@ -1,6 +1,7 @@
 #include "webserver.hpp"
 #include "filesystem.hpp"
 #include "ledmatrix.hpp"
+#include "macros.hpp"
 
 AsyncWebServer webServer(80); // webserver at Port 80
 IPAddress localIP;
@@ -16,6 +17,7 @@ const char *PARAM_LED = "led";
 const char *PARAM_RESULT = "result";
 const char *PARAM_LED_TIMEOUT = "toLed";
 const char *PARAM_DEVICE_TIMEOUT = "toDevice";
+const char *PARAM_ROLL_DELAY = "rollDelay";
 
 /* Endpoint params wifi manager */
 const char *PARAM_INPUT_0 = "ssid";
@@ -47,6 +49,7 @@ extern String creds[5];
 
 extern unsigned long deep_sleep;
 extern unsigned long led_sleep;
+extern unsigned int roll_delay;
 
 void dnsNext()
 {
@@ -230,15 +233,20 @@ void hostIndex()
     webServer.on("/savesettings", HTTP_POST, [](AsyncWebServerRequest *request)
                  {
     if (request->hasParam(PARAM_DEVICE_TIMEOUT, true, false) &&
-        request->hasParam(PARAM_LED_TIMEOUT, true, false) ) {
+        request->hasParam(PARAM_LED_TIMEOUT, true, false) &&
+        request->hasParam(PARAM_ROLL_DELAY, true, false)) {
         deep_sleep = request->getParam(PARAM_DEVICE_TIMEOUT, true, false)
                             ->value().toInt() *1000;
         led_sleep = request->getParam(PARAM_LED_TIMEOUT, true, false)
                             ->value().toInt() *1000;
+        roll_delay = request->getParam(PARAM_ROLL_DELAY, true, false)
+                            ->value().toInt();
     }   writeFile("/settings/devicetimeout.txt", 
                     std::to_string(deep_sleep).c_str());
         writeFile("/settings/ledtimeout.txt", 
                     std::to_string(led_sleep).c_str());
+        writeFile("/settings/rolldelay.txt", 
+                    std::to_string(roll_delay).c_str());
     
     request->send(200, "text/plain", "OK"); });
 

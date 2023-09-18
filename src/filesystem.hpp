@@ -1,10 +1,18 @@
+#ifndef _ARDUINO_H
+#define _ARDUINO_H
+#include <Arduino.h>
+#endif
+
+#ifndef _VECTOR_H
+#define _VECTOR_H
+#include <vector>
+#endif
+
 #ifndef _FS_HPP
 #define _FS_HPP
-#include "macros.hpp"
-#include <vector>
+
 #include <LittleFS.h>
 #include <Arduino_JSON.h>
-#include <Arduino.h>
 
 /* file paths to storage */
 const std::vector<String> paths = {
@@ -14,7 +22,8 @@ const std::vector<String> paths = {
     "/creds/gateway.txt",
     "/creds/subnet.txt",
     "/settings/devicetimeout.txt",
-    "/settings/ledtimeout.txt"};
+    "/settings/ledtimeout.txt",
+    "/settings/rolldelay.txt"};
 
 void initFS();
 void initSettings();
