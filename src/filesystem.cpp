@@ -1,18 +1,22 @@
 #include "filesystem.hpp"
 
 /* Credentials in RAM */
-String creds[5] = {
-    "", // SSID
-    "", // Password
-    "", // IP
-    "", // Gateway
-    ""  // Subnet
-};
+String creds[5];
+
+unsigned long deep_sleep;
+unsigned long led_sleep;
 
 JSONVar settings;
 
 void initFS()
 {
+    /* Credentials in RAM */
+    creds[_SSID] = "";
+    creds[_PASS] = "";
+    creds[_GATE] = "";
+    creds[_IPAD] = "";
+    creds[_SUBN] = "";
+
     if (LittleFS.begin())
         Serial.println("[\e[0;32m  OK  \e[0;37m] Initializing file system");
     else

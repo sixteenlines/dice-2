@@ -8,16 +8,45 @@ IPAddress localGateway;
 IPAddress localSubnet;
 DNSServer dnsServer;
 
-/* Init control vars */
-uint8_t dieRollResult = 0;
-unsigned long lastActionTime = 0;
-bool rollRequested = false;
-bool sleepRequested = false;
-bool managerRequested = false;
+/* Endpoint params main webpage */
+const char *PARAM_R = "r";
+const char *PARAM_G = "g";
+const char *PARAM_B = "b";
+const char *PARAM_LED = "led";
+const char *PARAM_RESULT = "result";
+const char *PARAM_LED_TIMEOUT = "toLed";
+const char *PARAM_DEVICE_TIMEOUT = "toDevice";
 
-uint8_t diceRed = 120;
-uint8_t diceGreen = 120;
-uint8_t diceBlue = 120;
+/* Endpoint params wifi manager */
+const char *PARAM_INPUT_0 = "ssid";
+const char *PARAM_INPUT_1 = "pass";
+const char *PARAM_INPUT_2 = "ip";
+const char *PARAM_INPUT_3 = "gateway";
+const char *PARAM_INPUT_4 = "subnet";
+const String MANAGER = "http://8.8.8.8";
+
+/* Access Point settings */
+const String AP_SSID = "MAGIC-DICE-SETUP";
+const String AP_PW = "eisdiele";
+
+/* dice vars */
+uint8_t dieRollResult;
+
+bool rollRequested;
+bool sleepRequested;
+bool managerRequested;
+
+uint8_t diceRed;
+uint8_t diceGreen;
+uint8_t diceBlue;
+
+unsigned long lastActionTime;
+
+/* external vars */
+extern String creds[5];
+
+extern unsigned long deep_sleep;
+extern unsigned long led_sleep;
 
 void dnsNext() {
     // we only handle dns requests while the wifi manager is running
@@ -26,12 +55,31 @@ void dnsNext() {
 
 bool initWifi()
 {
+    /* Init control vars */
+    dieRollResult = 0;
+    lastActionTime = 0;
+    rollRequested = false;
+    sleepRequested = false;
+    managerRequested = false;
+
+    diceRed = 120;
+    diceGreen = 120;
+    diceBlue = 120;
+
     // Wifi manager boot requested
     if (digitalRead(BTN1_PIN) == LOW)
     {
         managerSetup();
         managerRequested = true;
         return true;
+    }
+    else if (digitalRead(BTN2_PIN) == LOW)
+    {
+        WiFi.mode(WIFI_OFF);
+        printPattern(BIGDOT, 0, 0, 255); // offline mode = blue dot
+        delay(150);
+        printPattern(0);
+        return false;
     }
     // try to load stored creds
     else if (loadCredentials())
@@ -40,6 +88,7 @@ bool initWifi()
     }
     else
     {
+        sleepRequested = true;
         return false;
     }
 }
@@ -148,9 +197,9 @@ void hostIndex()
         request->hasParam(PARAM_B, true, false) &&
         request->hasParam(PARAM_LED, true, false)) {
         uint8_t num = request->getParam(PARAM_LED, true, false)->value().toInt();
-        uint8_t r = request->getParam(PARAM_R, true, false)->value().toInt();
-        uint8_t g = request->getParam(PARAM_G, true, false)->value().toInt();
-        uint8_t b = request->getParam(PARAM_B, true, false)->value().toInt();
+        uint8_t r = (request->getParam(PARAM_R, true, false)->value().toInt())/2;
+        uint8_t g = (request->getParam(PARAM_G, true, false)->value().toInt())/2;
+        uint8_t b = (request->getParam(PARAM_B, true, false)->value().toInt())/2;
         setLED(num, r, g, b);
         showLEDS();
         lastActionTime = millis();

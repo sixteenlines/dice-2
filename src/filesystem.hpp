@@ -1,3 +1,5 @@
+#ifndef _FS_HPP
+#define _FS_HPP
 #include "macros.hpp"
 #include <vector>
 #include <LittleFS.h>
@@ -14,15 +16,11 @@ const std::vector<String> paths = {
     "/settings/devicetimeout.txt",
     "/settings/ledtimeout.txt"};
 
-/* Credentials in RAM */
-String creds[5];
-
-unsigned long deep_sleep;
-unsigned long led_sleep;
-
 void initFS();
 void initSettings();
 String getSettings();
 void writeFile(const String path, const char *message);
 String readFile(const String path);
 bool loadCredentials();
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef _MATRIX_HPP
+#define _MATRIX_HPP
+
 #include "macros.hpp"
 #include <vector>
 #include <Adafruit_NeoPixel.h>
@@ -33,3 +36,5 @@ void printPattern(uint8_t pattern);
 void setLED(uint8_t num, uint8_t r, uint8_t g, uint8_t b);
 void showLEDS();
 void hideLEDS();
+
+#endif

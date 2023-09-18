@@ -1,6 +1,13 @@
 #include "ledmatrix.hpp"
 #include "webserver.hpp"
 
+/* external vars */
+extern uint8_t diceRed;
+extern uint8_t diceGreen;
+extern uint8_t diceBlue;
+
+extern unsigned long lastActionTime;
+
 /* Initializing neopixel and grid*/
 Adafruit_NeoPixel pixels =
     Adafruit_NeoPixel(NUM_LEDS, LEDS_PIN, NEO_GRB + NEO_KHZ400);

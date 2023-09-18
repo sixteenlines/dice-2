@@ -4,6 +4,22 @@
 #include <macros.hpp>
 #include <Arduino.h>
 
+/* external vars */
+extern uint8_t dieRollResult;
+
+extern bool rollRequested;
+extern bool sleepRequested;
+extern bool managerRequested;
+
+extern uint8_t diceRed;
+extern uint8_t diceGreen;
+extern uint8_t diceBlue;
+
+extern unsigned long lastActionTime;
+
+extern unsigned long deep_sleep;
+extern unsigned long led_sleep;
+
 /* function declarations */
 void sleep();
 void initIO();
@@ -26,8 +42,13 @@ void setup()
     }
     else
     {
-        Serial.println("[\e[0;31mFAILED\e[0;37m] Initializing WiFi");
-        sleepRequested = true; // optional power down if Wifi fails
+        if (sleepRequested) {
+            Serial.println("[\e[0;31mFAILED\e[0;37m] Initializing WiFi");
+            Serial.println(INDENT + "Going to Sleep");
+        }
+        else {
+            Serial.println("[\e[0;32m  OK  \e[0;37m] Offline Mode");
+        }
     }
 }
 

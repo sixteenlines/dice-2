@@ -1,3 +1,8 @@
+#ifndef _MACROS_HPP
+#define _MACROS_HPP
+
+#include <Arduino.h>
+
 /* Pins */
 #define STATUSLED_PIN D4
 #define RETENTION_PIN D1
@@ -22,3 +27,5 @@
 
 /* Serial format macros */
 const String INDENT = "         ";
+
+#endif
