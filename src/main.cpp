@@ -99,9 +99,11 @@ void initIO()
     pinMode(BTN0_PIN, INPUT_PULLUP); // used for rolling manually
     pinMode(BTN1_PIN, INPUT_PULLUP); // hold on boot for wifi manager
     pinMode(BTN2_PIN, INPUT_PULLUP); // free
+    pinMode(D4, OUTPUT);
     pinMode(RETENTION_PIN, OUTPUT);
     pinMode(STATUSLED_PIN, OUTPUT); // can be used to control onboard led
     digitalWrite(RETENTION_PIN, HIGH);
+    digitalWrite(D4, HIGH);
     Serial.println("[\e[0;32m  OK  \e[0;37m] Initializing system I/O");
 }
 
