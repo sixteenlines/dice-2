@@ -15,19 +15,19 @@ Beinhaltet KiCad Projektdaten - Schaltplan und Platinenlayout.
 
 Beinhaltet Files für das Dateisystem
 
-- HTML Seiten
-- CSS Stylesheets
-- Icons und Bilder
-- Textdateien
-  - creds (SSID, Passwort, etc)
-  - settings (Timeoutzeiten)
+-   HTML Seiten
+-   CSS Stylesheets
+-   Icons und Bilder
+-   Textdateien
+    -   creds (SSID, Passwort, etc)
+    -   settings (Timeoutzeiten)
 
 ### src
 
 Quellcode
 
-- header_main.hpp - Macros und Header
-- main.cpp - Microcontroller Programmroutinen
+-   header_main.hpp - Macros und Header
+-   main.cpp - Microcontroller Programmroutinen
 
 ## IDE & Framework
 
@@ -83,13 +83,36 @@ Zur Fehlerdiagnose ist ratsam, den Controller zu verbinden, die entsprechende se
 
 Es werden nun sämtliche Schritte des Bootvorgangs gespiegelt. Außerdem werden Anfragen an den Webserver gelogt.
 
-### Lithium Akku Upgrade
+## Lithium Akku Upgrade
 
 Um das Gerät mit einem wiederaufladbarem Akku auszustatten müssen einige zusätzliche Teile bezogen werden. In Klammern jeweils aufgeführt, ist der verwendete Footprint auf der Platine oder eine Teileempfehlung.
 
 1x 2.0 USB-C Port (GCT-USB4085)
 1x 3.7V Lithium Akku (LiPo 103450 - 51mm x 39mm x 10mm)
-1x DC-DC Converter 3.7V - 5V
-1x Charge Controller
+1x LiPo Laderegler mit DC-DC Converter 3.7V - 5V
+1x Drahtbrücke (0.6mm)
+1x Klebestreifen für Akku ([iFixit Klebestreifen](https://store.ifixit.de/products/stretch-release-battery-adhesive))
+Optional:
+1x JST-PH2 Header oder JST-XH2 oder JST-EH2 je nach Akku/Hersteller (siehe Datenblatt)
 
-Die bereits verbaute Steckleiste ist ausgelegt auf ein [kompaktes Modul](https://de.aliexpress.com/item/33034500618.html) mit DC-DC Wandler und Laderegler. Wird hiervon abgewichen ist auf eine korrekte Pinbelegung nach Schaltplan zu achten.
+Die bereits verbaute Steckleiste J1 ist ausgelegt auf ein [kompaktes Modul](https://de.aliexpress.com/item/33034500618.html) mit DC-DC Wandler und Laderegler. Wird von diesem abgewichen, ist auf eine [korrekte Pinbelegung](https://github.com/sixteenlines/dice-2/blob/production/cad/screenshot/dcdc_charge_header.jpg?raw=true) nach Schaltplan zu achten. Auch ist die korrekte Polarität beim direkten Verlöten der Akku Litzen, oder Bestücken des JST-Headers zu prüfen.
+
+###Arbeitsschritte:
+
+1. Öffnen des Gehäuses (Schraubendreher) und Entfernen der 9V Blockbatterie (Seitenschneider)
+
+2. Entfernen des TSR1-2450 (U2)
+
+3. Bestücken und Verlöten von Drahtbrücke B1 (Pin 1 - Pin 3 von U2)
+
+4. Bestücken und Verlöten von THT 2.0 USB Connector
+
+5. Bestücken und Verlöten des optionalen JST-Headers oder verlöten der Akku Litzen
+
+6. Einsetzen des DCDC-Charge Controller Moduls
+
+7. USB Ladegerät anschließen und verifizieren, dass die Charge LED des eingesetzten Moduls aufleuchtet.
+
+8. Akku mit Klebestreifen an die Stelle der alten 9V Batterie verkleben und Gehäuse wieder schließen.
+
+![Übersicht](cad/screenshot/upgrade_layout.jpg)
