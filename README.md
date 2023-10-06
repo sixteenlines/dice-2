@@ -88,16 +88,22 @@ Es werden nun sämtliche Schritte des Bootvorgangs gespiegelt. Außerdem werden 
 Um das Gerät mit einem wiederaufladbarem Akku auszustatten müssen einige zusätzliche Teile bezogen werden. In Klammern jeweils aufgeführt, ist der verwendete Footprint auf der Platine oder eine Teileempfehlung.
 
 1x 2.0 USB-C Port (GCT-USB4085)
+
 1x 3.7V Lithium Akku (LiPo 103450 - 51mm x 39mm x 10mm)
+
 1x LiPo Laderegler mit DC-DC Converter 3.7V - 5V
+
 1x Drahtbrücke (0.6mm)
+
 1x Klebestreifen für Akku ([iFixit Klebestreifen](https://store.ifixit.de/products/stretch-release-battery-adhesive))
+
 Optional:
+
 1x JST-PH2 Header oder JST-XH2 oder JST-EH2 je nach Akku/Hersteller (siehe Datenblatt)
 
 Die bereits verbaute Steckleiste J1 ist ausgelegt auf ein [kompaktes Modul](https://de.aliexpress.com/item/33034500618.html) mit DC-DC Wandler und Laderegler. Wird von diesem abgewichen, ist auf eine [korrekte Pinbelegung](https://github.com/sixteenlines/dice-2/blob/production/cad/screenshot/dcdc_charge_header.jpg?raw=true) nach Schaltplan zu achten. Auch ist die korrekte Polarität beim direkten Verlöten der Akku Litzen, oder Bestücken des JST-Headers zu prüfen.
 
-###Arbeitsschritte:
+### Arbeitsschritte:
 
 1. Öffnen des Gehäuses (Schraubendreher) und Entfernen der 9V Blockbatterie (Seitenschneider)
 
