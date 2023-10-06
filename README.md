@@ -3,6 +3,7 @@
 Projekt ESP8266 - D1 mini Matrix-Würfel mit Webserver
 
 Umfasst eine LED Matrix, 3 Taster (davon 2 frei programmierbar) und eine einfache Website, welche leicht mit Funktionen erweitert werden kann.
+Eine Möglichkeit ist der Tausch der serienmäßig verbauten 9V Batterie mit einem 3.7V Lithium Akku. Für dieses [Upgrade](#lithium-akku-upgrade) ist die Platine bereits vorbereitet.
 
 ## Repo Übersicht
 
@@ -81,3 +82,14 @@ Der Controller sendet standardmäßig mit einer Baudrate von 115200.
 Zur Fehlerdiagnose ist ratsam, den Controller zu verbinden, die entsprechende serielle Schnittstelle zu öffnen und zunächst einen [reset](#einschalten) durchzuführen.
 
 Es werden nun sämtliche Schritte des Bootvorgangs gespiegelt. Außerdem werden Anfragen an den Webserver gelogt.
+
+### Lithium Akku Upgrade
+
+Um das Gerät mit einem wiederaufladbarem Akku auszustatten müssen einige zusätzliche Teile bezogen werden. In Klammern jeweils aufgeführt, ist der verwendete Footprint auf der Platine oder eine Teileempfehlung.
+
+1x 2.0 USB-C Port (GCT-USB4085)
+1x 3.7V Lithium Akku (LiPo 103450 - 51mm x 39mm x 10mm)
+1x DC-DC Converter 3.7V - 5V
+1x Charge Controller
+
+Die bereits verbaute Steckleiste ist ausgelegt auf ein [kompaktes Modul](https://de.aliexpress.com/item/33034500618.html) mit DC-DC Wandler und Laderegler. Wird hiervon abgewichen ist auf eine korrekte Pinbelegung nach Schaltplan zu achten.
