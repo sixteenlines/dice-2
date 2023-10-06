@@ -117,7 +117,7 @@ Die bereits verbaute Steckleiste J1 ist ausgelegt auf ein [kompaktes Modul](http
 
 5. Bestücken und Verlöten des optionalen JST-Headers oder verlöten der Akku Litzen
 
-6. Einsetzen des DCDC-Charge Controller Moduls
+6. Aufsetzen und Verlöten des DCDC-Charge Controller Moduls
 
 7. USB Ladegerät anschließen und verifizieren, dass die Charge LED des eingesetzten Moduls aufleuchtet.
 
