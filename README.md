@@ -85,6 +85,8 @@ Es werden nun sämtliche Schritte des Bootvorgangs gespiegelt. Außerdem werden 
 
 ## Lithium Akku Upgrade
 
+### Übersicht und Stückliste
+
 Um das Gerät mit einem wiederaufladbarem Akku auszustatten müssen einige zusätzliche Teile bezogen werden. In Klammern jeweils aufgeführt, ist der verwendete Footprint auf der Platine oder eine Teileempfehlung.
 
 1x 2.0 USB-C Port (GCT-USB4085)
